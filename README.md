@@ -7,8 +7,12 @@ und Betriebsvereinbarungen.
 
 ## Nutzen
 
-- **Online:** über GitHub Pages im Browser (Desktop & Handy)
-- **Offline:** Repo als ZIP herunterladen ("Code" → "Download ZIP") und `index.html` lokal öffnen
+- **Als App installieren (empfohlen):** Seite öffnen → im Browser auf "App installieren" bzw.
+  "Zum Startbildschirm hinzufügen" tippen (Android/Chrome: Button erscheint automatisch in der App;
+  iPhone/Safari: Teilen-Button → "Zum Home-Bildschirm"). Läuft danach wie eine echte App mit eigenem
+  Icon, Vollbild ohne Browserleiste und funktioniert offline.
+- **Im Browser:** über GitHub Pages (Desktop & Handy), auch ohne Installation
+- **Als Dateien:** Repo als ZIP herunterladen ("Code" → "Download ZIP") und `index.html` lokal öffnen
 
 ## Modi
 
