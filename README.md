@@ -2,8 +2,8 @@
 
 Kostenlose, offline-fähige Lern-App für das Umschulungsfach "Rolle im Betrieb".
 Deckt ab: Betriebsrat, Jugend- und Auszubildendenvertretung (JAV), Tarifvertragsrecht,
-Arbeitskampf & Streik, duale Ausbildung (BBiG), Jugendarbeitsschutzgesetz (JArbSchG)
-und Betriebsvereinbarungen.
+Arbeitskampf & Streik, duale Ausbildung (BBiG), Jugendarbeitsschutzgesetz (JArbSchG),
+Betriebsvereinbarungen sowie eine komplette Vorbereitungsklausur (echter Vortest) zum Üben.
 
 ## Nutzen
 
