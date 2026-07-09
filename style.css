@@ -67,6 +67,20 @@ main#app {
 h1 { font-size: 1.6rem; margin: 4px 0 4px; }
 .subtitle { color: var(--muted); margin-bottom: 20px; }
 
+.install-btn {
+  display: block;
+  width: 100%;
+  margin-bottom: 16px;
+  padding: 13px;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  color: white;
+  font-weight: 700;
+  font-size: 0.95rem;
+  cursor: pointer;
+}
+
 .mode-picker {
   display: flex;
   gap: 8px;
