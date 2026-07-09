@@ -4,6 +4,7 @@ const STREAK_KEY = "rolleImBetrieb.streak.v1";
 
 let state = {
   mode: "quiz",
+  currentSubject: null,
   currentTopic: null,
   queue: [],
   index: 0,
@@ -47,6 +48,24 @@ function showView(id) {
   $(id).classList.remove("hidden");
 }
 
+// ---------- Subject grid rendering ----------
+function renderSubjects() {
+  const grid = $("#subjectGrid");
+  grid.innerHTML = "";
+  SUBJECTS.forEach(s => {
+    const topicCount = TOPICS.filter(t => t.subject === s.id).length;
+    const card = document.createElement("div");
+    card.className = "topic-card";
+    card.innerHTML = `
+      <span class="icon">${s.icon}</span>
+      <div class="title">${s.title}</div>
+      <div class="meta">${topicCount} Themen</div>
+    `;
+    card.addEventListener("click", () => goToSubject(s.id));
+    grid.appendChild(card);
+  });
+}
+
 // ---------- Topic grid rendering ----------
 function topicStats(topicId) {
   const qCount = QUESTIONS.filter(q => q.topic === topicId).length;
@@ -60,7 +79,7 @@ function topicStats(topicId) {
 function renderTopics() {
   const grid = $("#topicGrid");
   grid.innerHTML = "";
-  TOPICS.forEach(t => {
+  TOPICS.filter(t => t.subject === state.currentSubject).forEach(t => {
     const stats = topicStats(t.id);
     const pct = stats.total ? Math.round((stats.done / stats.total) * 100) : 0;
     const card = document.createElement("div");
@@ -88,19 +107,27 @@ document.querySelectorAll(".mode-btn").forEach(btn => {
 });
 
 $("#homeBtn").addEventListener("click", goHome);
-$("#homeFromResult").addEventListener("click", goHome);
-$("#backFromQuiz").addEventListener("click", goHome);
-$("#backFromCards").addEventListener("click", goHome);
+$("#backFromSubject").addEventListener("click", goHome);
+$("#homeFromResult").addEventListener("click", () => goToSubject(state.currentSubject));
+$("#backFromQuiz").addEventListener("click", () => goToSubject(state.currentSubject));
+$("#backFromCards").addEventListener("click", () => goToSubject(state.currentSubject));
 
 function goHome() {
+  state.currentSubject = null;
   showView("#view-home");
+  renderSubjects();
+}
+
+function goToSubject(subjectId) {
+  state.currentSubject = subjectId;
+  $("#subjectTitle").textContent = SUBJECTS.find(s => s.id === subjectId)?.title || "";
+  showView("#view-subject");
   renderTopics();
 }
 
 function startTopic(topicId) {
   state.currentTopic = topicId;
   if (state.mode === "cards") startCards(topicId);
-  else if (state.mode === "test") startTest();
   else startQuiz(topicId);
 }
 
@@ -110,16 +137,6 @@ function startQuiz(topicId) {
   state.queue = pool;
   state.index = 0;
   state.correctCount = 0;
-  showView("#view-quiz");
-  renderQuestion();
-}
-
-function startTest() {
-  const pool = shuffle(QUESTIONS).slice(0, 25);
-  state.queue = pool;
-  state.index = 0;
-  state.correctCount = 0;
-  state.currentTopic = "__test__";
   showView("#view-quiz");
   renderQuestion();
 }
@@ -216,12 +233,10 @@ function finishQuiz() {
   const total = state.queue.length;
   const pct = total ? Math.round((state.correctCount / total) * 100) : 0;
 
-  if (state.currentTopic !== "__test__") {
-    const progress = loadProgress();
-    const prevBest = progress[state.currentTopic]?.bestScore || 0;
-    progress[state.currentTopic] = { bestScore: Math.max(prevBest, state.correctCount), total };
-    saveProgress(progress);
-  }
+  const progress = loadProgress();
+  const prevBest = progress[state.currentTopic]?.bestScore || 0;
+  progress[state.currentTopic] = { bestScore: Math.max(prevBest, state.correctCount), total };
+  saveProgress(progress);
   bumpStreak();
 
   $("#resultEmoji").textContent = pct >= 80 ? "🏆" : pct >= 50 ? "💪" : "📚";
@@ -231,7 +246,7 @@ function finishQuiz() {
 }
 
 $("#retryBtn").addEventListener("click", () => {
-  if (state.currentTopic === "__test__") startTest();
+  if (state.mode === "cards") startCards(state.currentTopic);
   else startQuiz(state.currentTopic);
 });
 
@@ -268,7 +283,6 @@ function nextCard() {
     $("#resultTitle").textContent = "Karten durch!";
     $("#resultText").textContent = `Du hast alle ${state.queue.length} Karteikarten zu diesem Thema durchgesehen.`;
     showView("#view-result");
-    $("#retryBtn").onclick = () => startCards(state.currentTopic);
   } else {
     renderCard();
   }

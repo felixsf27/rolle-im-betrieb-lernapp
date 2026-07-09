@@ -1,9 +1,20 @@
-# Rolle im Betrieb – Lern-App
+# Lernkarten – Umschulung
 
-Kostenlose, offline-fähige Lern-App für das Umschulungsfach "Rolle im Betrieb".
-Deckt ab: Betriebsrat, Jugend- und Auszubildendenvertretung (JAV), Tarifvertragsrecht,
-Arbeitskampf & Streik, duale Ausbildung (BBiG), Jugendarbeitsschutzgesetz (JArbSchG),
-Betriebsvereinbarungen sowie eine komplette Vorbereitungsklausur (echter Vortest) zum Üben.
+Kostenlose, offline-fähige Lern-App für die Umschulung. Start ist eine Fächer-Übersicht,
+darunter liegen Themen mit Quiz und Karteikarten. Aktuell ein Fach: "Rolle im Betrieb"
+(Betriebsrat, JAV, Tarifvertragsrecht, Arbeitskampf & Streik, duale Ausbildung (BBiG),
+Jugendarbeitsschutzgesetz (JArbSchG), Betriebsvereinbarungen, Vorbereitungsklausur).
+
+## Neues Fach oder Thema hinzufügen
+
+Alles steckt in `data.js`, keine Änderung an `index.html` oder `app.js` nötig:
+
+- **Neues Fach:** Zeile in `SUBJECTS` ergänzen (`id`, `title`, `icon`).
+- **Neues Thema:** Zeile in `TOPICS` ergänzen, `subject` muss auf eine bestehende Fach-`id` zeigen.
+- **Neue Fragen/Karten:** Einträge in `QUESTIONS` bzw. `FLASHCARDS` mit passender Themen-`id` ergänzen.
+
+Nach Änderungen an den Dateien in `service-worker.js` den `CACHE_NAME` hochzählen,
+damit bereits installierte Versionen der App das Update laden.
 
 ## Nutzen
 

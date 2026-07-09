@@ -16,23 +16,31 @@
 </head>
 <body>
 <header class="topbar">
-  <div class="brand" id="homeBtn">📘 Rolle im Betrieb</div>
+  <div class="brand" id="homeBtn">📚 Lernkarten</div>
   <div class="streak" id="streakBadge">🔥 0</div>
 </header>
 
 <main id="app">
 
-  <!-- HOME / TOPIC SELECT -->
+  <!-- HOME / SUBJECT SELECT -->
   <section id="view-home" class="view">
-    <h1>Rolle im Betrieb</h1>
-    <p class="subtitle">Lern-App für dein Fach in der Umschulung. Wähle ein Thema und einen Modus.</p>
+    <h1>Lernkarten</h1>
+    <p class="subtitle">Wähle ein Fach.</p>
 
     <button id="installBtn" class="install-btn hidden">⬇️ App installieren</button>
+
+    <div id="subjectGrid" class="topic-grid"></div>
+  </section>
+
+  <!-- SUBJECT / TOPIC SELECT -->
+  <section id="view-subject" class="view hidden">
+    <button class="back-btn" id="backFromSubject">← Zurück</button>
+    <h1 id="subjectTitle"></h1>
+    <p class="subtitle">Wähle einen Modus und ein Thema.</p>
 
     <div class="mode-picker">
       <button class="mode-btn active" data-mode="quiz">❓ Quiz</button>
       <button class="mode-btn" data-mode="cards">🗂️ Karteikarten</button>
-      <button class="mode-btn" data-mode="test">⏱️ Testmodus (alle Themen)</button>
     </div>
 
     <div id="topicGrid" class="topic-grid"></div>

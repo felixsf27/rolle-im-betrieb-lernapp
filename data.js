@@ -1,13 +1,19 @@
-// Inhalte für "Rolle im Betrieb" – erstellt aus den Lernmaterialien der Umschulung
+// Fächer der Umschulung – neues Fach: einfach hier eine Zeile ergänzen
+const SUBJECTS = [
+  { id: "rolle-im-betrieb", title: "Rolle im Betrieb", icon: "📘" },
+];
+
+// Themen je Fach – erstellt aus den Lernmaterialien der Umschulung
+// Neues Thema in einem bestehenden Fach: Zeile hier ergänzen (subject-id muss zu SUBJECTS passen)
 const TOPICS = [
-  { id: "betriebsrat", title: "Betriebsrat", icon: "⚖️" },
-  { id: "jav", title: "Jugend- u. Azubivertretung (JAV)", icon: "🧑‍🎓" },
-  { id: "tarifvertrag", title: "Tarifvertragsrecht", icon: "📄" },
-  { id: "streik", title: "Arbeitskampf & Streik", icon: "✊" },
-  { id: "ausbildung", title: "Duale Ausbildung (BBiG)", icon: "🎓" },
-  { id: "jarbschg", title: "Jugendarbeitsschutz (JArbSchG)", icon: "🛡️" },
-  { id: "betriebsvereinbarung", title: "Betriebsvereinbarungen", icon: "🤝" },
-  { id: "klausur", title: "Vorbereitungsklausur (Vortest)", icon: "📝" },
+  { id: "betriebsrat", subject: "rolle-im-betrieb", title: "Betriebsrat", icon: "⚖️" },
+  { id: "jav", subject: "rolle-im-betrieb", title: "Jugend- u. Azubivertretung (JAV)", icon: "🧑‍🎓" },
+  { id: "tarifvertrag", subject: "rolle-im-betrieb", title: "Tarifvertragsrecht", icon: "📄" },
+  { id: "streik", subject: "rolle-im-betrieb", title: "Arbeitskampf & Streik", icon: "✊" },
+  { id: "ausbildung", subject: "rolle-im-betrieb", title: "Duale Ausbildung (BBiG)", icon: "🎓" },
+  { id: "jarbschg", subject: "rolle-im-betrieb", title: "Jugendarbeitsschutz (JArbSchG)", icon: "🛡️" },
+  { id: "betriebsvereinbarung", subject: "rolle-im-betrieb", title: "Betriebsvereinbarungen", icon: "🤝" },
+  { id: "klausur", subject: "rolle-im-betrieb", title: "Vorbereitungsklausur (Vortest)", icon: "📝" },
 ];
 
 // ---------- FLASHCARDS (Begriffe) ----------
