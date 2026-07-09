@@ -284,5 +284,35 @@ $("#cardRepeatBtn").addEventListener("click", () => {
 // ---------- Theme toggle support (host may set data-theme on <html>) ----------
 // no-op here; CSS handles via prefers-color-scheme + [data-theme] overrides
 
+// ---------- PWA: service worker + install prompt ----------
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("service-worker.js").catch(() => {});
+  });
+}
+
+let deferredInstallPrompt = null;
+const installBtn = $("#installBtn");
+
+window.addEventListener("beforeinstallprompt", (e) => {
+  e.preventDefault();
+  deferredInstallPrompt = e;
+  if (installBtn) installBtn.classList.remove("hidden");
+});
+
+if (installBtn) {
+  installBtn.addEventListener("click", async () => {
+    if (!deferredInstallPrompt) return;
+    deferredInstallPrompt.prompt();
+    await deferredInstallPrompt.userChoice;
+    deferredInstallPrompt = null;
+    installBtn.classList.add("hidden");
+  });
+}
+
+window.addEventListener("appinstalled", () => {
+  if (installBtn) installBtn.classList.add("hidden");
+});
+
 // ---------- Init ----------
 goHome();
