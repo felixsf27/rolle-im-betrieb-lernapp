@@ -2,8 +2,16 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Rolle im Betrieb – Lern-App</title>
+<meta name="theme-color" content="#4f46e5">
+<meta name="description" content="Quiz &amp; Karteikarten für das Umschulungsfach Rolle im Betrieb">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Rolle im Betrieb">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -18,6 +26,8 @@
   <section id="view-home" class="view">
     <h1>Rolle im Betrieb</h1>
     <p class="subtitle">Lern-App für dein Fach in der Umschulung. Wähle ein Thema und einen Modus.</p>
+
+    <button id="installBtn" class="install-btn hidden">⬇️ App installieren</button>
 
     <div class="mode-picker">
       <button class="mode-btn active" data-mode="quiz">❓ Quiz</button>
