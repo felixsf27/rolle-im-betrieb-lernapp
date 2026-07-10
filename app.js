@@ -151,8 +151,30 @@ document.querySelectorAll(".mode-btn").forEach(btn => {
     btn.classList.add("active");
     state.mode = btn.dataset.mode;
     renderTopics();
+    saveLastView({ name: "category", subjectId: state.currentSubject, categoryId: state.currentCategory, mode: state.mode });
   });
 });
+
+// ---------- Remember current view across reloads (e.g. Pull-to-Refresh) ----------
+// Pull-to-refresh / F5 reloads index.html from scratch, which would otherwise
+// always land back on the home screen. sessionStorage survives a reload (but
+// not a fully closed tab/app), so we restore the last subject/category/mode
+// instead of losing the user's place every time the page refreshes.
+const VIEW_STORAGE_KEY = "rolleImBetrieb.lastView.v1";
+
+function saveLastView(view) {
+  try { sessionStorage.setItem(VIEW_STORAGE_KEY, JSON.stringify(view)); }
+  catch (e) { /* sessionStorage unavailable (e.g. private mode) - ignore */ }
+}
+
+function loadLastView() {
+  try { return JSON.parse(sessionStorage.getItem(VIEW_STORAGE_KEY)); }
+  catch (e) { return null; }
+}
+
+function setActiveMode(mode) {
+  document.querySelectorAll(".mode-btn").forEach(b => b.classList.toggle("active", b.dataset.mode === mode));
+}
 
 // ---------- Navigation / hardware back-button (History API) ----------
 // Every "go deeper" action pushes a history entry; every in-app back/home
@@ -164,6 +186,7 @@ function renderHome() {
   state.currentCategory = null;
   showView("#view-home");
   renderSubjects();
+  saveLastView({ name: "home" });
 }
 
 function renderSubjectView(subjectId) {
@@ -172,15 +195,21 @@ function renderSubjectView(subjectId) {
   $("#subjectTitle").textContent = SUBJECTS.find(s => s.id === subjectId)?.title || "";
   showView("#view-subject");
   renderCategories();
+  saveLastView({ name: "subject", subjectId });
 }
 
-function renderCategoryView(subjectId, categoryId) {
+function renderCategoryView(subjectId, categoryId, mode) {
   state.currentSubject = subjectId;
   state.currentCategory = categoryId;
+  if (mode) {
+    state.mode = mode;
+    setActiveMode(mode);
+  }
   $("#categoryTitle").textContent = CATEGORIES.find(c => c.id === categoryId)?.title || "";
   showView("#view-category");
   renderTopics();
   updateModeAvailability();
+  saveLastView({ name: "category", subjectId, categoryId, mode: state.mode });
 }
 
 function applyHistoryState(viewState) {
@@ -195,7 +224,7 @@ function applyHistoryState(viewState) {
   // category, quiz, cards and structure entries all land on the category view:
   // resuming a quiz/cards/structure run mid-way isn't supported, and the
   // category view is exactly where the matching on-screen back button goes too.
-  renderCategoryView(viewState.subjectId, viewState.categoryId);
+  renderCategoryView(viewState.subjectId, viewState.categoryId, viewState.mode);
 }
 
 window.addEventListener("popstate", (e) => applyHistoryState(e.state));
@@ -505,5 +534,15 @@ window.addEventListener("appinstalled", () => {
 });
 
 // ---------- Init ----------
-history.replaceState({ name: "home" }, "");
-renderHome();
+const lastView = loadLastView();
+const canRestore = lastView && (
+  (lastView.name === "subject" && SUBJECTS.some(s => s.id === lastView.subjectId)) ||
+  (lastView.name === "category" && CATEGORIES.some(c => c.id === lastView.categoryId))
+);
+if (canRestore) {
+  history.replaceState(lastView, "");
+  applyHistoryState(lastView);
+} else {
+  history.replaceState({ name: "home" }, "");
+  renderHome();
+}
