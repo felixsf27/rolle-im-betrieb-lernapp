@@ -105,6 +105,28 @@ h1 { font-size: 1.6rem; margin: 4px 0 4px; }
   border-color: var(--accent);
 }
 
+.subject-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.subject-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.subject-card:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.08); }
+.subject-card .icon { font-size: 1.8rem; flex-shrink: 0; }
+.subject-card .info { flex: 1; min-width: 0; }
+.subject-card .title { font-weight: 600; font-size: 1rem; }
+.subject-card .meta { font-size: 0.8rem; color: var(--muted); margin-top: 2px; }
+
 .topic-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));

@@ -48,18 +48,20 @@ function showView(id) {
   $(id).classList.remove("hidden");
 }
 
-// ---------- Subject grid rendering ----------
+// ---------- Subject list rendering ----------
 function renderSubjects() {
   const grid = $("#subjectGrid");
   grid.innerHTML = "";
   SUBJECTS.forEach(s => {
     const topicCount = TOPICS.filter(t => t.subject === s.id).length;
     const card = document.createElement("div");
-    card.className = "topic-card";
+    card.className = "subject-card";
     card.innerHTML = `
       <span class="icon">${s.icon}</span>
-      <div class="title">${s.title}</div>
-      <div class="meta">${topicCount} Themen</div>
+      <div class="info">
+        <div class="title">${s.title}</div>
+        <div class="meta">${topicCount} Themen</div>
+      </div>
     `;
     card.addEventListener("click", () => goToSubject(s.id));
     grid.appendChild(card);
@@ -69,6 +71,21 @@ function renderSubjects() {
 // ---------- Topic grid rendering ----------
 function structureFor(topicId) {
   return STRUCTURES.find(s => s.topic === topicId);
+}
+
+function subjectHasStructure(subjectId) {
+  return TOPICS.some(t => t.subject === subjectId && structureFor(t.id));
+}
+
+function updateModeAvailability() {
+  const hasStructure = subjectHasStructure(state.currentSubject);
+  const structureBtn = document.querySelector('.mode-btn[data-mode="structure"]');
+  if (!structureBtn) return;
+  structureBtn.classList.toggle("hidden", !hasStructure);
+  if (!hasStructure && state.mode === "structure") {
+    state.mode = "quiz";
+    document.querySelectorAll(".mode-btn").forEach(b => b.classList.toggle("active", b.dataset.mode === "quiz"));
+  }
 }
 
 function topicStats(topicId) {
@@ -116,25 +133,54 @@ document.querySelectorAll(".mode-btn").forEach(btn => {
   });
 });
 
-$("#homeBtn").addEventListener("click", goHome);
-$("#backFromSubject").addEventListener("click", goHome);
-$("#homeFromResult").addEventListener("click", () => goToSubject(state.currentSubject));
-$("#backFromQuiz").addEventListener("click", () => goToSubject(state.currentSubject));
-$("#backFromCards").addEventListener("click", () => goToSubject(state.currentSubject));
-$("#backFromStructure").addEventListener("click", () => goToSubject(state.currentSubject));
-
-function goHome() {
+// ---------- Navigation / hardware back-button (History API) ----------
+// Every "go deeper" action pushes a history entry; every in-app back/home
+// button calls history.back() so the hardware/gesture back button on
+// Android always does the same thing as the on-screen back button instead
+// of leaving the app.
+function renderHome() {
   state.currentSubject = null;
   showView("#view-home");
   renderSubjects();
 }
 
-function goToSubject(subjectId) {
+function renderSubjectView(subjectId) {
   state.currentSubject = subjectId;
   $("#subjectTitle").textContent = SUBJECTS.find(s => s.id === subjectId)?.title || "";
   showView("#view-subject");
   renderTopics();
+  updateModeAvailability();
 }
+
+function applyHistoryState(viewState) {
+  if (!viewState || viewState.name === "home") {
+    renderHome();
+    return;
+  }
+  // subject, quiz, cards and structure entries all land on the subject view:
+  // resuming a quiz/cards/structure run mid-way isn't supported, and the
+  // subject view is exactly where the matching on-screen back button goes too.
+  renderSubjectView(viewState.subjectId);
+}
+
+window.addEventListener("popstate", (e) => applyHistoryState(e.state));
+
+function goHome() {
+  history.pushState({ name: "home" }, "");
+  renderHome();
+}
+
+function goToSubject(subjectId) {
+  history.pushState({ name: "subject", subjectId }, "");
+  renderSubjectView(subjectId);
+}
+
+$("#homeBtn").addEventListener("click", goHome);
+$("#backFromSubject").addEventListener("click", () => history.back());
+$("#homeFromResult").addEventListener("click", () => history.back());
+$("#backFromQuiz").addEventListener("click", () => history.back());
+$("#backFromCards").addEventListener("click", () => history.back());
+$("#backFromStructure").addEventListener("click", () => history.back());
 
 function startTopic(topicId) {
   state.currentTopic = topicId;
@@ -144,7 +190,8 @@ function startTopic(topicId) {
 }
 
 // ---------- QUIZ ----------
-function startQuiz(topicId) {
+function startQuiz(topicId, pushHistory = true) {
+  if (pushHistory) history.pushState({ name: "quiz", subjectId: state.currentSubject }, "");
   const pool = shuffle(QUESTIONS.filter(q => q.topic === topicId));
   state.queue = pool;
   state.index = 0;
@@ -258,15 +305,16 @@ function finishQuiz() {
 }
 
 $("#retryBtn").addEventListener("click", () => {
-  if (state.mode === "cards") startCards(state.currentTopic);
-  else if (state.mode === "structure") startStructure(state.currentTopic);
-  else startQuiz(state.currentTopic);
+  if (state.mode === "cards") startCards(state.currentTopic, false);
+  else if (state.mode === "structure") startStructure(state.currentTopic, false);
+  else startQuiz(state.currentTopic, false);
 });
 
 // ---------- STRUCTURE (Gliederung selbst aufbauen) ----------
 let structureState = { topicId: null, items: [], expectedIndex: 0, pool: [], mistakes: 0 };
 
-function startStructure(topicId) {
+function startStructure(topicId, pushHistory = true) {
+  if (pushHistory) history.pushState({ name: "structure", subjectId: state.currentSubject }, "");
   const struct = structureFor(topicId);
   if (!struct) return;
   structureState = {
@@ -336,7 +384,8 @@ function finishStructure() {
 }
 
 // ---------- FLASHCARDS ----------
-function startCards(topicId) {
+function startCards(topicId, pushHistory = true) {
+  if (pushHistory) history.pushState({ name: "cards", subjectId: state.currentSubject }, "");
   const pool = shuffle(FLASHCARDS.filter(c => c.topic === topicId));
   state.queue = pool;
   state.index = 0;
@@ -414,4 +463,5 @@ window.addEventListener("appinstalled", () => {
 });
 
 // ---------- Init ----------
-goHome();
+history.replaceState({ name: "home" }, "");
+renderHome();
