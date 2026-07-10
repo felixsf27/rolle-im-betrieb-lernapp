@@ -5,6 +5,7 @@ const STREAK_KEY = "rolleImBetrieb.streak.v1";
 let state = {
   mode: "quiz",
   currentSubject: null,
+  currentCategory: null,
   currentTopic: null,
   queue: [],
   index: 0,
@@ -53,17 +54,37 @@ function renderSubjects() {
   const grid = $("#subjectGrid");
   grid.innerHTML = "";
   SUBJECTS.forEach(s => {
-    const topicCount = TOPICS.filter(t => t.subject === s.id).length;
+    const categoryCount = CATEGORIES.filter(c => c.subject === s.id).length;
     const card = document.createElement("div");
     card.className = "subject-card";
     card.innerHTML = `
       <span class="icon">${s.icon}</span>
       <div class="info">
         <div class="title">${s.title}</div>
-        <div class="meta">${topicCount} Themen</div>
+        <div class="meta">${categoryCount} ${categoryCount === 1 ? "Kategorie" : "Kategorien"}</div>
       </div>
     `;
     card.addEventListener("click", () => goToSubject(s.id));
+    grid.appendChild(card);
+  });
+}
+
+// ---------- Category list rendering ----------
+function renderCategories() {
+  const grid = $("#categoryGrid");
+  grid.innerHTML = "";
+  CATEGORIES.filter(c => c.subject === state.currentSubject).forEach(c => {
+    const topicCount = TOPICS.filter(t => t.category === c.id).length;
+    const card = document.createElement("div");
+    card.className = "subject-card";
+    card.innerHTML = `
+      <span class="icon">${c.icon}</span>
+      <div class="info">
+        <div class="title">${c.title}</div>
+        <div class="meta">${topicCount} Themen</div>
+      </div>
+    `;
+    card.addEventListener("click", () => goToCategory(c.id));
     grid.appendChild(card);
   });
 }
@@ -73,12 +94,12 @@ function structureFor(topicId) {
   return STRUCTURES.find(s => s.topic === topicId);
 }
 
-function subjectHasStructure(subjectId) {
-  return TOPICS.some(t => t.subject === subjectId && structureFor(t.id));
+function categoryHasStructure(categoryId) {
+  return TOPICS.some(t => t.category === categoryId && structureFor(t.id));
 }
 
 function updateModeAvailability() {
-  const hasStructure = subjectHasStructure(state.currentSubject);
+  const hasStructure = categoryHasStructure(state.currentCategory);
   const structureBtn = document.querySelector('.mode-btn[data-mode="structure"]');
   if (!structureBtn) return;
   structureBtn.classList.toggle("hidden", !hasStructure);
@@ -101,7 +122,7 @@ function topicStats(topicId) {
 function renderTopics() {
   const grid = $("#topicGrid");
   grid.innerHTML = "";
-  TOPICS.filter(t => t.subject === state.currentSubject)
+  TOPICS.filter(t => t.category === state.currentCategory)
     .filter(t => state.mode !== "structure" || structureFor(t.id))
     .forEach(t => {
       const stats = topicStats(t.id);
@@ -140,14 +161,24 @@ document.querySelectorAll(".mode-btn").forEach(btn => {
 // of leaving the app.
 function renderHome() {
   state.currentSubject = null;
+  state.currentCategory = null;
   showView("#view-home");
   renderSubjects();
 }
 
 function renderSubjectView(subjectId) {
   state.currentSubject = subjectId;
+  state.currentCategory = null;
   $("#subjectTitle").textContent = SUBJECTS.find(s => s.id === subjectId)?.title || "";
   showView("#view-subject");
+  renderCategories();
+}
+
+function renderCategoryView(subjectId, categoryId) {
+  state.currentSubject = subjectId;
+  state.currentCategory = categoryId;
+  $("#categoryTitle").textContent = CATEGORIES.find(c => c.id === categoryId)?.title || "";
+  showView("#view-category");
   renderTopics();
   updateModeAvailability();
 }
@@ -157,10 +188,14 @@ function applyHistoryState(viewState) {
     renderHome();
     return;
   }
-  // subject, quiz, cards and structure entries all land on the subject view:
+  if (viewState.name === "subject") {
+    renderSubjectView(viewState.subjectId);
+    return;
+  }
+  // category, quiz, cards and structure entries all land on the category view:
   // resuming a quiz/cards/structure run mid-way isn't supported, and the
-  // subject view is exactly where the matching on-screen back button goes too.
-  renderSubjectView(viewState.subjectId);
+  // category view is exactly where the matching on-screen back button goes too.
+  renderCategoryView(viewState.subjectId, viewState.categoryId);
 }
 
 window.addEventListener("popstate", (e) => applyHistoryState(e.state));
@@ -175,8 +210,15 @@ function goToSubject(subjectId) {
   renderSubjectView(subjectId);
 }
 
+function goToCategory(categoryId) {
+  const cat = CATEGORIES.find(c => c.id === categoryId);
+  history.pushState({ name: "category", subjectId: cat.subject, categoryId }, "");
+  renderCategoryView(cat.subject, categoryId);
+}
+
 $("#homeBtn").addEventListener("click", goHome);
 $("#backFromSubject").addEventListener("click", () => history.back());
+$("#backFromCategory").addEventListener("click", () => history.back());
 $("#homeFromResult").addEventListener("click", () => history.back());
 $("#backFromQuiz").addEventListener("click", () => history.back());
 $("#backFromCards").addEventListener("click", () => history.back());
@@ -191,7 +233,7 @@ function startTopic(topicId) {
 
 // ---------- QUIZ ----------
 function startQuiz(topicId, pushHistory = true) {
-  if (pushHistory) history.pushState({ name: "quiz", subjectId: state.currentSubject }, "");
+  if (pushHistory) history.pushState({ name: "quiz", subjectId: state.currentSubject, categoryId: state.currentCategory }, "");
   const pool = shuffle(QUESTIONS.filter(q => q.topic === topicId));
   state.queue = pool;
   state.index = 0;
@@ -314,7 +356,7 @@ $("#retryBtn").addEventListener("click", () => {
 let structureState = { topicId: null, items: [], expectedIndex: 0, pool: [], mistakes: 0 };
 
 function startStructure(topicId, pushHistory = true) {
-  if (pushHistory) history.pushState({ name: "structure", subjectId: state.currentSubject }, "");
+  if (pushHistory) history.pushState({ name: "structure", subjectId: state.currentSubject, categoryId: state.currentCategory }, "");
   const struct = structureFor(topicId);
   if (!struct) return;
   structureState = {
@@ -385,7 +427,7 @@ function finishStructure() {
 
 // ---------- FLASHCARDS ----------
 function startCards(topicId, pushHistory = true) {
-  if (pushHistory) history.pushState({ name: "cards", subjectId: state.currentSubject }, "");
+  if (pushHistory) history.pushState({ name: "cards", subjectId: state.currentSubject, categoryId: state.currentCategory }, "");
   const pool = shuffle(FLASHCARDS.filter(c => c.topic === topicId));
   state.queue = pool;
   state.index = 0;

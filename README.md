@@ -1,22 +1,29 @@
 # Lernkarten – Umschulung
 
-Kostenlose, offline-fähige Lern-App für die Umschulung. Start ist eine Fächer-Übersicht,
-darunter liegen Themen mit Quiz und Karteikarten. Aktuell zwei Fächer:
+Kostenlose, offline-fähige Lern-App für die Umschulung. Aufbau: **Fach → Kategorie
+(ein Testblock) → Thema → Quiz/Karteikarten/Gliederung**. Die Kategorie-Ebene hält die
+Themen eines bereits geschriebenen Tests zusammen, damit ein neuer Test im selben Fach
+später als eigene Kategorie danebengelegt werden kann, statt mit alten Themen zu vermischen.
 
-- **Rolle im Betrieb**: Betriebsrat, JAV, Tarifvertragsrecht, Arbeitskampf & Streik,
-  duale Ausbildung (BBiG), Jugendarbeitsschutzgesetz (JArbSchG), Betriebsvereinbarungen,
-  Vorbereitungsklausur.
-- **Rechnungswesen**: Aufgaben & Bereiche des Rechnungswesens, Buchführung & Inventur,
-  Inventar, Bilanz.
-- **Tabellenkalkulation**: Grundlagen & Funktionen (SUMME, MIN, MAX, MITTELWERT, ANZAHL/ANZAHL2),
-  Zellbezüge (relativ, absolut, gemischt), UND & ODER.
+Aktuell drei Fächer:
 
-## Neues Fach oder Thema hinzufügen
+- **Rolle im Betrieb** → Kategorie "Jugend- und Arbeitsrecht": Betriebsrat, JAV,
+  Tarifvertragsrecht, Arbeitskampf & Streik, duale Ausbildung (BBiG), Jugendarbeitsschutzgesetz
+  (JArbSchG), Betriebsvereinbarungen, Vorbereitungsklausur.
+- **Rechnungswesen** → Kategorie "Inventur & Inventar": Aufgaben & Bereiche des
+  Rechnungswesens, Buchführung & Inventur, Inventar, Bilanz.
+- **Tabellenkalkulation** → Kategorie "Grundlagen & Bezüge": Grundlagen & Funktionen
+  (SUMME, MIN, MAX, MITTELWERT, ANZAHL/ANZAHL2), Zellbezüge (relativ, absolut, gemischt),
+  UND & ODER.
+
+## Neues Fach, neue Kategorie oder neues Thema hinzufügen
 
 Alles steckt in `data.js`, keine Änderung an `index.html` oder `app.js` nötig:
 
 - **Neues Fach:** Zeile in `SUBJECTS` ergänzen (`id`, `title`, `icon`).
-- **Neues Thema:** Zeile in `TOPICS` ergänzen, `subject` muss auf eine bestehende Fach-`id` zeigen.
+- **Neue Kategorie (z. B. für den nächsten Test in einem bestehenden Fach):** Zeile in
+  `CATEGORIES` ergänzen, `subject` muss auf eine bestehende Fach-`id` zeigen.
+- **Neues Thema:** Zeile in `TOPICS` ergänzen, `subject` und `category` müssen zusammenpassen.
 - **Neue Fragen/Karten:** Einträge in `QUESTIONS` bzw. `FLASHCARDS` mit passender Themen-`id` ergänzen.
 - **Neue Gliederungs-Übung:** Eintrag in `STRUCTURES` ergänzen (`topic`-id + `items` in der korrekten Reihenfolge).
 

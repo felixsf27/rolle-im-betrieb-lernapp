@@ -5,24 +5,33 @@ const SUBJECTS = [
   { id: "tabellenkalkulation", title: "Tabellenkalkulation", icon: "📊" },
 ];
 
-// Themen je Fach – erstellt aus den Lernmaterialien der Umschulung
-// Neues Thema in einem bestehenden Fach: Zeile hier ergänzen (subject-id muss zu SUBJECTS passen)
+// Kategorien je Fach – ein Testblock/Themenblock. Neue Kategorie (z. B. für den nächsten Test):
+// Zeile hier ergänzen, subject-id muss zu SUBJECTS passen.
+const CATEGORIES = [
+  { id: "rib-jugend-arbeitsrecht", subject: "rolle-im-betrieb", title: "Jugend- und Arbeitsrecht", icon: "⚖️" },
+  { id: "rewe-inventur-inventar", subject: "rewe", title: "Inventur & Inventar", icon: "📋" },
+  { id: "tk-grundlagen", subject: "tabellenkalkulation", title: "Grundlagen & Bezüge", icon: "📊" },
+];
+
+// Themen je Kategorie – erstellt aus den Lernmaterialien der Umschulung
+// Neues Thema in einer bestehenden Kategorie: Zeile hier ergänzen
+// (subject-id und category-id müssen zu SUBJECTS/CATEGORIES passen)
 const TOPICS = [
-  { id: "betriebsrat", subject: "rolle-im-betrieb", title: "Betriebsrat", icon: "⚖️" },
-  { id: "jav", subject: "rolle-im-betrieb", title: "Jugend- u. Azubivertretung (JAV)", icon: "🧑‍🎓" },
-  { id: "tarifvertrag", subject: "rolle-im-betrieb", title: "Tarifvertragsrecht", icon: "📄" },
-  { id: "streik", subject: "rolle-im-betrieb", title: "Arbeitskampf & Streik", icon: "✊" },
-  { id: "ausbildung", subject: "rolle-im-betrieb", title: "Duale Ausbildung (BBiG)", icon: "🎓" },
-  { id: "jarbschg", subject: "rolle-im-betrieb", title: "Jugendarbeitsschutz (JArbSchG)", icon: "🛡️" },
-  { id: "betriebsvereinbarung", subject: "rolle-im-betrieb", title: "Betriebsvereinbarungen", icon: "🤝" },
-  { id: "klausur", subject: "rolle-im-betrieb", title: "Vorbereitungsklausur (Vortest)", icon: "📝" },
-  { id: "rewe-aufgaben", subject: "rewe", title: "Aufgaben & Bereiche des Rechnungswesens", icon: "🧮" },
-  { id: "rewe-buchfuehrung-inventur", subject: "rewe", title: "Buchführung & Inventur", icon: "📚" },
-  { id: "rewe-inventar", subject: "rewe", title: "Inventar", icon: "📋" },
-  { id: "rewe-bilanz", subject: "rewe", title: "Bilanz", icon: "⚖️" },
-  { id: "excel-grundlagen", subject: "tabellenkalkulation", title: "Grundlagen & Funktionen", icon: "🔢" },
-  { id: "excel-bezuege", subject: "tabellenkalkulation", title: "Zellbezüge (relativ, absolut, gemischt)", icon: "📌" },
-  { id: "excel-und-oder", subject: "tabellenkalkulation", title: "UND & ODER", icon: "🔀" },
+  { id: "betriebsrat", subject: "rolle-im-betrieb", category: "rib-jugend-arbeitsrecht", title: "Betriebsrat", icon: "⚖️" },
+  { id: "jav", subject: "rolle-im-betrieb", category: "rib-jugend-arbeitsrecht", title: "Jugend- u. Azubivertretung (JAV)", icon: "🧑‍🎓" },
+  { id: "tarifvertrag", subject: "rolle-im-betrieb", category: "rib-jugend-arbeitsrecht", title: "Tarifvertragsrecht", icon: "📄" },
+  { id: "streik", subject: "rolle-im-betrieb", category: "rib-jugend-arbeitsrecht", title: "Arbeitskampf & Streik", icon: "✊" },
+  { id: "ausbildung", subject: "rolle-im-betrieb", category: "rib-jugend-arbeitsrecht", title: "Duale Ausbildung (BBiG)", icon: "🎓" },
+  { id: "jarbschg", subject: "rolle-im-betrieb", category: "rib-jugend-arbeitsrecht", title: "Jugendarbeitsschutz (JArbSchG)", icon: "🛡️" },
+  { id: "betriebsvereinbarung", subject: "rolle-im-betrieb", category: "rib-jugend-arbeitsrecht", title: "Betriebsvereinbarungen", icon: "🤝" },
+  { id: "klausur", subject: "rolle-im-betrieb", category: "rib-jugend-arbeitsrecht", title: "Vorbereitungsklausur (Vortest)", icon: "📝" },
+  { id: "rewe-aufgaben", subject: "rewe", category: "rewe-inventur-inventar", title: "Aufgaben & Bereiche des Rechnungswesens", icon: "🧮" },
+  { id: "rewe-buchfuehrung-inventur", subject: "rewe", category: "rewe-inventur-inventar", title: "Buchführung & Inventur", icon: "📚" },
+  { id: "rewe-inventar", subject: "rewe", category: "rewe-inventur-inventar", title: "Inventar", icon: "📋" },
+  { id: "rewe-bilanz", subject: "rewe", category: "rewe-inventur-inventar", title: "Bilanz", icon: "⚖️" },
+  { id: "excel-grundlagen", subject: "tabellenkalkulation", category: "tk-grundlagen", title: "Grundlagen & Funktionen", icon: "🔢" },
+  { id: "excel-bezuege", subject: "tabellenkalkulation", category: "tk-grundlagen", title: "Zellbezüge (relativ, absolut, gemischt)", icon: "📌" },
+  { id: "excel-und-oder", subject: "tabellenkalkulation", category: "tk-grundlagen", title: "UND & ODER", icon: "🔀" },
 ];
 
 // ---------- GLIEDERUNGEN (Reihenfolge zum Selbst-Üben) ----------
