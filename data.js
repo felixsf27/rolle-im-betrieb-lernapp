@@ -21,6 +21,44 @@ const TOPICS = [
   { id: "rewe-bilanz", subject: "rewe", title: "Bilanz", icon: "⚖️" },
 ];
 
+// ---------- GLIEDERUNGEN (Reihenfolge zum Selbst-Üben) ----------
+// Neue Übung: Zeile hier ergänzen, topic-id muss zu TOPICS passen. items = korrekte Reihenfolge.
+const STRUCTURES = [
+  {
+    topic: "rewe-inventar",
+    title: "Inventar-Gliederung",
+    items: [
+      "Inventar",
+      "Name des Kaufmanns, Ort, Stichtag (z. B. 31. Dezember)",
+      "A. Vermögen",
+      "I. Anlagevermögen",
+      "1. Grundstücke und Gebäude",
+      "2. Technische Anlagen und Maschinen",
+      "3. Fuhrpark",
+      "4. Betriebs- und Geschäftsausstattung",
+      "II. Umlaufvermögen",
+      "1. Rohstoffe",
+      "2. Hilfsstoffe",
+      "3. Betriebsstoffe",
+      "4. Unfertige Erzeugnisse",
+      "5. Fertige Erzeugnisse",
+      "6. Forderungen (a. LL)",
+      "7. Bankguthaben",
+      "8. Kassenbestand",
+      "Summe des Vermögens",
+      "B. Schulden (Verbindlichkeiten)",
+      "I. Langfristige Verbindlichkeiten",
+      "1. Hypothekendarlehen",
+      "2. Darlehen",
+      "II. Kurzfristige Verbindlichkeiten",
+      "1. Verbindlichkeiten a. LL",
+      "Summe der Schulden",
+      "C. Ermittlung des Eigenkapitals",
+      "Eigenkapital = Summe des Vermögens − Summe der Schulden",
+    ],
+  },
+];
+
 // ---------- FLASHCARDS (Begriffe) ----------
 const FLASHCARDS = [
   { topic: "tarifvertrag", front: "Tarifautonomie", back: "Tarifvertragsparteien sind unabhängig vom Staat und dürfen selbstständig Tarifverträge aushandeln und abschließen. Der Staat hat kein Eingriffsrecht." },

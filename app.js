@@ -67,32 +67,42 @@ function renderSubjects() {
 }
 
 // ---------- Topic grid rendering ----------
+function structureFor(topicId) {
+  return STRUCTURES.find(s => s.topic === topicId);
+}
+
 function topicStats(topicId) {
   const qCount = QUESTIONS.filter(q => q.topic === topicId).length;
   const cCount = FLASHCARDS.filter(c => c.topic === topicId).length;
+  const sCount = structureFor(topicId)?.items.length || 0;
   const progress = loadProgress();
   const done = progress[topicId]?.bestScore || 0;
-  const total = state.mode === "cards" ? cCount : qCount;
-  return { total, done, qCount, cCount };
+  const total = state.mode === "cards" ? cCount : state.mode === "structure" ? sCount : qCount;
+  return { total, done, qCount, cCount, sCount };
 }
 
 function renderTopics() {
   const grid = $("#topicGrid");
   grid.innerHTML = "";
-  TOPICS.filter(t => t.subject === state.currentSubject).forEach(t => {
-    const stats = topicStats(t.id);
-    const pct = stats.total ? Math.round((stats.done / stats.total) * 100) : 0;
-    const card = document.createElement("div");
-    card.className = "topic-card";
-    card.innerHTML = `
-      <span class="icon">${t.icon}</span>
-      <div class="title">${t.title}</div>
-      <div class="meta">${state.mode === "cards" ? stats.cCount + " Karten" : stats.qCount + " Fragen"}</div>
-      <div class="mastery-bar"><div class="mastery-fill" style="width:${pct}%"></div></div>
-    `;
-    card.addEventListener("click", () => startTopic(t.id));
-    grid.appendChild(card);
-  });
+  TOPICS.filter(t => t.subject === state.currentSubject)
+    .filter(t => state.mode !== "structure" || structureFor(t.id))
+    .forEach(t => {
+      const stats = topicStats(t.id);
+      const pct = stats.total ? Math.round((stats.done / stats.total) * 100) : 0;
+      const card = document.createElement("div");
+      card.className = "topic-card";
+      const metaText = state.mode === "cards" ? stats.cCount + " Karten"
+        : state.mode === "structure" ? stats.sCount + " Punkte"
+        : stats.qCount + " Fragen";
+      card.innerHTML = `
+        <span class="icon">${t.icon}</span>
+        <div class="title">${t.title}</div>
+        <div class="meta">${metaText}</div>
+        <div class="mastery-bar"><div class="mastery-fill" style="width:${pct}%"></div></div>
+      `;
+      card.addEventListener("click", () => startTopic(t.id));
+      grid.appendChild(card);
+    });
   $("#streakBadge").textContent = "🔥 " + getStreak();
 }
 
@@ -111,6 +121,7 @@ $("#backFromSubject").addEventListener("click", goHome);
 $("#homeFromResult").addEventListener("click", () => goToSubject(state.currentSubject));
 $("#backFromQuiz").addEventListener("click", () => goToSubject(state.currentSubject));
 $("#backFromCards").addEventListener("click", () => goToSubject(state.currentSubject));
+$("#backFromStructure").addEventListener("click", () => goToSubject(state.currentSubject));
 
 function goHome() {
   state.currentSubject = null;
@@ -128,6 +139,7 @@ function goToSubject(subjectId) {
 function startTopic(topicId) {
   state.currentTopic = topicId;
   if (state.mode === "cards") startCards(topicId);
+  else if (state.mode === "structure") startStructure(topicId);
   else startQuiz(topicId);
 }
 
@@ -247,8 +259,81 @@ function finishQuiz() {
 
 $("#retryBtn").addEventListener("click", () => {
   if (state.mode === "cards") startCards(state.currentTopic);
+  else if (state.mode === "structure") startStructure(state.currentTopic);
   else startQuiz(state.currentTopic);
 });
+
+// ---------- STRUCTURE (Gliederung selbst aufbauen) ----------
+let structureState = { topicId: null, items: [], expectedIndex: 0, pool: [], mistakes: 0 };
+
+function startStructure(topicId) {
+  const struct = structureFor(topicId);
+  if (!struct) return;
+  structureState = {
+    topicId,
+    items: struct.items,
+    expectedIndex: 0,
+    pool: shuffle(struct.items.map((text, i) => ({ text, i }))),
+    mistakes: 0,
+  };
+  showView("#view-structure");
+  renderStructure();
+}
+
+function renderStructure() {
+  const total = structureState.items.length;
+  $("#structureProgress").style.width = (structureState.expectedIndex / total * 100) + "%";
+  $("#structureScore").textContent = structureState.expectedIndex + " / " + total +
+    (structureState.mistakes ? " · " + structureState.mistakes + " Fehlversuche" : "");
+  const topicMeta = TOPICS.find(t => t.id === structureState.topicId);
+  $("#structureTopicLabel").textContent = topicMeta ? topicMeta.icon + " " + topicMeta.title : "";
+
+  const built = $("#structureBuilt");
+  built.innerHTML = "";
+  structureState.items.slice(0, structureState.expectedIndex).forEach(text => {
+    const li = document.createElement("li");
+    li.textContent = text;
+    built.appendChild(li);
+  });
+
+  const pool = $("#structurePool");
+  pool.innerHTML = "";
+  structureState.pool.forEach(({ text, i }) => {
+    const btn = document.createElement("button");
+    btn.className = "option";
+    btn.textContent = text;
+    btn.addEventListener("click", () => handleStructureTap(i, btn));
+    pool.appendChild(btn);
+  });
+}
+
+function handleStructureTap(i, btnEl) {
+  if (i === structureState.expectedIndex) {
+    structureState.pool = structureState.pool.filter(p => p.i !== i);
+    structureState.expectedIndex++;
+    if (structureState.expectedIndex >= structureState.items.length) {
+      finishStructure();
+    } else {
+      renderStructure();
+    }
+  } else {
+    structureState.mistakes++;
+    btnEl.classList.add("wrong");
+    setTimeout(() => btnEl.classList.remove("wrong"), 300);
+    $("#structureScore").textContent = structureState.expectedIndex + " / " + structureState.items.length +
+      " · " + structureState.mistakes + " Fehlversuche";
+  }
+}
+
+function finishStructure() {
+  $("#structureProgress").style.width = "100%";
+  bumpStreak();
+  const perfect = structureState.mistakes === 0;
+  $("#resultEmoji").textContent = perfect ? "🏆" : "💪";
+  $("#resultTitle").textContent = perfect ? "Perfekt!" : "Geschafft!";
+  $("#resultText").textContent = `Du hast die Gliederung mit ${structureState.mistakes} Fehlversuch(en) rekonstruiert.`;
+  showView("#view-result");
+}
 
 // ---------- FLASHCARDS ----------
 function startCards(topicId) {

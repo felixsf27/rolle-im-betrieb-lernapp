@@ -16,6 +16,7 @@ Alles steckt in `data.js`, keine Änderung an `index.html` oder `app.js` nötig:
 - **Neues Fach:** Zeile in `SUBJECTS` ergänzen (`id`, `title`, `icon`).
 - **Neues Thema:** Zeile in `TOPICS` ergänzen, `subject` muss auf eine bestehende Fach-`id` zeigen.
 - **Neue Fragen/Karten:** Einträge in `QUESTIONS` bzw. `FLASHCARDS` mit passender Themen-`id` ergänzen.
+- **Neue Gliederungs-Übung:** Eintrag in `STRUCTURES` ergänzen (`topic`-id + `items` in der korrekten Reihenfolge).
 
 Nach Änderungen an den Dateien in `service-worker.js` den `CACHE_NAME` hochzählen,
 damit bereits installierte Versionen der App das Update laden.
@@ -33,7 +34,9 @@ damit bereits installierte Versionen der App das Update laden.
 
 - **Quiz** – Multiple-Choice-Fragen pro Thema mit direktem Feedback
 - **Karteikarten** – Begriffe zum Umdrehen und Auswendiglernen
-- **Testmodus** – 25 zufällige Fragen aus allen Themen
+- **Gliederung** – Reihenfolge/Struktur eines Themas (z. B. den Aufbau des Inventars) aus
+  durcheinandergewürfelten Bausteinen selbst richtig zusammensetzen (nur bei Themen mit
+  einem Eintrag in `STRUCTURES`)
 
 Der Lernfortschritt wird lokal im Browser gespeichert (`localStorage`), es gibt keinen Server
 und keine Datenübertragung an Dritte.

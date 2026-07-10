@@ -41,9 +41,25 @@
     <div class="mode-picker">
       <button class="mode-btn active" data-mode="quiz">❓ Quiz</button>
       <button class="mode-btn" data-mode="cards">🗂️ Karteikarten</button>
+      <button class="mode-btn" data-mode="structure">🧱 Gliederung</button>
     </div>
 
     <div id="topicGrid" class="topic-grid"></div>
+  </section>
+
+  <!-- STRUCTURE VIEW -->
+  <section id="view-structure" class="view hidden">
+    <div class="quiz-header">
+      <button class="back-btn" id="backFromStructure">← Zurück</button>
+      <div class="progress-wrap"><div class="progress-bar" id="structureProgress"></div></div>
+      <div class="score" id="structureScore">0 / 0</div>
+    </div>
+    <div class="card">
+      <div class="q-topic" id="structureTopicLabel"></div>
+      <h2>Tippe die Punkte in der richtigen Reihenfolge an</h2>
+      <ol id="structureBuilt" class="structure-built"></ol>
+      <div id="structurePool" class="structure-pool"></div>
+    </div>
   </section>
 
   <!-- QUIZ VIEW -->

@@ -225,6 +225,17 @@ h1 { font-size: 1.6rem; margin: 4px 0 4px; }
 
 .card-actions { display: flex; gap: 10px; }
 
+.structure-built { margin: 0 0 18px; padding-left: 22px; }
+.structure-built li { padding: 4px 0; font-size: 0.92rem; }
+.structure-pool { display: flex; flex-wrap: wrap; gap: 8px; }
+.structure-pool .option { flex: none; width: auto; }
+.structure-pool .option.wrong { border-color: var(--bad); animation: shake 0.3s; }
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-4px); }
+  75% { transform: translateX(4px); }
+}
+
 .footer {
   text-align: center;
   padding: 20px;
