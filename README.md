@@ -1,9 +1,13 @@
 # Lernkarten – Umschulung
 
 Kostenlose, offline-fähige Lern-App für die Umschulung. Start ist eine Fächer-Übersicht,
-darunter liegen Themen mit Quiz und Karteikarten. Aktuell ein Fach: "Rolle im Betrieb"
-(Betriebsrat, JAV, Tarifvertragsrecht, Arbeitskampf & Streik, duale Ausbildung (BBiG),
-Jugendarbeitsschutzgesetz (JArbSchG), Betriebsvereinbarungen, Vorbereitungsklausur).
+darunter liegen Themen mit Quiz und Karteikarten. Aktuell zwei Fächer:
+
+- **Rolle im Betrieb**: Betriebsrat, JAV, Tarifvertragsrecht, Arbeitskampf & Streik,
+  duale Ausbildung (BBiG), Jugendarbeitsschutzgesetz (JArbSchG), Betriebsvereinbarungen,
+  Vorbereitungsklausur.
+- **Rechnungswesen**: Aufgaben & Bereiche des Rechnungswesens, Buchführung & Inventur,
+  Inventar, Bilanz.
 
 ## Neues Fach oder Thema hinzufügen
 
