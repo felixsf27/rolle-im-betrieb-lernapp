@@ -2,6 +2,7 @@
 const SUBJECTS = [
   { id: "rolle-im-betrieb", title: "Rolle im Betrieb", icon: "📘" },
   { id: "rewe", title: "Rechnungswesen", icon: "🧮" },
+  { id: "tabellenkalkulation", title: "Tabellenkalkulation", icon: "📊" },
 ];
 
 // Themen je Fach – erstellt aus den Lernmaterialien der Umschulung
@@ -19,6 +20,9 @@ const TOPICS = [
   { id: "rewe-buchfuehrung-inventur", subject: "rewe", title: "Buchführung & Inventur", icon: "📚" },
   { id: "rewe-inventar", subject: "rewe", title: "Inventar", icon: "📋" },
   { id: "rewe-bilanz", subject: "rewe", title: "Bilanz", icon: "⚖️" },
+  { id: "excel-grundlagen", subject: "tabellenkalkulation", title: "Grundlagen & Funktionen", icon: "🔢" },
+  { id: "excel-bezuege", subject: "tabellenkalkulation", title: "Zellbezüge (relativ, absolut, gemischt)", icon: "📌" },
+  { id: "excel-und-oder", subject: "tabellenkalkulation", title: "UND & ODER", icon: "🔀" },
 ];
 
 // ---------- GLIEDERUNGEN (Reihenfolge zum Selbst-Üben) ----------
@@ -184,6 +188,32 @@ const FLASHCARDS = [
   { topic: "rewe-bilanz", front: "Fremdkapital aus der Bilanzgleichung", back: "Fremdkapital = Vermögen − Eigenkapital." },
   { topic: "rewe-bilanz", front: "Funktion des Anlagevermögens", back: "Dient dem Unternehmen dauerhaft/langfristig und bildet die Basis der Betriebsbereitschaft." },
   { topic: "rewe-bilanz", front: "Funktion des Umlaufvermögens", back: "Dient dem Unternehmen nur kurzfristig und unterliegt ständiger Veränderung durch Leistungserstellung und -verwertung." },
+  { topic: "excel-grundlagen", front: "Zahl erkennen (Excel)", back: "Zahlen werden mit Komma als Dezimaltrennzeichen eingegeben (z. B. 12,50) und als rechenbarer Wert erkannt – rechtsbündig ausgerichtet." },
+  { topic: "excel-grundlagen", front: "Text erkennen (Excel)", back: "Zahlen mit Punkt statt Komma (z. B. 12.50) werden von Excel als Text erkannt, nicht als rechenbare Zahl – linksbündig ausgerichtet." },
+  { topic: "excel-grundlagen", front: "Excel-Syntax", back: "Jede Formel beginnt mit einem Gleichheitszeichen, z. B. =SUMME(A1:B1) oder =SUMME(A1;B2;C3)." },
+  { topic: "excel-grundlagen", front: "Doppelpunkt in einer Formel", back: "Markiert einen zusammenhängenden Zellbereich, z. B. A1:A8 = alle Zellen von A1 bis A8." },
+  { topic: "excel-grundlagen", front: "Semikolon in einer Formel", back: "Trennt einzelne, nicht zusammenhängende Zellen oder Argumente voneinander, z. B. =SUMME(A1;B2;C3)." },
+  { topic: "excel-grundlagen", front: "SUMME", back: "Addiert alle Werte in einem Zellbereich, z. B. =SUMME(A1:A8)." },
+  { topic: "excel-grundlagen", front: "MIN", back: "Gibt den kleinsten Wert in einem Zellbereich zurück, z. B. =MIN(A1:A8)." },
+  { topic: "excel-grundlagen", front: "MAX", back: "Gibt den größten Wert in einem Zellbereich zurück, z. B. =MAX(A1:A8)." },
+  { topic: "excel-grundlagen", front: "MITTELWERT", back: "Berechnet den Durchschnitt aller Werte in einem Zellbereich, z. B. =MITTELWERT(A1:A8)." },
+  { topic: "excel-grundlagen", front: "ANZAHL", back: "Zählt, wie viele Zellen in einem Bereich eine Zahl enthalten, z. B. =ANZAHL(A1:A8)." },
+  { topic: "excel-grundlagen", front: "ANZAHL2", back: "Zählt alle nicht leeren Zellen in einem Bereich – egal ob Zahl oder Text, z. B. =ANZAHL2(A1:A8)." },
+  { topic: "excel-grundlagen", front: "Merksatz zur Syntax", back: "\"Syntax ist am wichtigsten. Die Logik kommt von mir, das Rechnen übernimmt Excel.\"" },
+  { topic: "excel-bezuege", front: "Relativer Bezug", back: "Z. B. A2 – passt sich beim Kopieren/Ziehen der Formel automatisch an die neue Zeile/Spalte an." },
+  { topic: "excel-bezuege", front: "Absoluter Bezug", back: "Z. B. $A$2 – Spalte UND Zeile sind mit $ fest verankert, ändert sich beim Kopieren nicht." },
+  { topic: "excel-bezuege", front: "Gemischter Bezug", back: "Z. B. $A2 oder A$2 – nur Spalte ODER nur Zeile ist mit $ fest verankert, der andere Teil bleibt relativ." },
+  { topic: "excel-bezuege", front: "$-Zeichen vor dem Spaltenbuchstaben (z. B. $A2)", back: "Hält die Spalte A fest, die Zeile bleibt beim Kopieren variabel." },
+  { topic: "excel-bezuege", front: "$-Zeichen vor der Zeilennummer (z. B. A$2)", back: "Hält die Zeile 2 fest, die Spalte bleibt beim Kopieren variabel." },
+  { topic: "excel-bezuege", front: "Wann braucht man einen absoluten Bezug?", back: "Wenn eine Formel beim Kopieren/Ziehen immer auf dieselbe feste Zelle zeigen soll, z. B. auf einen festen Bezugswert wie den Zielumsatz in $B$51." },
+  { topic: "excel-bezuege", front: "F4-Taste", back: "Schaltet in Excel eine markierte Zellreferenz schnell zwischen relativ, absolut und gemischt um." },
+  { topic: "excel-und-oder", front: "UND-Funktion", back: "Prüft mehrere Bedingungen gleichzeitig – das Ergebnis ist nur WAHR, wenn ALLE Bedingungen erfüllt sind." },
+  { topic: "excel-und-oder", front: "ODER-Funktion", back: "Prüft mehrere Bedingungen – das Ergebnis ist WAHR, wenn MINDESTENS EINE Bedingung erfüllt ist." },
+  { topic: "excel-und-oder", front: "Syntax von UND/ODER", back: "=UND(Bedingung1;Bedingung2;...) bzw. =ODER(Bedingung1;Bedingung2;...) – Bedingungen werden durch Semikolon getrennt." },
+  { topic: "excel-und-oder", front: "Ergebnis von UND/ODER", back: "Immer ein Wahrheitswert: WAHR oder FALSCH." },
+  { topic: "excel-und-oder", front: "Signalwort für UND", back: "\"und\", \"gleichzeitig\", \"sowohl als auch\" im Aufgabentext deuten auf die UND-Funktion hin." },
+  { topic: "excel-und-oder", front: "Signalwort für ODER", back: "\"oder\", \"mindestens eines von beiden\" im Aufgabentext deuten auf die ODER-Funktion hin." },
+  { topic: "excel-und-oder", front: "Reihenfolge der Bedingungen bei UND/ODER", back: "Die Reihenfolge der Bedingungen innerhalb der Klammer spielt für das Ergebnis keine Rolle – nur ob sie erfüllt sind, zählt." },
 ];
 
 // ---------- QUIZ QUESTIONS (Multiple Choice) ----------
@@ -463,4 +493,48 @@ const QUESTIONS = [
   { topic: "rewe-bilanz", type: "single", q: "Welche Funktion hat das Umlaufvermögen für das Unternehmen?", options: ["Es dient dem Unternehmen nur kurzfristig und unterliegt ständiger Veränderung durch Leistungserstellung und -verwertung", "Es dient dauerhaft der Betriebsbereitschaft", "Es besteht nur aus Grundstücken", "Es wird nie verändert"], correct: [0] },
   { topic: "rewe-bilanz", type: "single", q: "Was zeigt die Aktivseite in Bezug auf Investition und Finanzierung?", options: ["Die Finanzierung – woher das Kapital stammt", "Die Investierung – wo das Kapital angelegt ist", "Weder Investition noch Finanzierung", "Nur die Steuerlast"], correct: [1] },
   { topic: "rewe-bilanz", type: "single", q: "Was zeigt die Passivseite in Bezug auf Investition und Finanzierung?", options: ["Die Investierung – wo das Kapital angelegt ist", "Die Finanzierung – woher das Kapital stammt", "Nur die Umsatzerlöse", "Nur die Kostenstellen"], correct: [1] },
+
+  // ===================== EXCEL: GRUNDLAGEN & FUNKTIONEN =====================
+  { topic: "excel-grundlagen", type: "single", q: "Woran erkennt Excel beim Eintippen eine Zahl?", options: ["An einem Punkt als Dezimaltrennzeichen", "An einem Komma als Dezimaltrennzeichen", "An einem Leerzeichen davor", "An Großbuchstaben"], correct: [1] },
+  { topic: "excel-grundlagen", type: "single", q: "Du tippst 12.50 (mit Punkt statt Komma) in eine Zelle ein. Was passiert?", options: ["Excel erkennt die Zahl trotzdem und rechnet damit", "Excel erkennt es als Text – es ist nicht rechenbar", "Excel zeigt eine Fehlermeldung", "Excel rundet automatisch auf 13"], correct: [1] },
+  { topic: "excel-grundlagen", type: "single", q: "Womit beginnt jede Formel in Excel?", options: ["Mit einem Doppelpunkt", "Mit einem Gleichheitszeichen (=)", "Mit einem Semikolon", "Mit dem Wort FORMEL"], correct: [1] },
+  { topic: "excel-grundlagen", type: "single", q: "Wofür steht der Doppelpunkt in =SUMME(A1:A8)?", options: ["Er trennt einzelne Zellen", "Er markiert einen zusammenhängenden Zellbereich von A1 bis A8", "Er startet die Formel", "Er rundet das Ergebnis"], correct: [1] },
+  { topic: "excel-grundlagen", type: "single", q: "Wofür steht das Semikolon in =SUMME(A1;B2;C3)?", options: ["Es markiert einen Zellbereich", "Es trennt einzelne, nicht zusammenhängende Zellen", "Es zeigt einen Fehler an", "Es ist optional und ohne Bedeutung"], correct: [1] },
+  { topic: "excel-grundlagen", type: "single", q: "Du möchtest die Gesamtsumme aller Umsatzzahlen in D4:D48 berechnen. Welche Funktion nutzt du?", options: ["=MITTELWERT(D4:D48)", "=SUMME(D4:D48)", "=ANZAHL(D4:D48)", "=MAX(D4:D48)"], correct: [1] },
+  { topic: "excel-grundlagen", type: "single", q: "Du möchtest herausfinden, wer von 45 Mitarbeitenden den höchsten Jahresumsatz erzielt hat. Welche Funktion nutzt du für den Wert?", options: ["=MIN(D4:D48)", "=MAX(D4:D48)", "=MITTELWERT(D4:D48)", "=SUMME(D4:D48)"], correct: [1] },
+  { topic: "excel-grundlagen", type: "single", q: "Du möchtest den niedrigsten erzielten Jahresumsatz ermitteln. Welche Funktion nutzt du?", options: ["=MIN(D4:D48)", "=MAX(D4:D48)", "=ANZAHL(D4:D48)", "=ANZAHL2(D4:D48)"], correct: [0] },
+  { topic: "excel-grundlagen", type: "single", q: "Du möchtest den durchschnittlichen Jahresumsatz aller Mitarbeitenden berechnen. Welche Funktion nutzt du?", options: ["=SUMME(D4:D48)", "=MITTELWERT(D4:D48)", "=MAX(D4:D48)", "=ANZAHL(D4:D48)"], correct: [1] },
+  { topic: "excel-grundlagen", type: "single", q: "In Spalte E stehen Kundenzahlen, einige Zellen sind aber noch leer. Mit welcher Funktion zählst du, wie viele Zellen tatsächlich eine Zahl enthalten?", options: ["=ANZAHL(E4:E48)", "=ANZAHL2(E4:E48)", "=SUMME(E4:E48)", "=MITTELWERT(E4:E48)"], correct: [0] },
+  { topic: "excel-grundlagen", type: "single", q: "Du möchtest wissen, wie viele Zellen in einem Bereich überhaupt befüllt sind – egal ob mit Zahl oder Text. Welche Funktion?", options: ["=ANZAHL(...)", "=ANZAHL2(...)", "=MITTELWERT(...)", "=MAX(...)"], correct: [1] },
+  { topic: "excel-grundlagen", type: "single", q: "Was ist der Unterschied zwischen ANZAHL und ANZAHL2?", options: ["Es gibt keinen Unterschied", "ANZAHL zählt nur Zellen mit Zahlen, ANZAHL2 zählt alle nicht leeren Zellen (Zahlen und Text)", "ANZAHL2 zählt nur Text, ANZAHL nur Zahlen und Text zusammen", "ANZAHL2 gibt es nur in älteren Excel-Versionen"], correct: [1] },
+  { topic: "excel-grundlagen", type: "single", q: "=MITTELWERT(A1:A8) berechnet:", options: ["Die Summe von A1 bis A8", "Den Durchschnitt der Werte von A1 bis A8", "Die Anzahl der Zellen von A1 bis A8", "Den größten Wert von A1 bis A8"], correct: [1] },
+  { topic: "excel-grundlagen", type: "single", q: "Welche Aussage passt zum Merksatz aus dem Unterricht?", options: ["\"Excel denkt für dich\"", "\"Syntax ist am wichtigsten – die Logik kommt von mir, das Rechnen übernimmt Excel\"", "\"Formeln sind Glückssache\"", "\"Rechnen musst du selbst, Excel schreibt nur\""], correct: [1] },
+
+  // ===================== EXCEL: ZELLBEZÜGE =====================
+  { topic: "excel-bezuege", type: "single", q: "Was ist ein relativer Bezug, z. B. A2?", options: ["Er bleibt beim Kopieren immer gleich", "Er passt sich beim Kopieren/Ziehen der Formel automatisch an die neue Zeile/Spalte an", "Er zeigt immer auf Spalte A", "Er funktioniert nur in der ersten Zeile"], correct: [1] },
+  { topic: "excel-bezuege", type: "single", q: "Was ist ein absoluter Bezug, z. B. $A$2?", options: ["Nur die Zeile ist fest, die Spalte ändert sich", "Spalte und Zeile sind beide fest verankert und ändern sich beim Kopieren nicht", "Er ist nur für Textzellen gedacht", "Er wird beim Kopieren automatisch gelöscht"], correct: [1] },
+  { topic: "excel-bezuege", type: "single", q: "Was ist ein gemischter Bezug, z. B. $A2?", options: ["Weder Spalte noch Zeile sind fest", "Nur die Spalte ist fest, die Zeile bleibt beim Kopieren variabel", "Spalte und Zeile sind beide fest", "Er ist in Excel nicht erlaubt"], correct: [1] },
+  { topic: "excel-bezuege", type: "single", q: "Was bewirkt das $-Zeichen vor dem Spaltenbuchstaben, z. B. in $A2?", options: ["Die Zeile 2 wird festgehalten", "Die Spalte A wird festgehalten", "Beides wird festgehalten", "Nichts, das $ ist nur Dekoration"], correct: [1] },
+  { topic: "excel-bezuege", type: "single", q: "Was bewirkt das $-Zeichen vor der Zeilennummer, z. B. in A$2?", options: ["Die Spalte A wird festgehalten", "Die Zeile 2 wird festgehalten", "Die Formel wird gesperrt und kann nicht mehr geändert werden", "Beides wird festgehalten"], correct: [1] },
+  { topic: "excel-bezuege", type: "single", q: "Du berechnest den Anteil jedes Mitarbeitenden am Gesamtumsatz mit =D4/B56 und ziehst die Formel nach unten bis D48. Was passiert, wenn B56 nicht absolut gesetzt ist?", options: ["Nichts, das Ergebnis bleibt korrekt", "Der Bezug auf B56 verschiebt sich mit nach unten und die Formel rechnet mit der falschen (meist leeren) Zelle", "Excel zeigt automatisch eine Fehlermeldung und stoppt", "Die Formel wird automatisch korrigiert"], correct: [1] },
+  { topic: "excel-bezuege", type: "single", q: "Wie muss die Formel aus der vorherigen Aufgabe richtig aussehen, damit sie beim Ziehen funktioniert?", options: ["=D4/B$56", "=D4/$B56", "=D4/$B$56", "=$D4/B56"], correct: [2] },
+  { topic: "excel-bezuege", type: "single", q: "In der Vertriebsauswertung wird der Zielumsatz aus Zelle B51 in jeder Zeile für die Bonusprüfung gebraucht. Welcher Bezugstyp gehört auf B51?", options: ["Relativer Bezug (B51)", "Absoluter Bezug ($B$51)", "Gemischter Bezug (B$51)", "Kein Bezug nötig, Zahl eintippen reicht"], correct: [1] },
+  { topic: "excel-bezuege", type: "single", q: "Mit welcher Taste kann man in Excel schnell zwischen relativem, absolutem und gemischtem Bezug einer markierten Referenz wechseln?", options: ["F2", "F4", "F9", "Strg+B"], correct: [1] },
+  { topic: "excel-bezuege", type: "single", q: "Warum verwendet man in Formeln Zellbezüge statt fest eingetippter Zahlen?", options: ["Weil es schneller zu tippen ist", "Damit sich die Formel automatisch aktualisiert, wenn sich der Wert in der Bezugszelle ändert", "Weil Excel feste Zahlen in Formeln verbietet", "Damit die Datei kleiner wird"], correct: [1] },
+
+  // ===================== EXCEL: UND & ODER =====================
+  { topic: "excel-und-oder", type: "single", q: "Wann liefert die UND-Funktion den Wert WAHR?", options: ["Wenn mindestens eine Bedingung erfüllt ist", "Nur wenn ALLE angegebenen Bedingungen erfüllt sind", "Immer, unabhängig von den Bedingungen", "Wenn keine Bedingung erfüllt ist"], correct: [1] },
+  { topic: "excel-und-oder", type: "single", q: "Wann liefert die ODER-Funktion den Wert WAHR?", options: ["Nur wenn alle Bedingungen erfüllt sind", "Wenn mindestens eine der angegebenen Bedingungen erfüllt ist", "Nie", "Nur wenn genau zwei Bedingungen erfüllt sind"], correct: [1] },
+  { topic: "excel-und-oder", type: "single", q: "Ein Mitarbeitender ist bonusberechtigt, wenn sein Umsatz mindestens dem Zielumsatz entspricht UND seine Kundenzahl mindestens der Mindestkundenzahl entspricht. Welche Funktion nutzt du?", options: ["ODER", "UND", "SUMME", "MAX"], correct: [1] },
+  { topic: "excel-und-oder", type: "single", q: "Ein Mitarbeitender erhält eine Sonderprämie, wenn er Rang 1 belegt ODER sein Umsatz über der Spitzenschwelle liegt. Welche Funktion nutzt du?", options: ["UND", "ODER", "MITTELWERT", "ANZAHL"], correct: [1] },
+  { topic: "excel-und-oder", type: "single", q: "Wie werden mehrere Bedingungen innerhalb von =UND(...) voneinander getrennt?", options: ["Durch ein Komma und ein Leerzeichen", "Durch ein Semikolon", "Durch das Wort UND", "Durch einen Doppelpunkt"], correct: [1] },
+  { topic: "excel-und-oder", type: "single", q: "Spielt die Reihenfolge der Bedingungen innerhalb von =UND(Bedingung1;Bedingung2) für das Ergebnis eine Rolle?", options: ["Ja, die erste Bedingung zählt mehr", "Nein, das Ergebnis hängt nur davon ab, ob die Bedingungen erfüllt sind, nicht von ihrer Reihenfolge", "Ja, nur die letzte Bedingung wird geprüft", "Nur bei mehr als 3 Bedingungen spielt die Reihenfolge eine Rolle"], correct: [1] },
+  { topic: "excel-und-oder", type: "single", q: "Was gibt =UND(5>3;2>4) zurück?", options: ["WAHR", "FALSCH", "5", "Einen Fehler"], correct: [1] },
+  { topic: "excel-und-oder", type: "single", q: "Was gibt =ODER(5>3;2>4) zurück?", options: ["WAHR", "FALSCH", "2", "Einen Fehler"], correct: [0] },
+  { topic: "excel-und-oder", type: "single", q: "Welches Signalwort im Aufgabentext deutet meist auf die UND-Funktion hin?", options: ["\"oder\"", "\"und\" / \"gleichzeitig\"", "\"entweder\"", "\"höchstens\""], correct: [1] },
+  { topic: "excel-und-oder", type: "single", q: "Welches Signalwort im Aufgabentext deutet meist auf die ODER-Funktion hin?", options: ["\"und\"", "\"gleichzeitig\"", "\"oder\"", "\"sowohl als auch\""], correct: [2] },
+  { topic: "excel-und-oder", type: "single", q: "Ein Fahrzeug muss zur Inspektion, wenn der Kilometerstand die Grenze erreicht ODER der Verbrauch die Grenze erreicht (Kilometerstand C10, Grenze $D$5, Verbrauch D10, Grenze $D$6). Welche Formel passt?", options: ["=UND(C10>=$D$5;D10>=$D$6)", "=ODER(C10>=$D$5;D10>=$D$6)", "=UND(C10=$D$5;D10=$D$6)", "=SUMME(C10;D10)>=$D$5"], correct: [1] },
+  { topic: "excel-und-oder", type: "single", q: "Ein Fahrzeug soll auf Austausch geprüft werden, wenn der Kilometerstand die Grenze erreicht UND gleichzeitig die Wartungskosten die Kostengrenze erreichen (Kilometerstand C10, Grenze $D$5, Kosten E10, Grenze $D$7). Welche Formel passt?", options: ["=ODER(C10>=$D$5;E10>=$D$7)", "=UND(C10>=$D$5;E10>=$D$7)", "=UND(C10>=$D$5,E10<=$D$7)", "=MAX(C10;E10)>=$D$5"], correct: [1] },
+  { topic: "excel-und-oder", type: "single", q: "Welchen Datentyp liefern UND und ODER als Ergebnis?", options: ["Eine Zahl", "Einen Text", "Einen Wahrheitswert (WAHR oder FALSCH)", "Ein Datum"], correct: [2] },
+  { topic: "excel-und-oder", type: "single", q: "Was ergibt =UND(3>1;4>2;5>10)?", options: ["WAHR, weil zwei von drei Bedingungen stimmen", "FALSCH, weil nicht alle drei Bedingungen erfüllt sind", "WAHR, weil die erste Bedingung stimmt", "Einen Fehler, weil zu viele Bedingungen angegeben wurden"], correct: [1] },
 ];

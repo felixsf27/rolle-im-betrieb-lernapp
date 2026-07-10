@@ -8,6 +8,8 @@ darunter liegen Themen mit Quiz und Karteikarten. Aktuell zwei Fächer:
   Vorbereitungsklausur.
 - **Rechnungswesen**: Aufgaben & Bereiche des Rechnungswesens, Buchführung & Inventur,
   Inventar, Bilanz.
+- **Tabellenkalkulation**: Grundlagen & Funktionen (SUMME, MIN, MAX, MITTELWERT, ANZAHL/ANZAHL2),
+  Zellbezüge (relativ, absolut, gemischt), UND & ODER.
 
 ## Neues Fach oder Thema hinzufügen
 
