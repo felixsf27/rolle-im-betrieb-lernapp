@@ -2,6 +2,10 @@
 const STORAGE_KEY = "rolleImBetrieb.progress.v1";
 const STREAK_KEY = "rolleImBetrieb.streak.v1";
 
+// Ab welcher Trefferquote der Schlüsselbegriffe eine Freitext-Antwort als "richtig" gilt.
+// 0.6 = 60 %. Hier zentral anpassbar, falls die Bewertung zu streng/zu locker ist.
+const OPEN_PASS_RATIO = 0.6;
+
 let state = {
   mode: "quiz",
   currentSubject: null,
@@ -11,6 +15,8 @@ let state = {
   index: 0,
   correctCount: 0,
   answered: false,
+  answeredLog: [],   // pro Durchlauf: { question, given, correctText, wasCorrect }
+  finishedKind: null, // "quiz" | "open" | "cards" | "structure" – steuert die Ergebnis-Buttons
 };
 
 function loadProgress() {
@@ -94,29 +100,47 @@ function structureFor(topicId) {
   return STRUCTURES.find(s => s.topic === topicId);
 }
 
+function openFor(topicId) {
+  return (typeof OPEN_QUESTIONS !== "undefined" ? OPEN_QUESTIONS : []).filter(o => o.topic === topicId);
+}
+
 function categoryHasStructure(categoryId) {
   return TOPICS.some(t => t.category === categoryId && structureFor(t.id));
 }
 
+function categoryHasOpen(categoryId) {
+  return TOPICS.some(t => t.category === categoryId && openFor(t.id).length > 0);
+}
+
 function updateModeAvailability() {
-  const hasStructure = categoryHasStructure(state.currentCategory);
-  const structureBtn = document.querySelector('.mode-btn[data-mode="structure"]');
-  if (!structureBtn) return;
-  structureBtn.classList.toggle("hidden", !hasStructure);
-  if (!hasStructure && state.mode === "structure") {
-    state.mode = "quiz";
-    document.querySelectorAll(".mode-btn").forEach(b => b.classList.toggle("active", b.dataset.mode === "quiz"));
-  }
+  // Gliederung und Freitext nur zeigen, wenn die aktuelle Kategorie dafür Inhalte hat.
+  const availability = {
+    structure: categoryHasStructure(state.currentCategory),
+    open: categoryHasOpen(state.currentCategory),
+  };
+  Object.keys(availability).forEach(mode => {
+    const btn = document.querySelector('.mode-btn[data-mode="' + mode + '"]');
+    if (!btn) return;
+    btn.classList.toggle("hidden", !availability[mode]);
+    if (!availability[mode] && state.mode === mode) {
+      state.mode = "quiz";
+      document.querySelectorAll(".mode-btn").forEach(b => b.classList.toggle("active", b.dataset.mode === "quiz"));
+    }
+  });
 }
 
 function topicStats(topicId) {
   const qCount = QUESTIONS.filter(q => q.topic === topicId).length;
   const cCount = FLASHCARDS.filter(c => c.topic === topicId).length;
   const sCount = structureFor(topicId)?.items.length || 0;
+  const oCount = openFor(topicId).length;
   const progress = loadProgress();
   const done = progress[topicId]?.bestScore || 0;
-  const total = state.mode === "cards" ? cCount : state.mode === "structure" ? sCount : qCount;
-  return { total, done, qCount, cCount, sCount };
+  const total = state.mode === "cards" ? cCount
+    : state.mode === "structure" ? sCount
+    : state.mode === "open" ? oCount
+    : qCount;
+  return { total, done, qCount, cCount, sCount, oCount };
 }
 
 function renderTopics() {
@@ -124,6 +148,7 @@ function renderTopics() {
   grid.innerHTML = "";
   TOPICS.filter(t => t.category === state.currentCategory)
     .filter(t => state.mode !== "structure" || structureFor(t.id))
+    .filter(t => state.mode !== "open" || openFor(t.id).length > 0)
     .forEach(t => {
       const stats = topicStats(t.id);
       const pct = stats.total ? Math.round((stats.done / stats.total) * 100) : 0;
@@ -131,6 +156,7 @@ function renderTopics() {
       card.className = "topic-card";
       const metaText = state.mode === "cards" ? stats.cCount + " Karten"
         : state.mode === "structure" ? stats.sCount + " Punkte"
+        : state.mode === "open" ? stats.oCount + " Aufgaben"
         : stats.qCount + " Fragen";
       card.innerHTML = `
         <span class="icon">${t.icon}</span>
@@ -252,21 +278,25 @@ $("#homeFromResult").addEventListener("click", () => history.back());
 $("#backFromQuiz").addEventListener("click", () => history.back());
 $("#backFromCards").addEventListener("click", () => history.back());
 $("#backFromStructure").addEventListener("click", () => history.back());
+$("#backFromOpen").addEventListener("click", () => history.back());
 
 function startTopic(topicId) {
   state.currentTopic = topicId;
   if (state.mode === "cards") startCards(topicId);
   else if (state.mode === "structure") startStructure(topicId);
+  else if (state.mode === "open") startOpen(topicId);
   else startQuiz(topicId);
 }
 
 // ---------- QUIZ ----------
-function startQuiz(topicId, pushHistory = true) {
+function startQuiz(topicId, pushHistory = true, presetPool = null) {
   if (pushHistory) history.pushState({ name: "quiz", subjectId: state.currentSubject, categoryId: state.currentCategory }, "");
-  const pool = shuffle(QUESTIONS.filter(q => q.topic === topicId));
+  // presetPool = nur eine Teilmenge (z. B. "Nur Fehler nochmal"), sonst alle Fragen des Themas
+  const pool = presetPool ? shuffle(presetPool) : shuffle(QUESTIONS.filter(q => q.topic === topicId));
   state.queue = pool;
   state.index = 0;
   state.correctCount = 0;
+  state.answeredLog = [];
   showView("#view-quiz");
   renderQuestion();
 }
@@ -334,6 +364,15 @@ function submitAnswer(q, selected, shuffledOrder, confirmBtnEl) {
     else if (selSet.has(originalIndex)) btn.classList.add("incorrect");
   });
 
+  const correctTexts = q.options.filter((_, i) => correctSet.has(i));
+  const givenTexts = q.options.filter((_, i) => selSet.has(i));
+  state.answeredLog.push({
+    question: q,
+    given: givenTexts.length ? givenTexts.join(", ") : "(keine Antwort)",
+    correctText: correctTexts.join(", "),
+    wasCorrect: isCorrect,
+  });
+
   const fb = $("#qFeedback");
   fb.classList.remove("hidden", "good", "bad");
   if (isCorrect) {
@@ -342,7 +381,6 @@ function submitAnswer(q, selected, shuffledOrder, confirmBtnEl) {
     state.correctCount++;
   } else {
     fb.classList.add("bad");
-    const correctTexts = q.options.filter((_, i) => correctSet.has(i));
     fb.textContent = "❌ Nicht ganz. Richtig: " + correctTexts.join(", ");
   }
   $("#qNextBtn").classList.remove("hidden");
@@ -372,19 +410,85 @@ function finishQuiz() {
   $("#resultEmoji").textContent = pct >= 80 ? "🏆" : pct >= 50 ? "💪" : "📚";
   $("#resultTitle").textContent = pct >= 80 ? "Stark!" : pct >= 50 ? "Gut gemacht!" : "Weiter üben!";
   $("#resultText").textContent = `Du hattest ${state.correctCount} von ${total} Fragen richtig (${pct}%).`;
+  showResult("quiz");
+}
+
+// ---------- Ergebnis-Ansicht (Review + Wiederholungs-Buttons) ----------
+function escapeHtml(s) {
+  return (s || "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}
+
+function showResult(kind) {
+  state.finishedKind = kind;
+  const reviewEl = $("#resultReview");
+  const retryBtn = $("#retryBtn");
+  const retryWrongBtn = $("#retryWrongBtn");
+
+  // Frage-für-Frage-Durchsicht nur für Fragen-Modi (Quiz/Freitext), nicht für Karten/Gliederung.
+  const showReview = (kind === "quiz" || kind === "open") && state.answeredLog.length;
+  reviewEl.classList.toggle("hidden", !showReview);
+  reviewEl.innerHTML = "";
+  let wrongCount = 0;
+  if (showReview) {
+    state.answeredLog.forEach((entry, n) => {
+      if (!entry.wasCorrect) wrongCount++;
+      const item = document.createElement("div");
+      item.className = "review-item " + (entry.wasCorrect ? "correct" : "incorrect");
+      item.innerHTML =
+        '<div class="review-q">' + (n + 1) + ". " + escapeHtml(entry.question.q) + '</div>' +
+        '<div class="review-line"><span class="review-label">Deine Antwort: </span>' +
+        '<span class="review-given ' + (entry.wasCorrect ? "correct-text" : "wrong-text") + '">' +
+        escapeHtml(entry.given) + (entry.wasCorrect ? " ✅" : " ❌") + '</span></div>' +
+        (entry.wasCorrect ? "" :
+          '<div class="review-line"><span class="review-label">' +
+          (kind === "open" ? "Musterantwort: " : "Richtig: ") + '</span>' +
+          '<span class="review-correct">' + escapeHtml(entry.correctText) + '</span></div>');
+      reviewEl.appendChild(item);
+    });
+  }
+
+  if (kind === "structure") {
+    retryBtn.textContent = "Nochmal";
+    retryWrongBtn.classList.add("hidden");
+  } else if (kind === "cards") {
+    retryBtn.textContent = "Nochmal üben";
+    retryWrongBtn.classList.add("hidden");
+  } else {
+    retryBtn.textContent = "Alle nochmal";
+    retryWrongBtn.classList.toggle("hidden", wrongCount === 0);
+  }
+
   showView("#view-result");
 }
 
 $("#retryBtn").addEventListener("click", () => {
-  if (state.mode === "cards") startCards(state.currentTopic, false);
-  else if (state.mode === "structure") startStructure(state.currentTopic, false);
+  const kind = state.finishedKind;
+  if (kind === "cards") startCards(state.currentTopic, false);
+  else if (kind === "structure") startStructure(state.currentTopic, false, true); // Retry: Nummerierung strippen
+  else if (kind === "open") startOpen(state.currentTopic, false);
   else startQuiz(state.currentTopic, false);
+});
+
+$("#retryWrongBtn").addEventListener("click", () => {
+  const wrong = state.answeredLog.filter(e => !e.wasCorrect).map(e => e.question);
+  if (!wrong.length) return;
+  if (state.finishedKind === "open") startOpen(state.currentTopic, false, wrong);
+  else startQuiz(state.currentTopic, false, wrong);
 });
 
 // ---------- STRUCTURE (Gliederung selbst aufbauen) ----------
 let structureState = { topicId: null, items: [], expectedIndex: 0, pool: [], mistakes: 0 };
 
-function startStructure(topicId, pushHistory = true) {
+// Entfernt führende Gliederungszeichen ("1.", "II.", "A." …) nur für die Anzeige.
+// Die interne Reihenfolge/Prüfung bleibt anhand des Original-Arrays unverändert.
+function stripStructureLabel(text) {
+  return text.replace(/^([IVXLCDM]+\.|[A-Z]\.|\d+\.)\s*/, "");
+}
+function structureDisplay(text) {
+  return structureState.strip ? stripStructureLabel(text) : text;
+}
+
+function startStructure(topicId, pushHistory = true, stripNumbering = false) {
   if (pushHistory) history.pushState({ name: "structure", subjectId: state.currentSubject, categoryId: state.currentCategory }, "");
   const struct = structureFor(topicId);
   if (!struct) return;
@@ -394,6 +498,7 @@ function startStructure(topicId, pushHistory = true) {
     expectedIndex: 0,
     pool: shuffle(struct.items.map((text, i) => ({ text, i }))),
     mistakes: 0,
+    strip: stripNumbering, // beim Wiederholen: Nummerierung verstecken, damit es nicht zu leicht ist
   };
   showView("#view-structure");
   renderStructure();
@@ -411,7 +516,7 @@ function renderStructure() {
   built.innerHTML = "";
   structureState.items.slice(0, structureState.expectedIndex).forEach(text => {
     const li = document.createElement("li");
-    li.textContent = text;
+    li.textContent = structureDisplay(text);
     built.appendChild(li);
   });
 
@@ -420,7 +525,7 @@ function renderStructure() {
   structureState.pool.forEach(({ text, i }) => {
     const btn = document.createElement("button");
     btn.className = "option";
-    btn.textContent = text;
+    btn.textContent = structureDisplay(text);
     btn.addEventListener("click", () => handleStructureTap(i, btn));
     pool.appendChild(btn);
   });
@@ -451,8 +556,110 @@ function finishStructure() {
   $("#resultEmoji").textContent = perfect ? "🏆" : "💪";
   $("#resultTitle").textContent = perfect ? "Perfekt!" : "Geschafft!";
   $("#resultText").textContent = `Du hast die Gliederung mit ${structureState.mistakes} Fehlversuch(en) rekonstruiert.`;
-  showView("#view-result");
+  showResult("structure");
 }
+
+// ---------- OPEN (Freitext-Aufgaben) ----------
+// Umlaut-/akzent-tolerantes Normalisieren für den Teilstring-Abgleich der Kernbegriffe.
+function normalizeText(s) {
+  return (s || "")
+    .toLowerCase()
+    .normalize("NFD").replace(/[\u0300-\u036f]/g, "") // Akzente/Umlaut-Punkte entfernen (ä->a, é->e ...)
+    .replace(/ß/g, "ss");
+}
+
+// Einfache Heuristik: zählt, wie viele keyPoints als Teilstring vorkommen. Keine echte
+// Inhaltsprüfung – daher wird danach immer die Musterantwort zum Selbstvergleich gezeigt.
+function evaluateOpen(openQ, text) {
+  const norm = normalizeText(text);
+  const total = openQ.keyPoints.length;
+  const hits = openQ.keyPoints.filter(kp => norm.includes(normalizeText(kp))).length;
+  const ratio = total ? hits / total : 0;
+  return { pass: ratio >= OPEN_PASS_RATIO, hits, total };
+}
+
+function startOpen(topicId, pushHistory = true, presetPool = null) {
+  if (pushHistory) history.pushState({ name: "open", subjectId: state.currentSubject, categoryId: state.currentCategory }, "");
+  const pool = presetPool ? shuffle(presetPool) : shuffle(openFor(topicId));
+  state.queue = pool;
+  state.index = 0;
+  state.correctCount = 0;
+  state.answeredLog = [];
+  showView("#view-open");
+  renderOpen();
+}
+
+function renderOpen() {
+  state.answered = false;
+  const o = state.queue[state.index];
+  const total = state.queue.length;
+  $("#openProgress").style.width = (state.index / total * 100) + "%";
+  $("#openScore").textContent = state.correctCount + " / " + total;
+  const topicMeta = TOPICS.find(t => t.id === o.topic);
+  $("#openTopicLabel").textContent = (topicMeta ? topicMeta.icon + " " + topicMeta.title : "") + " · Freitext";
+  $("#openText").textContent = o.q;
+  const input = $("#openInput");
+  input.value = "";
+  input.disabled = false;
+  $("#openFeedback").classList.add("hidden");
+  $("#openSample").classList.add("hidden");
+  $("#openCheckBtn").classList.remove("hidden");
+  $("#openNextBtn").classList.add("hidden");
+}
+
+function checkOpenAnswer() {
+  if (state.answered) return;
+  const o = state.queue[state.index];
+  const text = $("#openInput").value.trim();
+  if (!text) return; // ohne Eingabe wird nicht geprüft
+  state.answered = true;
+  $("#openInput").disabled = true;
+  $("#openCheckBtn").classList.add("hidden");
+
+  const res = evaluateOpen(o, text);
+  const fb = $("#openFeedback");
+  fb.classList.remove("hidden", "good", "bad");
+  if (res.pass) {
+    fb.classList.add("good");
+    fb.textContent = `✅ Richtig! (${res.hits}/${res.total} Kernbegriffe erkannt)`;
+    state.correctCount++;
+  } else {
+    fb.classList.add("bad");
+    fb.textContent = `🤔 Nicht ganz (${res.hits}/${res.total} Kernbegriffe erkannt). Vergleiche selbst mit der Musterantwort – wenn es sinngemäß stimmt, zähl es dir als richtig.`;
+  }
+
+  const sample = $("#openSample");
+  sample.classList.remove("hidden");
+  sample.innerHTML = '<span class="open-sample-label">Musterantwort</span>' + escapeHtml(o.sampleAnswer);
+
+  state.answeredLog.push({
+    question: o,
+    given: text,
+    correctText: o.sampleAnswer,
+    wasCorrect: res.pass,
+  });
+
+  $("#openScore").textContent = state.correctCount + " / " + state.queue.length;
+  $("#openNextBtn").classList.remove("hidden");
+}
+
+function finishOpen() {
+  $("#openProgress").style.width = "100%";
+  const total = state.queue.length;
+  const pct = total ? Math.round((state.correctCount / total) * 100) : 0;
+  bumpStreak();
+  $("#resultEmoji").textContent = pct >= 80 ? "🏆" : pct >= 50 ? "💪" : "📚";
+  $("#resultTitle").textContent = pct >= 80 ? "Stark!" : pct >= 50 ? "Gut gemacht!" : "Weiter üben!";
+  $("#resultText").textContent = `Selbsteinschätzung: ${state.correctCount} von ${total} Freitext-Antworten wurden als richtig gewertet (${pct}%). Bei Freitext zählt am Ende dein eigener Abgleich mit der Musterantwort.`;
+  showResult("open");
+}
+
+$("#openCheckBtn").addEventListener("click", checkOpenAnswer);
+$("#openNextBtn").addEventListener("click", () => {
+  state.index++;
+  if (state.index >= state.queue.length) finishOpen();
+  else renderOpen();
+});
 
 // ---------- FLASHCARDS ----------
 function startCards(topicId, pushHistory = true) {
@@ -487,7 +694,7 @@ function nextCard() {
     $("#resultEmoji").textContent = "🗂️";
     $("#resultTitle").textContent = "Karten durch!";
     $("#resultText").textContent = `Du hast alle ${state.queue.length} Karteikarten zu diesem Thema durchgesehen.`;
-    showView("#view-result");
+    showResult("cards");
   } else {
     renderCard();
   }
