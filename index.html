@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Rolle im Betrieb – Lern-App</title>
+<title>Umschulung 26/02</title>
 <meta name="theme-color" content="#4f46e5">
 <meta name="description" content="Quiz &amp; Karteikarten für das Umschulungsfach Rolle im Betrieb">
 <link rel="manifest" href="manifest.json">
@@ -16,7 +16,7 @@
 </head>
 <body>
 <header class="topbar">
-  <div class="brand" id="homeBtn">📚 Lernkarten</div>
+  <div class="brand" id="homeBtn">📚 Umschulung KEC 26/02</div>
   <div class="streak" id="streakBadge">🔥 0</div>
 </header>
 
@@ -24,7 +24,7 @@
 
   <!-- HOME / SUBJECT SELECT -->
   <section id="view-home" class="view">
-    <h1>Lernkarten</h1>
+    <h1>Fächer</h1>
     <p class="subtitle">Wähle ein Fach.</p>
 
     <button id="installBtn" class="install-btn hidden">⬇️ App installieren</button>
@@ -51,6 +51,7 @@
       <button class="mode-btn active" data-mode="quiz">❓ Quiz</button>
       <button class="mode-btn" data-mode="cards">🗂️ Karteikarten</button>
       <button class="mode-btn" data-mode="structure">🧱 Gliederung</button>
+      <button class="mode-btn" data-mode="open">✍️ Frei</button>
     </div>
 
     <div id="topicGrid" class="topic-grid"></div>
@@ -87,6 +88,24 @@
     </div>
   </section>
 
+  <!-- OPEN (Freitext) VIEW -->
+  <section id="view-open" class="view hidden">
+    <div class="quiz-header">
+      <button class="back-btn" id="backFromOpen">← Zurück</button>
+      <div class="progress-wrap"><div class="progress-bar" id="openProgress"></div></div>
+      <div class="score" id="openScore">0 / 0</div>
+    </div>
+    <div class="card question-card">
+      <div class="q-topic" id="openTopicLabel"></div>
+      <h2 id="openText"></h2>
+      <textarea id="openInput" class="open-input" rows="5" placeholder="Schreib hier in eigenen Worten, was ungefähr in der Antwort stehen muss ..."></textarea>
+      <button id="openCheckBtn" class="primary-btn">Antwort prüfen</button>
+      <div id="openFeedback" class="feedback hidden"></div>
+      <div id="openSample" class="open-sample hidden"></div>
+      <button id="openNextBtn" class="primary-btn hidden">Weiter →</button>
+    </div>
+  </section>
+
   <!-- RESULT VIEW -->
   <section id="view-result" class="view hidden">
     <div class="card result-card">
@@ -95,8 +114,10 @@
       <p id="resultText"></p>
       <div class="result-actions">
         <button class="primary-btn" id="retryBtn">Nochmal üben</button>
+        <button class="secondary-btn hidden" id="retryWrongBtn">Nur Fehler nochmal</button>
         <button class="secondary-btn" id="homeFromResult">Zur Themenübersicht</button>
       </div>
+      <div id="resultReview" class="result-review hidden"></div>
     </div>
   </section>
 
@@ -131,7 +152,7 @@
 </main>
 
 <footer class="footer">
-  <span>Erstellt für die Umschulung · Alle Inhalte offline nutzbar</span>
+  <span>Erstellt für die Umschulung . Viel Glück an alle!</span>
 </footer>
 
 <script src="data.js"></script>
