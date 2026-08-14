@@ -5,7 +5,7 @@ Kostenlose, offline-fähige Lern-App für die Umschulung. Aufbau: **Fach → Kat
 Themen eines bereits geschriebenen Tests zusammen, damit ein neuer Test im selben Fach
 später als eigene Kategorie danebengelegt werden kann, statt mit alten Themen zu vermischen.
 
-Aktuell drei Fächer:
+Aktuell vier Fächer:
 
 - **Rolle im Betrieb** → Kategorie "Jugend- und Arbeitsrecht": Betriebsrat, JAV,
   Tarifvertragsrecht, Arbeitskampf & Streik, duale Ausbildung (BBiG), Jugendarbeitsschutzgesetz
@@ -15,6 +15,13 @@ Aktuell drei Fächer:
 - **Tabellenkalkulation** → Kategorie "Grundlagen & Bezüge": Grundlagen & Funktionen
   (SUMME, MIN, MAX, MITTELWERT, ANZAHL/ANZAHL2), Zellbezüge (relativ, absolut, gemischt),
   UND & ODER.
+- **Textverarbeitung** → praktisches Word-Können statt reinem Wissen: Zeichen- &
+  Absatzformatierung, Rahmen & Schattierung, Formatpinsel, Umbrüche, Spalten (Kategorie
+  "Zeichen- & Absatzformatierung"); Suchen & Ersetzen, Fußnoten, Kopf-/Fußzeile &
+  Seitenzahlen, Seite einrichten, Sortieren & Nummerierung (Kategorie "Werkzeuge &
+  Funktionen"); EDV vs. IT, Hardware-Komponenten (Kategorie "EDV-Grundlagen"); eine
+  Klausur-Simulation nach dem Vorbild einer echten Musteraufgabe inkl. Gliederungs-Übung
+  zum systematischen Klausur-Ablauf (Kategorie "Klausur-Simulation").
 
 ## Neues Fach, neue Kategorie oder neues Thema hinzufügen
 

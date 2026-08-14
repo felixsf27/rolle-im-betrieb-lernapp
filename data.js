@@ -3,6 +3,7 @@ const SUBJECTS = [
   { id: "rolle-im-betrieb", title: "Rolle im Betrieb", icon: "📘" },
   { id: "rewe", title: "Rechnungswesen", icon: "🧮" },
   { id: "tabellenkalkulation", title: "Tabellenkalkulation", icon: "📊" },
+  { id: "textverarbeitung", title: "Textverarbeitung", icon: "📝" },
 ];
 
 // Kategorien je Fach – ein Testblock/Themenblock. Neue Kategorie (z. B. für den nächsten Test):
@@ -11,6 +12,10 @@ const CATEGORIES = [
   { id: "rib-jugend-arbeitsrecht", subject: "rolle-im-betrieb", title: "Jugend- und Arbeitsrecht", icon: "⚖️" },
   { id: "rewe-inventur-inventar", subject: "rewe", title: "Inventur & Inventar", icon: "📋" },
   { id: "tk-grundlagen", subject: "tabellenkalkulation", title: "Grundlagen & Bezüge", icon: "📊" },
+  { id: "tv-formatierung", subject: "textverarbeitung", title: "Zeichen- & Absatzformatierung", icon: "🖋️" },
+  { id: "tv-funktionen", subject: "textverarbeitung", title: "Werkzeuge & Funktionen", icon: "🔧" },
+  { id: "tv-edv-grundlagen", subject: "textverarbeitung", title: "EDV-Grundlagen", icon: "💻" },
+  { id: "tv-klausur", subject: "textverarbeitung", title: "Klausur-Simulation", icon: "🧪" },
 ];
 
 // Themen je Kategorie – erstellt aus den Lernmaterialien der Umschulung
@@ -32,6 +37,20 @@ const TOPICS = [
   { id: "excel-grundlagen", subject: "tabellenkalkulation", category: "tk-grundlagen", title: "Grundlagen & Funktionen", icon: "🔢" },
   { id: "excel-bezuege", subject: "tabellenkalkulation", category: "tk-grundlagen", title: "Zellbezüge (relativ, absolut, gemischt)", icon: "📌" },
   { id: "excel-und-oder", subject: "tabellenkalkulation", category: "tk-grundlagen", title: "UND & ODER", icon: "🔀" },
+  { id: "zeichenformatierung", subject: "textverarbeitung", category: "tv-formatierung", title: "Zeichenformatierung", icon: "🔤" },
+  { id: "absatzformatierung", subject: "textverarbeitung", category: "tv-formatierung", title: "Absatzformatierung", icon: "📐" },
+  { id: "rahmen-schattierung", subject: "textverarbeitung", category: "tv-formatierung", title: "Rahmen & Schattierung", icon: "🖼️" },
+  { id: "formatpinsel", subject: "textverarbeitung", category: "tv-formatierung", title: "Formatpinsel", icon: "🖌️" },
+  { id: "umbrueche", subject: "textverarbeitung", category: "tv-formatierung", title: "Umbrüche (Zeile/Seite/Abschnitt)", icon: "↩️" },
+  { id: "spalten", subject: "textverarbeitung", category: "tv-formatierung", title: "Spalten", icon: "📰" },
+  { id: "suchen-ersetzen", subject: "textverarbeitung", category: "tv-funktionen", title: "Suchen & Ersetzen", icon: "🔍" },
+  { id: "fussnoten", subject: "textverarbeitung", category: "tv-funktionen", title: "Fußnoten", icon: "🔖" },
+  { id: "kopf-fusszeile", subject: "textverarbeitung", category: "tv-funktionen", title: "Kopf-/Fußzeile & Seitenzahlen", icon: "📄" },
+  { id: "seite-einrichten", subject: "textverarbeitung", category: "tv-funktionen", title: "Seite einrichten", icon: "📏" },
+  { id: "sortieren-nummerierung", subject: "textverarbeitung", category: "tv-funktionen", title: "Sortieren & Nummerierung", icon: "🔢" },
+  { id: "edv-vs-it", subject: "textverarbeitung", category: "tv-edv-grundlagen", title: "EDV vs. IT", icon: "💾" },
+  { id: "hardware", subject: "textverarbeitung", category: "tv-edv-grundlagen", title: "Hardware-Komponenten", icon: "🖥️" },
+  { id: "klausur-ablauf", subject: "textverarbeitung", category: "tv-klausur", title: "Klausur-Ablauf (Wetter-Aufgabe)", icon: "⏱️" },
 ];
 
 // ---------- GLIEDERUNGEN (Reihenfolge zum Selbst-Üben) ----------
@@ -68,6 +87,24 @@ const STRUCTURES = [
       "Summe der Schulden",
       "C. Ermittlung des Eigenkapitals",
       "Eigenkapital = Summe des Vermögens − Summe der Schulden",
+    ],
+  },
+  {
+    topic: "klausur-ablauf",
+    title: "Systematischer Ablauf einer Word-Klausur",
+    items: [
+      "1. Datei öffnen/speichern + eigene Daten (Name, Kurs, Datum) in Kopf-/Fußzeile eintragen",
+      "2. Grundformatierung der ersten Seite: Papierformat, Ausrichtung, Seitenränder",
+      "3. Grundformatierung des Fließtexts: Schriftart, Schriftgröße, Zeilenabstand, Blocksatz",
+      "4. Überschrift formatieren (Schriftgröße, fett, zentriert, Farbe, Rahmen)",
+      "5. Absatzformatierung im ersten Textabschnitt (Einzüge, Abstände vor/nach)",
+      "6. Zeichenformatierung einzelner Textstellen (fett, kursiv, unterstrichen, Farbe, Hervorhebung)",
+      "7. Suchen und Ersetzen durchführen",
+      "8. Fußnote(n) einfügen und formatieren",
+      "9. Abschnittswechsel setzen, wo sich das Seitenformat ändern soll",
+      "10. Zweite Überschrift und Spalten für den neuen Abschnitt formatieren",
+      "11. Kopf-/Fußzeile inkl. Seitenzahlen je Abschnitt einrichten (Verknüpfung ggf. deaktivieren)",
+      "12. Liste sortieren, letzte Kontrolle mit 'Alle Zeichen anzeigen', speichern",
     ],
   },
 ];
@@ -223,6 +260,71 @@ const FLASHCARDS = [
   { topic: "excel-und-oder", front: "Signalwort für UND", back: "\"und\", \"gleichzeitig\", \"sowohl als auch\" im Aufgabentext deuten auf die UND-Funktion hin." },
   { topic: "excel-und-oder", front: "Signalwort für ODER", back: "\"oder\", \"mindestens eines von beiden\" im Aufgabentext deuten auf die ODER-Funktion hin." },
   { topic: "excel-und-oder", front: "Reihenfolge der Bedingungen bei UND/ODER", back: "Die Reihenfolge der Bedingungen innerhalb der Klammer spielt für das Ergebnis keine Rolle – nur ob sie erfüllt sind, zählt." },
+  { topic: "zeichenformatierung", front: "Fett / Kursiv / Unterstrichen setzen", back: "Text markieren → Start → Schriftart-Gruppe → Symbol 'Fett', 'Kursiv' oder 'Unterstrichen' anklicken." },
+  { topic: "zeichenformatierung", front: "Kapitälchen", back: "Text markieren → Start → kleiner Pfeil unten rechts in der Schriftart-Gruppe öffnet das Dialogfeld 'Schriftart' → Effekte → Kapitälchen." },
+  { topic: "zeichenformatierung", front: "Zeichenabstand erweitern oder verschmälern (z. B. 2 pt)", back: "Text markieren → Schriftart-Dialogfeld → Reiter 'Erweitert' → Abstand: Erweitert/Schmal → Wert in pt eingeben." },
+  { topic: "zeichenformatierung", front: "Text skalieren (z. B. auf 175 %)", back: "Text markieren → Schriftart-Dialogfeld → Reiter 'Erweitert' → Skalierung → Prozentwert wählen." },
+  { topic: "zeichenformatierung", front: "Texthervorhebungsfarbe (Textmarker)", back: "Text markieren → Start → Symbol 'Texthervorhebungsfarbe' → Farbe wählen." },
+  { topic: "zeichenformatierung", front: "Doppelt durchgestrichen formatieren", back: "Text markieren → Schriftart-Dialogfeld → Effekte → Doppelt durchgestrichen." },
+  { topic: "zeichenformatierung", front: "Rahmen nur um ein einzelnes Wort, nicht um den Absatz", back: "Text markieren → Start → Rahmenlinien-Symbol → 'Rahmen und Schattierung...' → bei 'Übernehmen für' die Option 'Text' statt 'Absatz' wählen." },
+  { topic: "zeichenformatierung", front: "Groß-/Kleinschreibung eines markierten Textes ändern", back: "Text markieren → Start → Symbol 'Groß-/Kleinschreibung' (Aa) → gewünschte Variante wählen (z. B. GROSSBUCHSTABEN)." },
+  { topic: "absatzformatierung", front: "Erstzeileneinzug setzen", back: "Cursor im Absatz → Absatz-Dialog → Einzüge und Abstände → Sondereinzug: Erste Zeile → Wert eingeben (z. B. 1 cm)." },
+  { topic: "absatzformatierung", front: "Hängender Einzug", back: "Absatz-Dialog → Einzüge und Abstände → Sondereinzug: Hängend → Wert eingeben. Die erste Zeile bleibt am Rand, alle folgenden Zeilen rücken ein." },
+  { topic: "absatzformatierung", front: "Negativeinzug (Absatz ragt über den Rand hinaus)", back: "Absatz-Dialog → Einzug links auf einen negativen Wert setzen (z. B. -1 cm)." },
+  { topic: "absatzformatierung", front: "Linker/rechter Einzug für einen ganzen Absatz", back: "Absatz-Dialog → Einzüge und Abstände → Einzug links/rechts → Wert in cm eingeben." },
+  { topic: "absatzformatierung", front: "Zeilenabstand auf einen exakten Wert setzen (z. B. genau 13 pt)", back: "Absatz-Dialog → Zeilenabstand → 'Genau' wählen → Wert in pt eingeben (statt 'Einfach' oder '1,5 Zeilen')." },
+  { topic: "absatzformatierung", front: "Abstand vor/nach einem Absatz einstellen", back: "Absatz-Dialog → Abstand → Feld 'Vor' bzw. 'Nach' → Wert in pt eingeben." },
+  { topic: "absatzformatierung", front: "Blocksatz einstellen", back: "Text markieren → Start → Absatz-Gruppe → Symbol 'Blocksatz' (viertes der vier Ausrichtungs-Symbole)." },
+  { topic: "absatzformatierung", front: "Silbentrennung / Randausgleich", back: "Layout → Seite einrichten-Gruppe → Silbentrennung → 'Automatisch' oder 'Manuell'. Gleicht den unruhigen rechten Rand bei Blocksatz aus." },
+  { topic: "rahmen-schattierung", front: "Rahmen um einen Absatz oder Text legen", back: "Markieren → Start → Rahmenlinien-Symbol (Pfeil daneben) → 'Rahmen und Schattierung...' → Linienart, Breite, Farbe wählen → übernehmen für 'Text' oder 'Absatz'." },
+  { topic: "rahmen-schattierung", front: "Dreifachen Rahmen in einer bestimmten Farbe", back: "Dialog 'Rahmen und Schattierung' → bei 'Formatvorlage' die dreifache Linienart wählen, Farbe einstellen, dann übernehmen." },
+  { topic: "rahmen-schattierung", front: "Rahmen mit einer Füllfarbe hinterlegen", back: "Im Dialog 'Rahmen und Schattierung' auf den Reiter 'Schattierung' wechseln und die Füllfarbe wählen." },
+  { topic: "rahmen-schattierung", front: "Gestrichelter Rahmen über die volle Zeilenbreite", back: "Rahmen und Schattierung → gestrichelte Linienart wählen → übernehmen für 'Absatz' (läuft dann über die volle Zeilenbreite, nicht nur um das Wort)." },
+  { topic: "formatpinsel", front: "Format von einer Textstelle auf eine andere übertragen", back: "Cursor in den bereits formatierten Text setzen → Start → Formatpinsel anklicken → über den Zielbereich ziehen." },
+  { topic: "formatpinsel", front: "Formatpinsel auf mehrere, nicht zusammenhängende Stellen anwenden", back: "Formatpinsel-Symbol doppelt anklicken statt einmal – bleibt dann nach jedem Ziehen aktiv, bis man Esc drückt oder erneut klickt." },
+  { topic: "umbrueche", front: "Neuer Absatz vs. Zeilenumbruch ohne neuen Absatz", back: "Neuer Absatz: Eingabetaste. Zeilenumbruch innerhalb desselben Absatzes: Umschalt+Eingabetaste." },
+  { topic: "umbrueche", front: "Manueller Seitenumbruch (Seitenwechsel)", back: "Cursor an die Stelle setzen → Einfügen → Seitenumbruch (oder Layout → Umbrüche → Seite). Erzwingt eine neue Seite, das Seitenformat bleibt aber unverändert." },
+  { topic: "umbrueche", front: "Abschnittswechsel", back: "Layout → Umbrüche → Abschnittsumbrüche → 'Nächste Seite'. Erlaubt ab hier ein eigenes Seitenformat (Papierformat, Ränder, Ausrichtung) und eigene Kopf-/Fußzeilen." },
+  { topic: "umbrueche", front: "Wann braucht man einen Abschnittswechsel statt eines einfachen Seitenumbruchs?", back: "Immer, wenn sich ab einer bestimmten Seite das Seitenlayout ändern soll (z. B. Hoch- auf Querformat, andere Ränder, andere Kopfzeile) – ein einfacher Seitenumbruch kann das nicht." },
+  { topic: "umbrueche", front: "Unsichtbare Zeichen einblenden", back: "Start → Absatz-Gruppe → Symbol '¶'. Zeigt Absatzmarken, Leerzeichen sowie Seiten-/Abschnittsumbrüche als Symbole an." },
+  { topic: "spalten", front: "Text in mehrere Spalten setzen", back: "Text markieren → Layout → Spalten → Spaltenanzahl wählen oder 'Weitere Spalten...' für individuelle Einstellungen." },
+  { topic: "spalten", front: "Spaltenabstand einstellen", back: "Layout → Spalten → 'Weitere Spalten...' → Feld 'Abstand' → Wert in cm eingeben." },
+  { topic: "spalten", front: "Trennlinie zwischen Spalten einfügen", back: "Layout → Spalten → 'Weitere Spalten...' → Häkchen bei 'Trennlinie' setzen." },
+  { topic: "spalten", front: "Nur einen Teil des Textes in Spalten setzen", back: "Nur den gewünschten Textbereich markieren, bevor man Layout → Spalten wählt – Word fügt die nötigen Abschnittswechsel automatisch davor/danach ein." },
+  { topic: "suchen-ersetzen", front: "Suchen und Ersetzen öffnen", back: "Start → Bearbeiten-Gruppe → 'Ersetzen'." },
+  { topic: "suchen-ersetzen", front: "Ein Wort im ganzen Dokument ersetzen", back: "Dialog 'Suchen und Ersetzen' → Reiter 'Ersetzen' → Suchbegriff eingeben → Ersetzung eingeben → 'Alle ersetzen'." },
+  { topic: "suchen-ersetzen", front: "Beim Ersetzen gleichzeitig die Schriftfarbe ändern", back: "Im Feld 'Ersetzen durch' auf 'Mehr' → 'Format' → 'Schriftart' → gewünschte Farbe wählen, bevor man auf 'Alle ersetzen' klickt." },
+  { topic: "suchen-ersetzen", front: "Wort durch ein Sonderzeichen ersetzen (z. B. 'Prozent' durch %)", back: "Suchen und Ersetzen → Suchbegriff eingeben, im Feld 'Ersetzen durch' das Zeichen direkt eintippen oder über 'Symbol' einfügen." },
+  { topic: "fussnoten", front: "Fußnote mit automatischer Nummerierung einfügen", back: "Cursor hinter das Wort setzen → Verweise → Fußnote einfügen. Word setzt automatisch die nächste Nummer." },
+  { topic: "fussnoten", front: "Schriftart/-größe des Fußnotentextes ändern", back: "In den Fußnotenbereich am Seitenende klicken, Text markieren und wie normalen Text über Start → Schriftart formatieren." },
+  { topic: "fussnoten", front: "Format einer Fußnote auf eine andere übertragen", back: "Cursor in den bereits formatierten Fußnotentext setzen → Formatpinsel → über den Text der anderen Fußnote ziehen." },
+  { topic: "fussnoten", front: "Nummerierung mehrerer Fußnoten beim Einfügen einer neuen", back: "Word nummeriert alle Fußnoten automatisch neu durch, sobald eine weitere eingefügt wird." },
+  { topic: "kopf-fusszeile", front: "Kopfzeile einfügen und bearbeiten", back: "Einfügen → Kopfzeile → 'Kopfzeile bearbeiten' (oder Doppelklick oben auf die Seite)." },
+  { topic: "kopf-fusszeile", front: "Automatisches Datum in die Kopfzeile einfügen", back: "In der Kopfzeile: Einfügen → Datum und Uhrzeit → numerisches Format wählen (z. B. TT.MM.JJJJ)." },
+  { topic: "kopf-fusszeile", front: "Automatische Seitenzahl einfügen", back: "Einfügen → Seitenzahl → Position wählen (z. B. Seitenende) → Format wählen." },
+  { topic: "kopf-fusszeile", front: "Unterschiedliche Kopfzeile ab einem neuen Abschnitt", back: "Erst einen Abschnittswechsel einfügen. Dann in die Kopfzeile des neuen Abschnitts klicken → 'Mit vorheriger verknüpfen' deaktivieren → erst danach lässt sich die Kopfzeile unabhängig ändern." },
+  { topic: "kopf-fusszeile", front: "Warum muss man 'Mit vorheriger verknüpfen' ausschalten?", back: "Solange die Verknüpfung aktiv ist, überschreibt jede Änderung an der Kopf-/Fußzeile automatisch auch alle vorherigen Abschnitte." },
+  { topic: "kopf-fusszeile", front: "Text linksbündig und rechtsbündig in derselben Kopfzeilenzeile", back: "Linken Text eintippen, dann Tab drücken (springt zur rechten Tabstopp-Position), rechten Text eintippen." },
+  { topic: "seite-einrichten", front: "Papierformat ändern (z. B. A4)", back: "Layout → Seite einrichten-Gruppe → Format → gewünschte Größe wählen." },
+  { topic: "seite-einrichten", front: "Seitenausrichtung Hoch- oder Querformat", back: "Layout → Ausrichtung → Hochformat oder Querformat." },
+  { topic: "seite-einrichten", front: "Seitenränder einstellen", back: "Layout → Seitenränder → vordefinierten Wert wählen oder 'Benutzerdefinierte Seitenränder...' für exakte cm-Werte." },
+  { topic: "seite-einrichten", front: "Nur ein Teil des Dokuments soll ein anderes Seitenformat bekommen", back: "Vor der betroffenen Stelle einen Abschnittswechsel ('Nächste Seite') einfügen, dann für diesen Abschnitt separat das Seitenformat ändern." },
+  { topic: "sortieren-nummerierung", front: "Eine Liste alphabetisch sortieren", back: "Liste markieren → Start → Absatz-Gruppe → Symbol 'Sortieren' → Aufsteigend oder Absteigend wählen → OK." },
+  { topic: "sortieren-nummerierung", front: "Aufzählungszeichen (z. B. fetter Punkt) hinzufügen", back: "Zeilen markieren → Start → Symbol 'Aufzählungszeichen' → über 'Neues Aufzählungszeichen definieren...' das gewünschte Zeichen wählen." },
+  { topic: "sortieren-nummerierung", front: "Nummerierung hinzufügen", back: "Zeilen markieren → Start → Symbol 'Nummerierung' → Nummerierungsformat wählen (z. B. 1. 2. 3.)." },
+  { topic: "edv-vs-it", front: "EDV", back: "Elektronische Datenverarbeitung – Bearbeitung, Verarbeitung und Verwaltung von Daten in Datenbanken/Computersystemen. Wird heute oft durch 'PC-Kenntnisse' ersetzt." },
+  { topic: "edv-vs-it", front: "IT", back: "Informationstechnik (Information Technology) – verbindet Informatik mit Elektrotechnik, Sammelbegriff für eine ganze Branche (Hardware, Software, Netzwerke, Telekommunikation)." },
+  { topic: "edv-vs-it", front: "Verhältnis EDV zu IT", back: "EDV ist ein Teilbereich der IT. EDV beschränkt sich eher auf Software/Datenverarbeitung, IT umfasst deutlich mehr Bereiche." },
+  { topic: "edv-vs-it", front: "Unterbereiche der IT (Beispiele)", back: "Kommunikations-IT, Business-IT, Unterhaltungs-IT, IT-Management." },
+  { topic: "edv-vs-it", front: "Typische EDV-Kenntnisse", back: "Umgang mit Büroanwendungen (Word, Excel, PowerPoint) und Betriebssystemen (Windows, Linux, macOS)." },
+  { topic: "hardware", front: "Eingabegeräte", back: "Tastatur, Maus, Trackball, Joystick, Scanner, Mikrofon – Geräte, mit denen Daten in den Computer eingegeben werden." },
+  { topic: "hardware", front: "Ausgabegeräte", back: "Monitor, Drucker, Lautsprecher – Geräte, die Daten aus dem Computer ausgeben." },
+  { topic: "hardware", front: "Zentraleinheit (Bestandteile)", back: "Gehäuse mit Netzteil, Mainboard, Prozessor (CPU), Arbeitsspeicher (RAM), Grafikkarte, Soundkarte, Modem/Netzwerkkarte, Festplatte, Diskettenlaufwerk, CD-ROM/DVD." },
+  { topic: "hardware", front: "CPU", back: "Central Processing Unit – der Prozessor, das 'Gehirn' des Computers." },
+  { topic: "hardware", front: "RAM", back: "Random Access Memory – der Arbeitsspeicher, in dem Daten nur temporär (bis zum Ausschalten) gespeichert werden." },
+  { topic: "hardware", front: "Mainboard", back: "Motherboard – die Hauptplatine, auf der alle wichtigen Komponenten des Computers zusammenlaufen und verbunden sind." },
+  { topic: "klausur-ablauf", front: "Bearbeitungszeit einer typischen Textverarbeitungs-Klausur", back: "Ca. 45 Minuten für ca. 12 Arbeitsschritte – im Schnitt nur 3-4 Minuten pro Aufgabe, also zügig und in fester Reihenfolge arbeiten." },
+  { topic: "klausur-ablauf", front: "Warum zuerst die Grundformatierung (Papier, Ränder, Schrift, Zeilenabstand) einstellen?", back: "Diese Einstellungen wirken sich auf das ganze Dokument aus. Werden sie erst am Ende gesetzt, verschieben sich Absätze/Umbrüche und schon erledigte Detailarbeit kann durcheinandergeraten." },
 ];
 
 // ---------- QUIZ QUESTIONS (Multiple Choice) ----------
@@ -546,4 +648,85 @@ const QUESTIONS = [
   { topic: "excel-und-oder", type: "single", q: "Ein Fahrzeug soll auf Austausch geprüft werden, wenn der Kilometerstand die Grenze erreicht UND gleichzeitig die Wartungskosten die Kostengrenze erreichen (Kilometerstand C10, Grenze $D$5, Kosten E10, Grenze $D$7). Welche Formel passt?", options: ["=ODER(C10>=$D$5;E10>=$D$7)", "=UND(C10>=$D$5;E10>=$D$7)", "=UND(C10>=$D$5,E10<=$D$7)", "=MAX(C10;E10)>=$D$5"], correct: [1] },
   { topic: "excel-und-oder", type: "single", q: "Welchen Datentyp liefern UND und ODER als Ergebnis?", options: ["Eine Zahl", "Einen Text", "Einen Wahrheitswert (WAHR oder FALSCH)", "Ein Datum"], correct: [2] },
   { topic: "excel-und-oder", type: "single", q: "Was ergibt =UND(3>1;4>2;5>10)?", options: ["WAHR, weil zwei von drei Bedingungen stimmen", "FALSCH, weil nicht alle drei Bedingungen erfüllt sind", "WAHR, weil die erste Bedingung stimmt", "Einen Fehler, weil zu viele Bedingungen angegeben wurden"], correct: [1] },
+
+  // ===================== ZEICHENFORMATIERUNG (Textverarbeitung) =====================
+  { topic: "zeichenformatierung", type: "single", q: "Du sollst ein Wort in Kapitälchen darstellen. Wo findest du diese Option?", options: ["Start → Schriftart-Dialogfeld → Effekte → Kapitälchen", "Layout → Schriftart → Kapitälchen", "Einfügen → Sonderzeichen → Kapitälchen", "Überprüfen → Sprache → Kapitälchen"], correct: [0] },
+  { topic: "zeichenformatierung", type: "single", q: "Ein Wort soll in der Schriftart Algerian, 13 pt erscheinen. Wo stellst du das ein?", options: ["Layout → Umbrüche", "Start → Schriftart-Gruppe (Schriftart + Schriftgröße ändern)", "Einfügen → WordArt", "Überprüfen → Rechtschreibung"], correct: [1] },
+  { topic: "zeichenformatierung", type: "single", q: "Was bewirkt ein erweiterter Zeichenabstand von 2 pt?", options: ["Die Buchstaben eines Wortes rücken weiter auseinander", "Der Text wird größer dargestellt", "Der Zeilenabstand wird größer", "Die Schriftart wird automatisch fett"], correct: [0] },
+  { topic: "zeichenformatierung", type: "single", q: "Ein Wort soll skaliert auf 175 % dargestellt werden. Was ändert sich dadurch?", options: ["Nur die Schriftgröße", "Die Breite der Buchstaben wird gestreckt, die Höhe bleibt gleich", "Der Zeilenabstand wird 175 % größer", "Das Wort wird automatisch fett"], correct: [1] },
+  { topic: "zeichenformatierung", type: "single", q: "Wie überträgst du die Formatierung eines bereits formatierten Wortes auf ein anderes Wort, ohne alle Schritte erneut einzustellen?", options: ["Mit dem Formatpinsel", "Mit Suchen und Ersetzen", "Mit der Rechtschreibprüfung", "Mit einem Seitenumbruch"], correct: [0] },
+  { topic: "zeichenformatierung", type: "single", q: "Welchen Weg nutzt du für 'doppelt durchgestrichen'?", options: ["Schriftart-Dialogfeld → Effekte → Doppelt durchgestrichen", "Start → Unterstreichen-Symbol zweimal klicken", "Absatz-Dialog → Rahmen", "Layout → Umbrüche"], correct: [0] },
+
+  // ===================== ABSATZFORMATIERUNG (Textverarbeitung) =====================
+  { topic: "absatzformatierung", type: "single", q: "Du sollst jedem Absatz einen Erstzeileneinzug von 1 cm geben. Wo stellst du das ein?", options: ["Absatz-Dialog → Einzüge und Abstände → Sondereinzug: Erste Zeile", "Start → Schriftart-Dialog", "Layout → Spalten", "Einfügen → Tabelle"], correct: [0] },
+  { topic: "absatzformatierung", type: "single", q: "Ein Absatz soll 1 cm über den linken Rand hinausragen. Welche Einstellung brauchst du?", options: ["Einen hängenden Einzug", "Einen negativen linken Einzug", "Zeilenabstand 'Genau'", "Erstzeileneinzug"], correct: [1] },
+  { topic: "absatzformatierung", type: "single", q: "Bei einer nummerierten Aufzählung sollen alle Absätze einen hängenden Einzug bekommen. Was passiert dabei?", options: ["Die erste Zeile rückt ein, alle folgenden bleiben am Rand", "Die Nummer bleibt am Rand, der Fließtext danach rückt einheitlich ein", "Der ganze Absatz rückt nach rechts", "Nur die letzte Zeile rückt ein"], correct: [1] },
+  { topic: "absatzformatierung", type: "single", q: "Wie stellst du den Zeilenabstand auf exakt 13 pt, statt auf 'Einfach' oder '1,5 Zeilen'?", options: ["Absatz-Dialog → Zeilenabstand → 'Genau' → Wert eingeben", "Schriftart-Dialog → Skalierung", "Layout → Abstand vor Absatz", "Start → Schriftgröße auf 13 setzen"], correct: [0] },
+  { topic: "absatzformatierung", type: "single", q: "Was bewirkt Blocksatz?", options: ["Der Text wird zentriert", "Der Text wird links und rechts glatt am Rand ausgerichtet", "Der Text wird nur rechtsbündig ausgerichtet", "Der Text bekommt automatisch einen Rahmen"], correct: [1] },
+  { topic: "absatzformatierung", type: "single", q: "Warum braucht Blocksatz oft zusätzlich die Silbentrennung?", options: ["Damit die Schriftgröße automatisch angepasst wird", "Damit der unruhige rechte Rand durch bessere Wortabstände ausgeglichen wird", "Weil Blocksatz sonst nicht speicherbar ist", "Damit Rahmen korrekt angezeigt werden"], correct: [1] },
+
+  // ===================== RAHMEN & SCHATTIERUNG (Textverarbeitung) =====================
+  { topic: "rahmen-schattierung", type: "single", q: "Eine Überschrift soll einen dreifachen, dunkelblauen Rahmen bekommen. Welcher Weg führt dorthin?", options: ["Start → Rahmenlinien-Symbol → 'Rahmen und Schattierung...' → Formatvorlage: dreifache Linie, Farbe: Dunkelblau", "Einfügen → Formen → Rahmen", "Layout → Ränder", "Überprüfen → Rahmen"], correct: [0] },
+  { topic: "rahmen-schattierung", type: "single", q: "Wie füllst du den Rahmen zusätzlich mit einer hellblauen Hintergrundfarbe?", options: ["Im selben Dialog auf den Reiter 'Schattierung' wechseln und die Füllfarbe wählen", "Über Start → Texthervorhebungsfarbe", "Über Einfügen → Wasserzeichen", "Über Layout → Spalten"], correct: [0] },
+  { topic: "rahmen-schattierung", type: "single", q: "Ein Rahmen soll nur um ein einzelnes Wort laufen, nicht um den ganzen Absatz. Was musst du bei 'Übernehmen für' einstellen?", options: ["Absatz", "Text", "Dokument", "Abschnitt"], correct: [1] },
+
+  // ===================== FORMATPINSEL (Textverarbeitung) =====================
+  { topic: "formatpinsel", type: "single", q: "Du willst eine Formatierung auf drei verschiedene, nicht zusammenhängende Textstellen übertragen. Wie gehst du vor?", options: ["Formatpinsel einmal anklicken und dreimal ziehen", "Formatpinsel doppelt anklicken, dann alle drei Stellen nacheinander ziehen und danach Esc drücken", "Strg+C und Strg+V für jede Stelle", "Suchen und Ersetzen mit Format"], correct: [1] },
+
+  // ===================== UMBRÜCHE (Textverarbeitung) =====================
+  { topic: "umbrueche", type: "single", q: "Ab einer bestimmten Stelle soll das Papierformat von Hochformat auf Querformat wechseln, der Rest des Dokuments soll Hochformat bleiben. Was brauchst du?", options: ["Einen einfachen Seitenumbruch", "Einen Abschnittswechsel 'Nächste Seite'", "Eine Leerzeile", "Einen Zeilenumbruch mit Umschalt+Eingabe"], correct: [1] },
+  { topic: "umbrueche", type: "single", q: "Was ist der Unterschied zwischen einem Seitenumbruch und einem Abschnittswechsel?", options: ["Es gibt keinen Unterschied", "Ein Seitenumbruch erzwingt nur eine neue Seite, ein Abschnittswechsel erlaubt zusätzlich ein eigenes Seitenformat/eigene Kopfzeilen ab dieser Stelle", "Ein Abschnittswechsel funktioniert nur in Tabellen", "Ein Seitenumbruch kann nur am Dokumentende eingefügt werden"], correct: [1] },
+  { topic: "umbrueche", type: "single", q: "Wie erkennst du im Dokument, wo ein Abschnittswechsel eingefügt wurde?", options: ["Gar nicht, das sieht man nie", "Über 'Alle Zeichen anzeigen' werden Abschnittsumbrüche als beschriftete Doppellinie sichtbar", "Nur über das Inhaltsverzeichnis", "Nur wenn man die Datei neu öffnet"], correct: [1] },
+  { topic: "umbrueche", type: "single", q: "Du sollst nach einem bestimmten Satz einen neuen Absatz einfügen, ohne die restliche Formatierung zu stören. Wie machst du das?", options: ["Cursor an die Stelle setzen und Eingabetaste drücken", "Das ganze Dokument neu schreiben", "Layout → Umbrüche → Abschnitt", "Verweise → Fußnote einfügen"], correct: [0] },
+
+  // ===================== SPALTEN (Textverarbeitung) =====================
+  { topic: "spalten", type: "single", q: "Der Text nach der zweiten Überschrift soll zweispaltig mit Trennlinie dargestellt werden, der Text davor soll einspaltig bleiben. Was ist der erste Schritt?", options: ["Den gesamten Text markieren", "Nur den gewünschten Textbereich markieren, bevor man Spalten auswählt", "Ein neues Dokument öffnen", "Eine Tabelle einfügen"], correct: [1] },
+  { topic: "spalten", type: "single", q: "Wo stellst du den Spaltenabstand und die Trennlinie zwischen zwei Spalten ein?", options: ["Layout → Spalten → 'Weitere Spalten...'", "Start → Absatz-Dialog", "Einfügen → Tabelle", "Überprüfen → Rechtschreibung"], correct: [0] },
+
+  // ===================== SUCHEN & ERSETZEN (Textverarbeitung) =====================
+  { topic: "suchen-ersetzen", type: "single", q: "Du sollst im ganzen Dokument 'Prozent' durch das Zeichen % ersetzen. Welche Funktion nutzt du?", options: ["Rechtschreibprüfung", "Suchen und Ersetzen", "AutoKorrektur-Einstellungen", "Serienbrief"], correct: [1] },
+  { topic: "suchen-ersetzen", type: "single", q: "Beim Ersetzen soll der neue Text zusätzlich rot gefärbt werden. Wie stellst du das im Dialog 'Suchen und Ersetzen' ein?", options: ["Das geht nicht, Farbe muss man danach manuell anpassen", "Im Feld 'Ersetzen durch' auf 'Mehr' → 'Format' → 'Schriftart' → Farbe wählen", "Über Start → Texthervorhebungsfarbe vor dem Ersetzen", "Über Layout → Farben"], correct: [1] },
+  { topic: "suchen-ersetzen", type: "single", q: "Warum ist Suchen und Ersetzen schneller als manuelles Korrigieren, wenn ein Begriff mehrfach im Text vorkommt?", options: ["Weil es automatisch die Rechtschreibung prüft", "Weil mit 'Alle ersetzen' jedes Vorkommen auf einmal geändert wird", "Weil es automatisch übersetzt", "Weil es die Datei automatisch speichert"], correct: [1] },
+
+  // ===================== FUSSNOTEN (Textverarbeitung) =====================
+  { topic: "fussnoten", type: "single", q: "Du sollst hinter einem Wort eine Fußnote einfügen. Wo findest du diese Funktion?", options: ["Verweise → Fußnote einfügen", "Einfügen → Kopf- und Fußzeile", "Start → Absatz", "Layout → Umbrüche"], correct: [0] },
+  { topic: "fussnoten", type: "single", q: "Die Fußnote soll in Calibri, 10 pt erscheinen. Wo formatierst du das?", options: ["Im normalen Fließtext, die Fußnote übernimmt das automatisch", "Direkt im Fußnotenbereich am Seitenende – dort den Text markieren und formatieren", "Über Layout → Design", "Das ist bei Fußnoten nicht möglich"], correct: [1] },
+  { topic: "fussnoten", type: "single", q: "Was passiert automatisch, wenn du eine weitere Fußnote vor einer bereits vorhandenen einfügst?", options: ["Nichts, du musst die Nummern manuell anpassen", "Word nummeriert alle Fußnoten automatisch neu durch", "Die alte Fußnote wird gelöscht", "Word fragt, ob du eine neue Seite einfügen willst"], correct: [1] },
+
+  // ===================== KOPF-/FUSSZEILE (Textverarbeitung) =====================
+  { topic: "kopf-fusszeile", type: "single", q: "Die Kopfzeile der zweiten Seite (nach einem Abschnittswechsel) soll anders aussehen als die der ersten. Was musst du zuerst tun?", options: ["Nichts, das geht automatisch", "In der Kopfzeile des neuen Abschnitts 'Mit vorheriger verknüpfen' deaktivieren", "Die erste Kopfzeile löschen", "Ein zweites Dokument erstellen"], correct: [1] },
+  { topic: "kopf-fusszeile", type: "single", q: "Links soll ein Text stehen, rechts der eigene Name – in derselben Kopfzeilenzeile. Wie gehst du vor?", options: ["Zwei getrennte Textfelder einfügen", "Linken Text eintippen, mit Tab zur rechten Tabstopp-Position springen, rechten Text eintippen", "Eine Tabelle mit zwei Spalten einfügen", "Das geht in einer Kopfzeile nicht"], correct: [1] },
+  { topic: "kopf-fusszeile", type: "single", q: "Wo fügst du eine automatische Seitenzahl ein, die sich beim Hinzufügen von Seiten selbst aktualisiert?", options: ["Manuell die Zahl eintippen", "Einfügen → Seitenzahl → Position wählen", "Start → Nummerierung", "Überprüfen → Seitenzahlen"], correct: [1] },
+
+  // ===================== SEITE EINRICHTEN (Textverarbeitung) =====================
+  { topic: "seite-einrichten", type: "single", q: "Die erste Seite soll A4 Hochformat bleiben, die zweite A4 Querformat werden. Was ist die Voraussetzung dafür?", options: ["Ein Abschnittswechsel zwischen den beiden Seiten", "Zwei separate Word-Dateien", "Ein einfacher Seitenumbruch reicht aus", "Das geht in Word grundsätzlich nicht"], correct: [0] },
+  { topic: "seite-einrichten", type: "single", q: "Wo stellst du die Seitenränder auf exakt 2 cm auf allen Seiten ein?", options: ["Layout → Seitenränder → 'Benutzerdefinierte Seitenränder...'", "Start → Absatz", "Einfügen → Tabelle", "Überprüfen → Sprache"], correct: [0] },
+
+  // ===================== SORTIEREN & NUMMERIERUNG (Textverarbeitung) =====================
+  { topic: "sortieren-nummerierung", type: "single", q: "Am Ende des Dokuments steht eine Liste von Begriffen. Sie soll alphabetisch aufsteigend sortiert werden. Welche Word-Funktion nutzt du?", options: ["Suchen und Ersetzen", "Die Funktion 'Sortieren' in der Absatz-Gruppe (Start-Tab)", "Formatpinsel", "Rechtschreibprüfung"], correct: [1] },
+  { topic: "sortieren-nummerierung", type: "single", q: "Drei Begriffe sollen mit fetten Punkten statt Zahlen versehen werden. Welche Funktion nutzt du?", options: ["Nummerierung", "Aufzählungszeichen", "Sortieren", "Einzug"], correct: [1] },
+
+  // ===================== EDV VS. IT (Textverarbeitung) =====================
+  { topic: "edv-vs-it", type: "single", q: "Wofür steht die Abkürzung EDV?", options: ["Elektronische Datenverwaltung", "Elektronische Datenverarbeitung", "Elektronische Datenvernetzung", "Einheitliche Datenverarbeitung"], correct: [1] },
+  { topic: "edv-vs-it", type: "single", q: "Wofür steht IT?", options: ["Informationstechnik", "Internet-Technologie", "Interne Technik", "Informationstransfer"], correct: [0] },
+  { topic: "edv-vs-it", type: "single", q: "Wie verhalten sich EDV und IT zueinander?", options: ["EDV und IT sind exakt dasselbe", "EDV ist ein Teilbereich der umfassenderen IT", "IT ist ein Teilbereich der EDV", "Sie haben nichts miteinander zu tun"], correct: [1] },
+  { topic: "edv-vs-it", type: "single", q: "Welcher Begriff wird heute häufig anstelle von 'EDV-Kenntnisse' verwendet?", options: ["Cloud-Kenntnisse", "PC-Kenntnisse", "Netzwerk-Kenntnisse", "Server-Kenntnisse"], correct: [1] },
+
+  // ===================== HARDWARE (Textverarbeitung) =====================
+  { topic: "hardware", type: "single", q: "Zu welcher Gerätegruppe gehört ein Scanner?", options: ["Eingabegerät", "Ausgabegerät", "Zentraleinheit", "Kein Hardware-Bestandteil"], correct: [0] },
+  { topic: "hardware", type: "single", q: "Zu welcher Gerätegruppe gehört ein Drucker?", options: ["Eingabegerät", "Ausgabegerät", "Zentraleinheit", "Software"], correct: [1] },
+  { topic: "hardware", type: "single", q: "Wofür steht CPU?", options: ["Central Processing Unit", "Computer Power Unit", "Central Program Utility", "Core Processing Unity"], correct: [0] },
+  { topic: "hardware", type: "single", q: "Was gehört zur Zentraleinheit?", options: ["Monitor und Lautsprecher", "Mainboard, Prozessor, Arbeitsspeicher, Grafikkarte", "Tastatur und Maus", "Nur das Gehäuse"], correct: [1] },
+  { topic: "hardware", type: "single", q: "Was ist der Unterschied zwischen RAM und Festplatte?", options: ["Kein Unterschied, beides speichert dauerhaft", "RAM speichert nur temporär bis zum Ausschalten, die Festplatte speichert dauerhaft", "RAM ist ein Eingabegerät, Festplatte ein Ausgabegerät", "RAM ist langsamer als eine Festplatte"], correct: [1] },
+
+  // ===================== KLAUSUR-SIMULATION (Wetter-Aufgabe) =====================
+  { topic: "klausur-ablauf", type: "single", q: "Die erste Seite soll in Calibri, 12 pt, Zeilenabstand 1,0 und Blocksatz eingerichtet werden. Wann solltest du das erledigen?", options: ["Ganz am Ende, nach allen anderen Schritten", "Als einen der ersten Schritte, weil sich die Grundformatierung auf das ganze Dokument auswirkt", "Erst nachdem die Fußnote gesetzt ist", "Die Reihenfolge spielt keine Rolle"], correct: [1] },
+  { topic: "klausur-ablauf", type: "single", q: "Die Überschrift soll 20 pt, fett, zentriert, mit doppeltem dunkelblauem Rahmen sein. Welche zwei Word-Bereiche brauchst du dafür?", options: ["Nur die Schriftart-Gruppe", "Schriftart-Gruppe (Größe/fett/zentriert) und den Dialog 'Rahmen und Schattierung' (Rahmen)", "Nur Layout → Spalten", "Nur Einfügen → Formen"], correct: [1] },
+  { topic: "klausur-ablauf", type: "single", q: "Ein Absatz soll zusätzlich zum Erstzeileneinzug einen linken Einzug von 2 cm bekommen. Wo stellst du beides ein?", options: ["In zwei getrennten Dialogen, das geht nicht gleichzeitig", "Im selben Absatz-Dialog unter 'Einzüge und Abstände' lassen sich Sondereinzug und Einzug links gemeinsam setzen", "Nur über das Lineal, der Dialog erlaubt das nicht", "Über Layout → Spalten"], correct: [1] },
+  { topic: "klausur-ablauf", type: "single", q: "Erst soll ein Begriff im Text ersetzt werden, danach soll beim ersten Auftreten eines anderen Begriffs eine Fußnote eingefügt werden. In welcher Reihenfolge gehst du sinnvollerweise vor?", options: ["Erst die Fußnote setzen, danach ersetzen – die Reihenfolge ist egal", "Erst ersetzen, dann die Fußnote einfügen, damit du weißt, wo der Begriff nach dem Ersetzen tatsächlich steht", "Beides gleichzeitig in einem Dialog", "Fußnoten müssen vor dem Speichern gelöscht werden"], correct: [1] },
+  { topic: "klausur-ablauf", type: "single", q: "Ab einem bestimmten Absatz soll die nächste Seite Querformat mit anderen Rändern bekommen, die erste Seite aber Hochformat bleiben. Was fügst du an dieser Stelle ein?", options: ["Einen einfachen Seitenumbruch", "Einen Abschnittswechsel 'Nächste Seite'", "Eine leere Tabelle", "Einen Zeilenumbruch"], correct: [1] },
+  { topic: "klausur-ablauf", type: "single", q: "Die Kopfzeile der zweiten Seite soll sich von der ersten unterscheiden. Was ist der notwendige Zwischenschritt, bevor du den neuen Kopfzeilentext eintippst?", options: ["Nichts, einfach überschreiben", "'Mit vorheriger verknüpfen' in der Kopfzeile des neuen Abschnitts deaktivieren", "Die erste Kopfzeile löschen", "Ein zweites Dokument öffnen"], correct: [1] },
+  { topic: "klausur-ablauf", type: "single", q: "Am Ende soll eine Liste alphabetisch sortiert werden. Welche Funktion nutzt du, statt die Reihenfolge manuell einzutippen?", options: ["Suchen und Ersetzen", "Die Sortieren-Funktion in der Absatz-Gruppe", "Rechtschreibprüfung", "AutoKorrektur"], correct: [1] },
+  { topic: "klausur-ablauf", type: "single", q: "Warum lohnt es sich, bei einer 45-minütigen Klausur mit ca. 12 Arbeitsschritten die Reihenfolge der Aufgabenstellung genau einzuhalten?", options: ["Weil Word Schritte nur in dieser Reihenfolge zulässt", "Weil spätere Schritte (z. B. Abschnittswechsel, Spalten) auf den vorherigen Formatierungen aufbauen und bei falscher Reihenfolge Mehrarbeit entsteht", "Weil die Reihenfolge separat bewertet wird, nicht das Ergebnis", "Weil man sonst nicht speichern kann"], correct: [1] },
+  { topic: "klausur-ablauf", type: "multi", q: "Welche der folgenden Anweisungen aus einer Textverarbeitungs-Klausur brauchen zwingend einen Abschnittswechsel statt eines einfachen Seitenumbruchs? (2 richtig)", options: ["Ab der zweiten Seite Querformat statt Hochformat", "Nach dem letzten Absatz eine neue, leere Seite für eine Liste", "Ab der zweiten Seite eine andere Kopfzeile ohne Verknüpfung zur ersten", "Nach der Überschrift einen zusätzlichen Absatz einfügen"], correct: [0, 2] },
 ];
