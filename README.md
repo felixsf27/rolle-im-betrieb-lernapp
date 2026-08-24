@@ -5,7 +5,7 @@ Kostenlose, offline-fähige Lern-App für die Umschulung. Aufbau: **Fach → Kat
 Themen eines bereits geschriebenen Tests zusammen, damit ein neuer Test im selben Fach
 später als eigene Kategorie danebengelegt werden kann, statt mit alten Themen zu vermischen.
 
-Aktuell vier Fächer:
+Aktuell fünf Fächer:
 
 - **Rolle im Betrieb** → Kategorie "Jugend- und Arbeitsrecht": Betriebsrat, JAV,
   Tarifvertragsrecht, Arbeitskampf & Streik, duale Ausbildung (BBiG), Jugendarbeitsschutzgesetz
@@ -22,6 +22,10 @@ Aktuell vier Fächer:
   Funktionen"); EDV vs. IT, Hardware-Komponenten (Kategorie "EDV-Grundlagen"); eine
   Klausur-Simulation nach dem Vorbild einer echten Musteraufgabe inkl. Gliederungs-Übung
   zum systematischen Klausur-Ablauf (Kategorie "Klausur-Simulation").
+- **Recht** → eigenständiges Fach, nicht Teil von "Rolle im Betrieb" → Kategorie
+  "Rechtsgrundlagen (BGB AT)": Normenhierarchie & Rechtsquellen, Rechtsnorm (Tatbestand &
+  Rechtsfolge), Rechtsobjekte (Sachen), Rechtssubjekte (Personen), Rechtsfähigkeit (jur. Person),
+  Geschäftsfähigkeit, Deliktfähigkeit, Schuldfähigkeit, Betreuung, Abstraktionsprinzip.
 
 ## Neues Fach, neue Kategorie oder neues Thema hinzufügen
 

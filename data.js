@@ -4,6 +4,7 @@ const SUBJECTS = [
   { id: "rewe", title: "Rechnungswesen", icon: "🧮" },
   { id: "tabellenkalkulation", title: "Tabellenkalkulation", icon: "📊" },
   { id: "textverarbeitung", title: "Textverarbeitung", icon: "📝" },
+  { id: "recht", title: "Recht", icon: "⚖️" },
 ];
 
 // Kategorien je Fach – ein Testblock/Themenblock. Neue Kategorie (z. B. für den nächsten Test):
@@ -16,6 +17,7 @@ const CATEGORIES = [
   { id: "tv-funktionen", subject: "textverarbeitung", title: "Werkzeuge & Funktionen", icon: "🔧" },
   { id: "tv-edv-grundlagen", subject: "textverarbeitung", title: "EDV-Grundlagen", icon: "💻" },
   { id: "tv-klausur", subject: "textverarbeitung", title: "Klausur-Simulation", icon: "🧪" },
+  { id: "recht-grundlagen", subject: "recht", title: "Rechtsgrundlagen (BGB AT)", icon: "📜" },
 ];
 
 // Themen je Kategorie – erstellt aus den Lernmaterialien der Umschulung
@@ -51,6 +53,16 @@ const TOPICS = [
   { id: "edv-vs-it", subject: "textverarbeitung", category: "tv-edv-grundlagen", title: "EDV vs. IT", icon: "💾" },
   { id: "hardware", subject: "textverarbeitung", category: "tv-edv-grundlagen", title: "Hardware-Komponenten", icon: "🖥️" },
   { id: "klausur-ablauf", subject: "textverarbeitung", category: "tv-klausur", title: "Klausur-Ablauf (Wetter-Aufgabe)", icon: "⏱️" },
+  { id: "recht-normenhierarchie", subject: "recht", category: "recht-grundlagen", title: "Normenhierarchie & Rechtsquellen", icon: "🏛️" },
+  { id: "recht-tatbestand-rechtsfolge", subject: "recht", category: "recht-grundlagen", title: "Rechtsnorm: Tatbestand & Rechtsfolge", icon: "📐" },
+  { id: "recht-rechtsobjekte", subject: "recht", category: "recht-grundlagen", title: "Rechtsobjekte (Sachen)", icon: "📦" },
+  { id: "recht-rechtssubjekte", subject: "recht", category: "recht-grundlagen", title: "Rechtssubjekte (Personen)", icon: "🧑‍⚖️" },
+  { id: "recht-rechtsfaehigkeit", subject: "recht", category: "recht-grundlagen", title: "Rechtsfähigkeit (jur. Person)", icon: "🏢" },
+  { id: "recht-geschaeftsfaehigkeit", subject: "recht", category: "recht-grundlagen", title: "Geschäftsfähigkeit", icon: "✍️" },
+  { id: "recht-deliktfaehigkeit", subject: "recht", category: "recht-grundlagen", title: "Deliktfähigkeit", icon: "💥" },
+  { id: "recht-schuldfaehigkeit", subject: "recht", category: "recht-grundlagen", title: "Schuldfähigkeit", icon: "🚔" },
+  { id: "recht-betreuung", subject: "recht", category: "recht-grundlagen", title: "Betreuung & Geschäftsfähigkeit", icon: "🩺" },
+  { id: "recht-abstraktionsprinzip", subject: "recht", category: "recht-grundlagen", title: "Abstraktionsprinzip", icon: "🔗" },
 ];
 
 // ---------- GLIEDERUNGEN (Reihenfolge zum Selbst-Üben) ----------
@@ -729,6 +741,70 @@ const QUESTIONS = [
   { topic: "klausur-ablauf", type: "single", q: "Am Ende soll eine Liste alphabetisch sortiert werden. Welche Funktion nutzt du, statt die Reihenfolge manuell einzutippen?", options: ["Suchen und Ersetzen", "Die Sortieren-Funktion in der Absatz-Gruppe", "Rechtschreibprüfung", "AutoKorrektur"], correct: [1] },
   { topic: "klausur-ablauf", type: "single", q: "Warum lohnt es sich, bei einer 45-minütigen Klausur mit ca. 12 Arbeitsschritten die Reihenfolge der Aufgabenstellung genau einzuhalten?", options: ["Weil Word Schritte nur in dieser Reihenfolge zulässt", "Weil spätere Schritte (z. B. Abschnittswechsel, Spalten) auf den vorherigen Formatierungen aufbauen und bei falscher Reihenfolge Mehrarbeit entsteht", "Weil die Reihenfolge separat bewertet wird, nicht das Ergebnis", "Weil man sonst nicht speichern kann"], correct: [1] },
   { topic: "klausur-ablauf", type: "multi", q: "Welche der folgenden Anweisungen aus einer Textverarbeitungs-Klausur brauchen zwingend einen Abschnittswechsel statt eines einfachen Seitenumbruchs? (2 richtig)", options: ["Ab der zweiten Seite Querformat statt Hochformat", "Nach dem letzten Absatz eine neue, leere Seite für eine Liste", "Ab der zweiten Seite eine andere Kopfzeile ohne Verknüpfung zur ersten", "Nach der Überschrift einen zusätzlichen Absatz einfügen"], correct: [0, 2] },
+
+  // ===================== RECHT: NORMENHIERARCHIE =====================
+  { topic: "recht-normenhierarchie", type: "single", q: "Welche Rangfolge der Rechtsquellen ist in Deutschland korrekt (von oben nach unten)?", options: ["Grundgesetz → Gesetz → Rechtsverordnung → Verwaltungsvorschrift", "Gesetz → Grundgesetz → Verwaltungsvorschrift → Rechtsverordnung", "Rechtsverordnung → Gesetz → Grundgesetz → Verwaltungsvorschrift", "Grundgesetz → Verwaltungsvorschrift → Gesetz → Rechtsverordnung"], correct: [0] },
+  { topic: "recht-normenhierarchie", type: "single", q: "In welchem Bereich hat EU-Recht Vorrang vor deutschem Recht?", options: ["In allen Rechtsbereichen ausnahmslos", "Nur in den Bereichen, die Deutschland an die EU übertragen hat", "Nie, das Grundgesetz steht immer über EU-Recht", "Nur bei Verträgen zwischen Privatpersonen"], correct: [1] },
+  { topic: "recht-normenhierarchie", type: "single", q: "Welches Verhältnis besteht im Zivilrecht zwischen zwei Privatpersonen?", options: ["Ein Über-/Unterordnungsverhältnis wie im öffentlichen Recht", "Ein Gleichordnungsverhältnis", "Es gibt dort gar keine rechtliche Beziehung", "Nur der Staat kann zwischen ihnen vermitteln"], correct: [1] },
+  { topic: "recht-normenhierarchie", type: "multi", q: "Welche Aussagen zum Ziel des Zivilrechts sind laut Unterricht richtig? (2 richtig)", options: ["Es geht um Wahrheitsfindung wie im Strafprozess", "Es geht um einen fairen Interessenausgleich zwischen den Streitenden", "Bei Einigkeit in einem Punkt wird dieser als unstreitig unterstellt", "Nur der Staat legt fest, wer recht hat", "Jede Partei muss vor Gericht ihre komplette Lebensgeschichte erzählen"], correct: [1, 2] },
+
+  // ===================== RECHT: TATBESTAND & RECHTSFOLGE =====================
+  { topic: "recht-tatbestand-rechtsfolge", type: "single", q: "Aus welchen zwei Teilen besteht eine Rechtsnorm?", options: ["Einleitung und Schluss", "Tatbestand und Rechtsfolge", "Paragraph und Kommentar", "Gesetz und Verordnung"], correct: [1] },
+  { topic: "recht-tatbestand-rechtsfolge", type: "single", q: "Was beschreibt der Tatbestand einer Norm?", options: ["Die rechtliche Konsequenz einer Handlung", "Die allgemeine Formulierung eines Lebenssachverhalts", "Das Urteil des Gerichts", "Die Höhe der Strafe"], correct: [1] },
+  { topic: "recht-tatbestand-rechtsfolge", type: "single", q: "Jemand leiht sich kurzzeitig ein fremdes Auto, tankt es sogar voll und stellt es unbeschädigt mit Schlüssel zurück, ohne es behalten zu wollen. Wie wird das rechtlich eingeordnet?", options: ["Diebstahl, weil das Auto genutzt wurde", "Kein Diebstahl, weil der Vorsatz zur dauerhaften Zueignung fehlt", "Automatisch strafbar wegen unerlaubten Fahrens", "Unterschlagung, weil es nicht sofort zurückgegeben wurde"], correct: [1] },
+  { topic: "recht-tatbestand-rechtsfolge", type: "single", q: "Welche Rechtsfolge hat § 823 BGB, wenn jemand die Sache eines anderen beschädigt?", options: ["Freiheitsstrafe", "Schadensersatzpflicht", "Bußgeld an den Staat", "Entzug des Eigentums"], correct: [1] },
+  { topic: "recht-tatbestand-rechtsfolge", type: "multi", q: "Welche der folgenden Fälle wurden im Unterricht als Tatbestand-Rechtsfolge-Beispiele genannt? (3 richtig)", options: ["Unterlassene Hilfeleistung", "Zu schnelles Fahren auf der Autobahn", "Unerlaubtes Entfernen vom Unfallort (Unfallflucht)", "Falschparken", "Leistungserschleichung (Schwarzfahren)"], correct: [0, 2, 4] },
+
+  // ===================== RECHT: RECHTSOBJEKTE =====================
+  { topic: "recht-rechtsobjekte", type: "single", q: "Woraus bestehen Rechtsobjekte?", options: ["Nur aus beweglichen Sachen", "Aus Sachen und Rechten", "Nur aus Grundstücken", "Aus Personen und Sachen"], correct: [1] },
+  { topic: "recht-rechtsobjekte", type: "single", q: "Wie wird ein Haus rechtlich behandelt?", options: ["Als eigenständige unbewegliche Sache", "Als Teil des Grundstücks, nicht als eigenständige Sache", "Als bewegliche Sache", "Als Recht, nicht als Sache"], correct: [1] },
+  { topic: "recht-rechtsobjekte", type: "single", q: "Was ist eine Eigentumswohnung rechtlich gesehen?", options: ["Ein komplett eigenständiges Grundstück", "Ein Miteigentumsanteil am Grundstück mit ausschließlichem Nutzungsrecht an der Wohnung", "Eine bewegliche Sache", "Ein reines Nutzungsrecht ohne Eigentumsanteil"], correct: [1] },
+  { topic: "recht-rechtsobjekte", type: "single", q: "Ein Kunde bestellt 1000 Kugelschreiber, ohne bestimmte Exemplare festzulegen. Um was für eine Sache handelt es sich?", options: ["Speziessache", "Gattungssache (vertretbare Sache)", "Unteilbare Sache", "Unbewegliche Sache"], correct: [1] },
+  { topic: "recht-rechtsobjekte", type: "single", q: "Ein Kunde sucht sich im Laden gezielt drei bestimmte Monitore aus ('den, den und den'). Um was für eine Sache handelt es sich jetzt?", options: ["Gattungssache", "Speziessache (nicht vertretbar)", "Verbrauchbare Sache", "Unbewegliche Sache"], correct: [1] },
+  { topic: "recht-rechtsobjekte", type: "single", q: "Was passiert bei einer verbrauchbaren Sache wie Mehl, wenn sie bestimmungsgemäß verwendet wird?", options: ["Sie bleibt unverändert erhalten", "Sie ist danach 'weg' bzw. verbraucht", "Sie wird automatisch zur Speziessache", "Sie kann nicht mehr verliehen werden"], correct: [1] },
+  { topic: "recht-rechtsobjekte", type: "single", q: "Warum kann bei einem Geld-Darlehen (z. B. 10 Euro leihen) nicht derselbe Geldschein zurückverlangt werden?", options: ["Weil Geld eine Speziessache ist", "Weil Geld eine vertretbare Sache ist und nur der Wert zählt", "Weil Geld keine Sache ist", "Weil Banknoten nach einem Jahr ungültig werden"], correct: [1] },
+  { topic: "recht-rechtsobjekte", type: "single", q: "Ein Fahrrad verliert durch Abschrauben des Hinterrads seine Funktion als Fahrrad. Was für eine Sache ist es damit?", options: ["Teilbar", "Unteilbar", "Vertretbar", "Verbrauchbar"], correct: [1] },
+  { topic: "recht-rechtsobjekte", type: "single", q: "Wie werden Tiere rechtlich grundsätzlich eingeordnet?", options: ["Als eigenständige Rechtssubjekte", "Als Sachen, aber mit rechtlicher Sonderstellung", "Als Rechte", "Gar nicht erfasst"], correct: [1] },
+
+  // ===================== RECHT: RECHTSSUBJEKTE =====================
+  { topic: "recht-rechtssubjekte", type: "single", q: "Was bezeichnet man als Rechtsfähigkeit?", options: ["Die Fähigkeit, Verträge selbst zu unterschreiben", "Die Eigenschaft, Träger von Rechten und Pflichten sein zu können", "Die Fähigkeit, vor Gericht auszusagen", "Das Wahlrecht ab 18"], correct: [1] },
+  { topic: "recht-rechtssubjekte", type: "single", q: "Zwei Personen gründen zusammen eine GbR. Um was für eine Art von Rechtssubjekt handelt es sich?", options: ["Eine juristische Person", "Eine Personengesellschaft", "Eine natürliche Person", "Gar kein Rechtssubjekt"], correct: [1] },
+  { topic: "recht-rechtssubjekte", type: "single", q: "Wer haftet bei einer juristischen Person (z. B. GmbH) für Schulden der Gesellschaft?", options: ["Die Gesellschafter mit ihrem Privatvermögen", "Die Gesellschaft selbst mit dem Gesellschaftsvermögen", "Niemand, Schulden verfallen automatisch", "Der Staat"], correct: [1] },
+  { topic: "recht-rechtssubjekte", type: "single", q: "Wer haftet bei einer Personengesellschaft (z. B. OHG)?", options: ["Nur die Gesellschaft mit ihrem eigenen Vermögen", "Alle Gesellschafter gemeinsam mit ihrem gesamten Vermögen", "Niemand", "Nur der Gesellschafter mit der höchsten Einlage"], correct: [1] },
+
+  // ===================== RECHT: RECHTSFÄHIGKEIT (JUR. PERSON) =====================
+  { topic: "recht-rechtsfaehigkeit", type: "single", q: "Wann beginnt bei einer juristischen Person (z. B. GmbH) die Rechtsfähigkeit?", options: ["Mit der Unterschrift des Gesellschaftsvertrags", "Mit der Eintragung ins Register", "Mit der ersten Rechnung", "Mit der Gewerbeanmeldung"], correct: [1] },
+  { topic: "recht-rechtsfaehigkeit", type: "single", q: "Wann endet die Rechtsfähigkeit einer juristischen Person?", options: ["Mit der Insolvenzanmeldung", "Mit der Löschung aus dem Register", "Nach 30 Jahren automatisch", "Sie endet nie"], correct: [1] },
+
+  // ===================== RECHT: GESCHÄFTSFÄHIGKEIT =====================
+  { topic: "recht-geschaeftsfaehigkeit", type: "single", q: "Ab welchem Alter ist man in Deutschland voll geschäftsfähig?", options: ["16", "18", "21", "14"], correct: [1] },
+  { topic: "recht-geschaeftsfaehigkeit", type: "single", q: "In welcher Altersspanne ist man beschränkt geschäftsfähig?", options: ["0-6 Jahre", "7-17 Jahre", "14-17 Jahre", "Ab 18 Jahre"], correct: [1] },
+  { topic: "recht-geschaeftsfaehigkeit", type: "single", q: "Ein 10-Jähriger kauft sich von seinem Taschengeld ein Comicheft. Braucht er dafür die gesonderte Einwilligung seiner Eltern?", options: ["Ja, immer", "Nein, wegen des Taschengeldparagraphen gilt die Einwilligung als vorab erteilt", "Nur wenn das Heft über 10 Euro kostet", "Nur mit schriftlicher Vollmacht"], correct: [1] },
+  { topic: "recht-geschaeftsfaehigkeit", type: "multi", q: "Welche Ausnahmen von der Einwilligungspflicht bei beschränkter Geschäftsfähigkeit wurden im Unterricht genannt? (2 richtig)", options: ["Taschengeldparagraph", "Geschäfte, die dem Minderjährigen ausschließlich rechtlichen Vorteil bringen", "Käufe über 100 Euro", "Käufe an Sonn- und Feiertagen", "Geschäfte mit Verwandten ersten Grades"], correct: [0, 1] },
+  { topic: "recht-geschaeftsfaehigkeit", type: "single", q: "Ein 16-Jähriger hat mit Einwilligung der Eltern separat ein Arbeitsverhältnis. Was gilt dafür?", options: ["Er darf das Arbeitsverhältnis eigenständig führen und auch selbst kündigen", "Er braucht für jede Kündigung erneut die Einwilligung", "Er darf nicht selbst kündigen", "Das Arbeitsverhältnis ist automatisch unwirksam"], correct: [0] },
+  { topic: "recht-geschaeftsfaehigkeit", type: "single", q: "Derselbe 16-jährige Azubi will sich privat ein Auto kaufen, um zur Arbeit zu fahren. Deckt die Einwilligung zum Arbeitsverhältnis diesen Kauf automatisch ab?", options: ["Ja, weil es dem Arbeitsweg dient", "Nein, dafür braucht es eine eigene Einwilligung", "Ja, ab 16 automatisch", "Nein, das ist grundsätzlich verboten"], correct: [1] },
+
+  // ===================== RECHT: DELIKTFÄHIGKEIT =====================
+  { topic: "recht-deliktfaehigkeit", type: "single", q: "Worum geht es bei der Deliktfähigkeit?", options: ["Ob jemand strafrechtlich belangt werden kann", "Ob jemand zivilrechtlich für einen verursachten Schaden Schadensersatz leisten muss", "Ob jemand wählen darf", "Ob jemand einen Vertrag unterschreiben darf"], correct: [1] },
+  { topic: "recht-deliktfaehigkeit", type: "single", q: "Ab welchem Alter ist man voll deliktfähig?", options: ["14", "16", "18", "21"], correct: [2] },
+  { topic: "recht-deliktfaehigkeit", type: "single", q: "Ein 9-Jähriger beschädigt beim Spielen eine fremde Sache. Ist er deliktfähig?", options: ["Nein, unter 7 wäre er das nicht, mit 9 kommt es auf die Einsichtsfähigkeit im Einzelfall an", "Ja, ab 7 ist man automatisch voll deliktfähig", "Nein, erst ab 18 überhaupt deliktfähig", "Das hängt nur vom Notendurchschnitt ab"], correct: [0] },
+
+  // ===================== RECHT: SCHULDFÄHIGKEIT =====================
+  { topic: "recht-schuldfaehigkeit", type: "single", q: "Bis zu welchem Alter ist man in Deutschland strafrechtlich nicht schuldfähig?", options: ["Unter 12 Jahre", "Unter 14 Jahre", "Unter 16 Jahre", "Unter 18 Jahre"], correct: [1] },
+  { topic: "recht-schuldfaehigkeit", type: "single", q: "Wovon hängt bei 14- bis 17-Jährigen die Schuldfähigkeit ab?", options: ["Vom Notendurchschnitt in der Schule", "Von der Einsichtsfähigkeit, das Unrecht der Tat zu erkennen", "Ausschließlich vom Wohnort", "Sie sind grundsätzlich nie schuldfähig"], correct: [1] },
+  { topic: "recht-schuldfaehigkeit", type: "single", q: "Ab welchem Alter ist man voll schuldfähig?", options: ["16", "18", "21", "14"], correct: [1] },
+
+  // ===================== RECHT: BETREUUNG =====================
+  { topic: "recht-betreuung", type: "single", q: "Führt eine gerichtlich angeordnete Betreuung automatisch zur vollständigen Geschäftsunfähigkeit?", options: ["Ja, immer", "Nein, nur soweit der Aufgabenkreis der Betreuung reicht", "Ja, aber nur bei über 65-Jährigen", "Nein, Betreuung hat keinerlei Einfluss auf die Geschäftsfähigkeit"], correct: [1] },
+  { topic: "recht-betreuung", type: "single", q: "Jemand hat eine Betreuung nur für Grundstücksgeschäfte eingerichtet. Wie ist seine Geschäftsfähigkeit in anderen Bereichen (z. B. beim Einkaufen)?", options: ["Vollständig entfallen", "Weiterhin gegeben, da die Betreuung nur den Aufgabenkreis Grundstücke betrifft", "Automatisch auf den gesetzlichen Vertreter übergegangen", "Von einem Richter im Einzelfall neu zu entscheiden"], correct: [1] },
+
+  // ===================== RECHT: ABSTRAKTIONSPRINZIP =====================
+  { topic: "recht-abstraktionsprinzip", type: "single", q: "Was besagt das Abstraktionsprinzip im deutschen Recht?", options: ["Verpflichtungs- und Verfügungsgeschäft sind rechtlich getrennt zu betrachten und je eigenständig wirksam/unwirksam", "Verträge sind immer formfrei gültig", "Nur schriftliche Verträge sind wirksam", "Verpflichtungsgeschäfte gibt es im deutschen Recht nicht"], correct: [0] },
+  { topic: "recht-abstraktionsprinzip", type: "single", q: "Was ist das Verpflichtungsgeschäft bei einem Kauf?", options: ["Die Übergabe der Ware", "Der Kaufvertrag", "Die Rechnung", "Die Zahlung"], correct: [1] },
+  { topic: "recht-abstraktionsprinzip", type: "single", q: "Was ist das Verfügungsgeschäft bei einem Kauf?", options: ["Der Kaufvertrag selbst", "Die Erfüllung/Übereignung, z. B. Übergabe der Ware gegen Geld", "Die Anzahlung", "Die Rechnungsstellung"], correct: [1] },
+  { topic: "recht-abstraktionsprinzip", type: "single", q: "Ein Käufer erhält eine mangelhafte Kaufsache. Was gilt laut Abstraktionsprinzip für den Kaufvertrag?", options: ["Der Kaufvertrag ist automatisch unwirksam", "Der Kaufvertrag (Verpflichtungsgeschäft) bleibt wirksam, nur die Erfüllung ist fehlerhaft", "Es gibt gar keinen Vertrag", "Nur der Verkäufer kann den Vertrag anfechten"], correct: [1] },
+  { topic: "recht-abstraktionsprinzip", type: "single", q: "Eine Vertragspartei war beim Vertragsschluss geschäftsunfähig. Was passiert mit einer bereits übergebenen Ware (Verfügungsgeschäft)?", options: ["Sie bleibt beim Käufer, da das Verfügungsgeschäft unabhängig gültig ist", "Sie muss rückabgewickelt werden, weil bereits das Verpflichtungsgeschäft unwirksam war", "Der Verkäufer bekommt automatisch Schadensersatz", "Das spielt keine Rolle"], correct: [1] },
+  { topic: "recht-abstraktionsprinzip", type: "single", q: "Wofür gibt es statt einer schwer beweisbaren Anfechtung (z. B. wegen Alkoholisierung) oft ein alternatives Mittel bei bestimmten Vertragssituationen (z. B. Messekauf)?", options: ["Das Widerrufsrecht", "Die sofortige Nichtigkeit", "Eine Anzeige bei der Polizei", "Eine automatische Rückabwicklung nach 30 Tagen"], correct: [0] },
 ];
 
 // ---------- OFFENE FRAGEN (Freitext) ----------
