@@ -104,6 +104,10 @@ function openFor(topicId) {
   return (typeof OPEN_QUESTIONS !== "undefined" ? OPEN_QUESTIONS : []).filter(o => o.topic === topicId);
 }
 
+function bookingsFor(topicId) {
+  return (typeof BOOKINGS !== "undefined" ? BOOKINGS : []).filter(b => b.topic === topicId);
+}
+
 function categoryHasStructure(categoryId) {
   return TOPICS.some(t => t.category === categoryId && structureFor(t.id));
 }
@@ -112,11 +116,16 @@ function categoryHasOpen(categoryId) {
   return TOPICS.some(t => t.category === categoryId && openFor(t.id).length > 0);
 }
 
+function categoryHasBookings(categoryId) {
+  return TOPICS.some(t => t.category === categoryId && bookingsFor(t.id).length > 0);
+}
+
 function updateModeAvailability() {
-  // Gliederung und Freitext nur zeigen, wenn die aktuelle Kategorie dafür Inhalte hat.
+  // Gliederung, Freitext und Buchung nur zeigen, wenn die aktuelle Kategorie dafür Inhalte hat.
   const availability = {
     structure: categoryHasStructure(state.currentCategory),
     open: categoryHasOpen(state.currentCategory),
+    booking: categoryHasBookings(state.currentCategory),
   };
   Object.keys(availability).forEach(mode => {
     const btn = document.querySelector('.mode-btn[data-mode="' + mode + '"]');
@@ -134,13 +143,15 @@ function topicStats(topicId) {
   const cCount = FLASHCARDS.filter(c => c.topic === topicId).length;
   const sCount = structureFor(topicId)?.items.length || 0;
   const oCount = openFor(topicId).length;
+  const bCount = bookingsFor(topicId).length;
   const progress = loadProgress();
   const done = progress[topicId]?.bestScore || 0;
   const total = state.mode === "cards" ? cCount
     : state.mode === "structure" ? sCount
     : state.mode === "open" ? oCount
+    : state.mode === "booking" ? bCount
     : qCount;
-  return { total, done, qCount, cCount, sCount, oCount };
+  return { total, done, qCount, cCount, sCount, oCount, bCount };
 }
 
 function renderTopics() {
@@ -149,6 +160,7 @@ function renderTopics() {
   TOPICS.filter(t => t.category === state.currentCategory)
     .filter(t => state.mode !== "structure" || structureFor(t.id))
     .filter(t => state.mode !== "open" || openFor(t.id).length > 0)
+    .filter(t => state.mode !== "booking" || bookingsFor(t.id).length > 0)
     .forEach(t => {
       const stats = topicStats(t.id);
       const pct = stats.total ? Math.round((stats.done / stats.total) * 100) : 0;
@@ -157,6 +169,7 @@ function renderTopics() {
       const metaText = state.mode === "cards" ? stats.cCount + " Karten"
         : state.mode === "structure" ? stats.sCount + " Punkte"
         : state.mode === "open" ? stats.oCount + " Aufgaben"
+        : state.mode === "booking" ? stats.bCount + " Buchungen"
         : stats.qCount + " Fragen";
       card.innerHTML = `
         <span class="icon">${t.icon}</span>
@@ -279,12 +292,14 @@ $("#backFromQuiz").addEventListener("click", () => history.back());
 $("#backFromCards").addEventListener("click", () => history.back());
 $("#backFromStructure").addEventListener("click", () => history.back());
 $("#backFromOpen").addEventListener("click", () => history.back());
+$("#backFromBooking").addEventListener("click", () => history.back());
 
 function startTopic(topicId) {
   state.currentTopic = topicId;
   if (state.mode === "cards") startCards(topicId);
   else if (state.mode === "structure") startStructure(topicId);
   else if (state.mode === "open") startOpen(topicId);
+  else if (state.mode === "booking") startBooking(topicId);
   else startQuiz(topicId);
 }
 
@@ -424,8 +439,8 @@ function showResult(kind) {
   const retryBtn = $("#retryBtn");
   const retryWrongBtn = $("#retryWrongBtn");
 
-  // Frage-für-Frage-Durchsicht nur für Fragen-Modi (Quiz/Freitext), nicht für Karten/Gliederung.
-  const showReview = (kind === "quiz" || kind === "open") && state.answeredLog.length;
+  // Frage-für-Frage-Durchsicht nur für Fragen-Modi (Quiz/Freitext/Buchung), nicht für Karten/Gliederung.
+  const showReview = (kind === "quiz" || kind === "open" || kind === "booking") && state.answeredLog.length;
   reviewEl.classList.toggle("hidden", !showReview);
   reviewEl.innerHTML = "";
   let wrongCount = 0;
@@ -435,7 +450,7 @@ function showResult(kind) {
       const item = document.createElement("div");
       item.className = "review-item " + (entry.wasCorrect ? "correct" : "incorrect");
       item.innerHTML =
-        '<div class="review-q">' + (n + 1) + ". " + escapeHtml(entry.question.q) + '</div>' +
+        '<div class="review-q">' + (n + 1) + ". " + escapeHtml(entry.question.q || entry.question.situation) + '</div>' +
         '<div class="review-line"><span class="review-label">Deine Antwort: </span>' +
         '<span class="review-given ' + (entry.wasCorrect ? "correct-text" : "wrong-text") + '">' +
         escapeHtml(entry.given) + (entry.wasCorrect ? " ✅" : " ❌") + '</span></div>' +
@@ -466,6 +481,7 @@ $("#retryBtn").addEventListener("click", () => {
   if (kind === "cards") startCards(state.currentTopic, false);
   else if (kind === "structure") startStructure(state.currentTopic, false, true); // Retry: Nummerierung strippen
   else if (kind === "open") startOpen(state.currentTopic, false);
+  else if (kind === "booking") startBooking(state.currentTopic, false);
   else startQuiz(state.currentTopic, false);
 });
 
@@ -473,7 +489,13 @@ $("#retryWrongBtn").addEventListener("click", () => {
   const wrong = state.answeredLog.filter(e => !e.wasCorrect).map(e => e.question);
   if (!wrong.length) return;
   if (state.finishedKind === "open") startOpen(state.currentTopic, false, wrong);
-  else startQuiz(state.currentTopic, false, wrong);
+  else if (state.finishedKind === "booking") {
+    // answeredLog speichert bei Buchung nur { situation }, daher die vollen BOOKINGS-Objekte
+    // anhand der situation zurückholen statt der verkürzten question-Objekte aus dem Log.
+    const wrongBookings = bookingsFor(state.currentTopic).filter(b => wrong.some(w => w.situation === b.situation));
+    startBooking(state.currentTopic, false, wrongBookings);
+  }
+  else startQuiz(state.currentTopic, false);
 });
 
 // ---------- STRUCTURE (Gliederung selbst aufbauen) ----------
@@ -659,6 +681,118 @@ $("#openNextBtn").addEventListener("click", () => {
   state.index++;
   if (state.index >= state.queue.length) finishOpen();
   else renderOpen();
+});
+
+// ---------- BUCHUNGSSATZ-TRAINER ----------
+// Prüft, ob der eingegebene Kontoname per Wortgrenze zu einem der Aliase passt (tolerant
+// gegenüber Zusätzen wie "Konto" oder Artikeln, aber ohne dass "Darlehen" versehentlich
+// in "Hypothekendarlehen" mitmatcht - deshalb Wortgrenzen statt reinem Teilstring-Check).
+function accountMatches(input, accountKey) {
+  const entry = ACCOUNT_ALIASES[accountKey];
+  if (!entry) return false;
+  const norm = normalizeText(input);
+  return entry.aliases.some(a => new RegExp("(^|[^a-z0-9])" + a + "([^a-z0-9]|$)").test(norm));
+}
+
+function amountMatches(input, expected) {
+  const digits = (input || "").replace(/[^0-9]/g, "");
+  return digits !== "" && parseInt(digits, 10) === expected;
+}
+
+function startBooking(topicId, pushHistory = true, presetPool = null) {
+  if (pushHistory) history.pushState({ name: "booking", subjectId: state.currentSubject, categoryId: state.currentCategory }, "");
+  const pool = presetPool ? shuffle(presetPool) : shuffle(bookingsFor(topicId));
+  state.queue = pool;
+  state.index = 0;
+  state.correctCount = 0;
+  state.answeredLog = [];
+  showView("#view-booking");
+  renderBooking();
+}
+
+function renderBooking() {
+  state.answered = false;
+  const b = state.queue[state.index];
+  const total = state.queue.length;
+  $("#bookingProgress").style.width = (state.index / total * 100) + "%";
+  $("#bookingScore").textContent = state.correctCount + " / " + total;
+  const topicMeta = TOPICS.find(t => t.id === b.topic);
+  $("#bookingTopicLabel").textContent = (topicMeta ? topicMeta.icon + " " + topicMeta.title : "") + " · Buchungssatz";
+  $("#bookingText").textContent = b.situation;
+  $("#bookingSollInput").value = "";
+  $("#bookingHabenInput").value = "";
+  $("#bookingAmountInput").value = "";
+  [$("#bookingSollInput"), $("#bookingHabenInput"), $("#bookingAmountInput")].forEach(el => el.disabled = false);
+  $("#bookingFeedback").classList.add("hidden");
+  $("#bookingExplain").classList.add("hidden");
+  $("#bookingCheckBtn").classList.remove("hidden");
+  $("#bookingNextBtn").classList.add("hidden");
+}
+
+function checkBookingAnswer() {
+  if (state.answered) return;
+  const b = state.queue[state.index];
+  const sollText = $("#bookingSollInput").value.trim();
+  const habenText = $("#bookingHabenInput").value.trim();
+  const amountText = $("#bookingAmountInput").value.trim();
+  if (!sollText || !habenText || !amountText) return; // ohne vollständige Eingabe wird nicht geprüft
+
+  state.answered = true;
+  [$("#bookingSollInput"), $("#bookingHabenInput"), $("#bookingAmountInput")].forEach(el => el.disabled = true);
+  $("#bookingCheckBtn").classList.add("hidden");
+
+  const sollOk = accountMatches(sollText, b.soll);
+  const habenOk = accountMatches(habenText, b.haben);
+  const amountOk = amountMatches(amountText, b.amount);
+  const isCorrect = sollOk && habenOk && amountOk;
+
+  const correctSoll = ACCOUNT_ALIASES[b.soll].account;
+  const correctHaben = ACCOUNT_ALIASES[b.haben].account;
+  const correctSatz = correctSoll + " an " + correctHaben + ", " + b.amount.toLocaleString("de-DE") + " €";
+
+  const fb = $("#bookingFeedback");
+  fb.classList.remove("hidden", "good", "bad");
+  if (isCorrect) {
+    fb.classList.add("good");
+    fb.textContent = "✅ Richtig! " + correctSatz;
+    state.correctCount++;
+  } else {
+    fb.classList.add("bad");
+    fb.textContent = "❌ Soll: " + (sollOk ? "✓" : "✗") + " · Haben: " + (habenOk ? "✓" : "✗") +
+      " · Betrag: " + (amountOk ? "✓" : "✗") + " — Richtig wäre: " + correctSatz;
+  }
+
+  const explain = $("#bookingExplain");
+  explain.classList.remove("hidden");
+  explain.innerHTML = '<span class="open-sample-label">' + b.art + '</span>' + escapeHtml(b.explanation);
+
+  state.answeredLog.push({
+    question: { situation: b.situation },
+    given: sollText + " an " + habenText + ", " + amountText,
+    correctText: correctSatz,
+    wasCorrect: isCorrect,
+  });
+
+  $("#bookingScore").textContent = state.correctCount + " / " + state.queue.length;
+  $("#bookingNextBtn").classList.remove("hidden");
+}
+
+function finishBooking() {
+  $("#bookingProgress").style.width = "100%";
+  const total = state.queue.length;
+  const pct = total ? Math.round((state.correctCount / total) * 100) : 0;
+  bumpStreak();
+  $("#resultEmoji").textContent = pct >= 80 ? "🏆" : pct >= 50 ? "💪" : "📚";
+  $("#resultTitle").textContent = pct >= 80 ? "Stark!" : pct >= 50 ? "Gut gemacht!" : "Weiter üben!";
+  $("#resultText").textContent = `Du hattest ${state.correctCount} von ${total} Buchungssätzen komplett richtig (${pct}%).`;
+  showResult("booking");
+}
+
+$("#bookingCheckBtn").addEventListener("click", checkBookingAnswer);
+$("#bookingNextBtn").addEventListener("click", () => {
+  state.index++;
+  if (state.index >= state.queue.length) finishBooking();
+  else renderBooking();
 });
 
 // ---------- FLASHCARDS ----------

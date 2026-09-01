@@ -300,6 +300,42 @@ h1 { font-size: 1.6rem; margin: 4px 0 4px; }
   margin-bottom: 6px;
 }
 
+/* Buchungssatz-Trainer */
+.booking-hint {
+  margin-bottom: 16px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: color-mix(in srgb, var(--accent) 9%, var(--surface));
+  font-size: 0.83rem;
+  line-height: 1.5;
+}
+.booking-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 4px;
+}
+.booking-form label {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--muted);
+}
+.booking-form input {
+  display: block;
+  width: 100%;
+  margin-top: 4px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1.5px solid var(--border);
+  background: var(--bg);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 0.95rem;
+}
+.booking-form input:focus { outline: none; border-color: var(--accent); }
+
 /* Ergebnis-Review (Fragen-Durchsicht) */
 .result-review {
   margin-top: 20px;
