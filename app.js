@@ -949,9 +949,28 @@ $("#calNextBtn").addEventListener("click", () => {
 // no-op here; CSS handles via prefers-color-scheme + [data-theme] overrides
 
 // ---------- PWA: service worker + install prompt ----------
+// Ohne das Folgende kann eine bereits installierte/geoeffnete App noch tagelang die
+// alte Version zeigen: Browser pruefen von sich aus nur selten (bis zu 24h) auf eine
+// neue service-worker.js, und selbst nachdem der neue Worker aktiv ist, laedt die
+// bereits offene Seite ihr JS/CSS nicht von selbst neu. reg.update() erzwingt die
+// Pruefung bei jedem Start, controllerchange erkennt den Wechsel auf den neuen Worker
+// und laedt die Seite dann genau einmal automatisch neu.
 if ("serviceWorker" in navigator) {
+  // Nur reloaden, wenn diese Seite beim Laden bereits von einem Worker kontrolliert
+  // wurde - sonst wuerde jede Erstinstallation (kein vorheriger Worker -> claim()
+  // durch den ersten Worker feuert controllerchange auch) einen unnoetigen Reload
+  // direkt beim allerersten Besuch ausloesen.
+  const hadControllerAtLoad = !!navigator.serviceWorker.controller;
   window.addEventListener("load", () => {
-    navigator.serviceWorker.register("service-worker.js").catch(() => {});
+    navigator.serviceWorker.register("service-worker.js").then((reg) => {
+      reg.update();
+    }).catch(() => {});
+  });
+  let reloadedForUpdate = false;
+  navigator.serviceWorker.addEventListener("controllerchange", () => {
+    if (!hadControllerAtLoad || reloadedForUpdate) return;
+    reloadedForUpdate = true;
+    window.location.reload();
   });
 }
 
