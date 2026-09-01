@@ -3,21 +3,21 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Umschulung 26/02</title>
-<meta name="theme-color" content="#4f46e5">
-<meta name="description" content="Quiz &amp; Karteikarten für das Umschulungsfach Rolle im Betrieb">
+<title>Umschulung KEC 26/02</title>
+<meta name="theme-color" content="#b45309">
+<meta name="description" content="Quiz, Karteikarten &amp; Buchungssatz-Trainer für die Umschulung Kaufmann für E-Commerce">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" href="icon-192.png">
 <link rel="apple-touch-icon" href="icon-192.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Rolle im Betrieb">
+<meta name="apple-mobile-web-app-title" content="Umschulung">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <header class="topbar">
   <div class="brand" id="homeBtn">📚 Umschulung KEC 26/02</div>
-  <div class="streak" id="streakBadge">🔥 0</div>
+  <button class="streak" id="streakBadge" type="button"><span aria-hidden="true">🔥</span> <span id="streakCount">0</span></button>
 </header>
 
 <main id="app">
@@ -183,6 +183,26 @@
   </section>
 
 </main>
+
+<!-- LERN-KALENDER (Klick auf die Flamme) -->
+<div id="streakModal" class="modal-overlay hidden">
+  <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="streakModalTitle" tabindex="-1">
+    <div class="modal-header">
+      <h2 id="streakModalTitle"><span aria-hidden="true">🔥</span> Lern-Kalender</h2>
+      <button class="modal-close" id="closeStreakModal" type="button" aria-label="Schließen">✕</button>
+    </div>
+    <p class="modal-sub" id="streakModalSub"></p>
+    <div class="calendar-nav">
+      <button class="secondary-btn" id="calPrevBtn" type="button">← Zurück</button>
+      <div class="calendar-month" id="calMonthLabel"></div>
+      <button class="secondary-btn" id="calNextBtn" type="button">Weiter →</button>
+    </div>
+    <div class="calendar-weekdays">
+      <span>Mo</span><span>Di</span><span>Mi</span><span>Do</span><span>Fr</span><span>Sa</span><span>So</span>
+    </div>
+    <div class="calendar-grid" id="calendarGrid"></div>
+  </div>
+</div>
 
 <footer class="footer">
   <span>Erstellt für die Umschulung . Viel Glück an alle!</span>

@@ -27,17 +27,34 @@ function saveProgress(p) { localStorage.setItem(STORAGE_KEY, JSON.stringify(p));
 
 function bumpStreak() {
   const today = new Date().toISOString().slice(0, 10);
-  let s = JSON.parse(localStorage.getItem(STREAK_KEY) || "null") || { last: null, count: 0 };
-  if (s.last === today) return s.count;
-  const yesterday = new Date(Date.now() - 86400000).toISOString().slice(0, 10);
-  s.count = s.last === yesterday ? s.count + 1 : 1;
-  s.last = today;
-  localStorage.setItem(STREAK_KEY, JSON.stringify(s));
+  let s = JSON.parse(localStorage.getItem(STREAK_KEY) || "null") || { last: null, count: 0, days: [] };
+  if (!Array.isArray(s.days)) s.days = []; // alte Datensätze ohne days-Liste abfangen
+  let changed = false;
+  if (!s.days.includes(today)) { s.days.push(today); changed = true; }
+  if (s.last !== today) {
+    const yesterday = new Date(Date.now() - 86400000).toISOString().slice(0, 10);
+    s.count = s.last === yesterday ? s.count + 1 : 1;
+    s.last = today;
+    changed = true;
+  }
+  if (changed) localStorage.setItem(STREAK_KEY, JSON.stringify(s));
   return s.count;
 }
 function getStreak() {
   const s = JSON.parse(localStorage.getItem(STREAK_KEY) || "null") || { count: 0 };
   return s.count;
+}
+function getActiveDays() {
+  const s = JSON.parse(localStorage.getItem(STREAK_KEY) || "null") || { days: [] };
+  return Array.isArray(s.days) ? s.days : [];
+}
+// Aktualisiert die Flammen-Anzeige im Header. Wird von jeder View aufgerufen, die den
+// Header zeigt (also praktisch allen) - vorher stand hier nur an einer Stelle im Code
+// (renderTopics), wodurch die Flamme auf der Startseite nach dem Neuladen fälschlich auf
+// dem im HTML hart codierten "0" stehen blieb, obwohl der echte Wert im localStorage
+// korrekt gespeichert war.
+function updateStreakBadge() {
+  $("#streakCount").textContent = getStreak();
 }
 
 // ---------- Utilities ----------
@@ -180,7 +197,7 @@ function renderTopics() {
       card.addEventListener("click", () => startTopic(t.id));
       grid.appendChild(card);
     });
-  $("#streakBadge").textContent = "🔥 " + getStreak();
+  updateStreakBadge();
 }
 
 // ---------- Mode picker ----------
@@ -225,6 +242,7 @@ function renderHome() {
   state.currentCategory = null;
   showView("#view-home");
   renderSubjects();
+  updateStreakBadge();
   saveLastView({ name: "home" });
 }
 
@@ -234,6 +252,7 @@ function renderSubjectView(subjectId) {
   $("#subjectTitle").textContent = SUBJECTS.find(s => s.id === subjectId)?.title || "";
   showView("#view-subject");
   renderCategories();
+  updateStreakBadge();
   saveLastView({ name: "subject", subjectId });
 }
 
@@ -435,6 +454,7 @@ function escapeHtml(s) {
 
 function showResult(kind) {
   state.finishedKind = kind;
+  updateStreakBadge(); // Flamme sofort aktualisieren, nicht erst bei der naechsten Navigation
   const reviewEl = $("#resultReview");
   const retryBtn = $("#retryBtn");
   const retryWrongBtn = $("#retryWrongBtn");
@@ -842,6 +862,87 @@ $("#cardRepeatBtn").addEventListener("click", () => {
   const c = state.queue[state.index];
   state.queue.push(c);
   nextCard();
+});
+
+// ---------- LERN-KALENDER (Klick auf die Flamme zeigt, an welchen Tagen geuebt wurde) ----------
+let calendarViewDate = new Date(); // Monat, der gerade im Kalender angezeigt wird
+
+function pad2(n) { return String(n).padStart(2, "0"); }
+function dateKey(y, m, d) { return y + "-" + pad2(m + 1) + "-" + pad2(d); }
+
+const MONTH_NAMES = ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"];
+
+function renderCalendar() {
+  const y = calendarViewDate.getFullYear();
+  const m = calendarViewDate.getMonth();
+  $("#calMonthLabel").textContent = MONTH_NAMES[m] + " " + y;
+
+  const activeDays = new Set(getActiveDays());
+  const todayKey = new Date().toISOString().slice(0, 10);
+  const firstOfMonth = new Date(y, m, 1);
+  const firstWeekday = (firstOfMonth.getDay() + 6) % 7; // JS: 0=So..6=Sa -> hier 0=Mo..6=So
+  const daysInMonth = new Date(y, m + 1, 0).getDate();
+
+  const grid = $("#calendarGrid");
+  grid.innerHTML = "";
+  for (let i = 0; i < firstWeekday; i++) {
+    const empty = document.createElement("div");
+    empty.className = "cal-day empty";
+    grid.appendChild(empty);
+  }
+  for (let d = 1; d <= daysInMonth; d++) {
+    const key = dateKey(y, m, d);
+    const cell = document.createElement("div");
+    cell.className = "cal-day" + (activeDays.has(key) ? " active" : "") + (key === todayKey ? " today" : "");
+    cell.textContent = d;
+    grid.appendChild(cell);
+  }
+
+  $("#streakModalSub").textContent =
+    `Aktuelle Serie: ${getStreak()} Tag(e) am Stück · insgesamt ${activeDays.size} Lerntag(e)`;
+}
+
+let streakModalOpenerEl = null; // Element, das den Dialog geoeffnet hat - bekommt beim Schliessen den Fokus zurueck
+
+function openStreakModal() {
+  streakModalOpenerEl = document.activeElement;
+  calendarViewDate = new Date();
+  renderCalendar();
+  $("#streakModal").classList.remove("hidden");
+  $(".modal-card").focus();
+}
+function closeStreakModal() {
+  $("#streakModal").classList.add("hidden");
+  (streakModalOpenerEl || $("#streakBadge")).focus();
+}
+
+// Einfache Fokus-Falle: Tab/Shift+Tab bleiben innerhalb des offenen Dialogs, damit
+// Tastatur-Nutzer nicht versehentlich hinter das Modal auf die verdeckte Seite tabben.
+function trapFocus(e) {
+  if (e.key !== "Tab" || $("#streakModal").classList.contains("hidden")) return;
+  const focusable = $("#streakModal").querySelectorAll('button, [href], input, [tabindex]:not([tabindex="-1"])');
+  if (!focusable.length) return;
+  const first = focusable[0], last = focusable[focusable.length - 1];
+  if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+  else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+}
+
+$("#streakBadge").addEventListener("click", openStreakModal);
+$("#closeStreakModal").addEventListener("click", closeStreakModal);
+$("#streakModal").addEventListener("click", (e) => {
+  if (e.target.id === "streakModal") closeStreakModal(); // Klick auf den abgedunkelten Hintergrund
+});
+window.addEventListener("keydown", (e) => {
+  if (e.key === "Escape" && !$("#streakModal").classList.contains("hidden")) closeStreakModal();
+  else trapFocus(e);
+});
+$("#calPrevBtn").addEventListener("click", () => {
+  calendarViewDate = new Date(calendarViewDate.getFullYear(), calendarViewDate.getMonth() - 1, 1);
+  renderCalendar();
+});
+$("#calNextBtn").addEventListener("click", () => {
+  calendarViewDate = new Date(calendarViewDate.getFullYear(), calendarViewDate.getMonth() + 1, 1);
+  renderCalendar();
 });
 
 // ---------- Theme toggle support (host may set data-theme on <html>) ----------
