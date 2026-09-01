@@ -11,7 +11,9 @@ Aktuell fünf Fächer:
   Tarifvertragsrecht, Arbeitskampf & Streik, duale Ausbildung (BBiG), Jugendarbeitsschutzgesetz
   (JArbSchG), Betriebsvereinbarungen, Vorbereitungsklausur.
 - **Rechnungswesen** → Kategorie "Inventur & Inventar": Aufgaben & Bereiche des
-  Rechnungswesens, Buchführung & Inventur, Inventar, Bilanz.
+  Rechnungswesens, Buchführung & Inventur, Inventar, Bilanz. Kategorie "Eröffnungsbilanz,
+  Konten & Buchungssätze": Eröffnungsbilanz & EBK, Aktiv- und Passivkonten, Buchungssätze
+  üben (inkl. eigenem Modus "📒 Buchung", siehe unten), Kontenabschluss & Schlussbilanz (SBK).
 - **Tabellenkalkulation** → Kategorie "Grundlagen & Bezüge": Grundlagen & Funktionen
   (SUMME, MIN, MAX, MITTELWERT, ANZAHL/ANZAHL2), Zellbezüge (relativ, absolut, gemischt),
   UND & ODER.
@@ -37,6 +39,10 @@ Alles steckt in `data.js`, keine Änderung an `index.html` oder `app.js` nötig:
 - **Neues Thema:** Zeile in `TOPICS` ergänzen, `subject` und `category` müssen zusammenpassen.
 - **Neue Fragen/Karten:** Einträge in `QUESTIONS` bzw. `FLASHCARDS` mit passender Themen-`id` ergänzen.
 - **Neue Gliederungs-Übung:** Eintrag in `STRUCTURES` ergänzen (`topic`-id + `items` in der korrekten Reihenfolge).
+- **Neue Buchungssatz-Aufgabe:** Eintrag in `BOOKINGS` ergänzen (`topic`-id, `situation`,
+  `amount`, `soll`/`haben` als Schlüssel aus `ACCOUNT_ALIASES`, `art`, `explanation`). Neues
+  Konto: Eintrag in `ACCOUNT_ALIASES` ergänzen (`account` = Anzeigename, `aliases` = erkannte
+  Schreibweisen in Kleinbuchstaben).
 
 Nach Änderungen an den Dateien in `service-worker.js` den `CACHE_NAME` hochzählen,
 damit bereits installierte Versionen der App das Update laden.
@@ -57,6 +63,11 @@ damit bereits installierte Versionen der App das Update laden.
 - **Gliederung** – Reihenfolge/Struktur eines Themas (z. B. den Aufbau des Inventars) aus
   durcheinandergewürfelten Bausteinen selbst richtig zusammensetzen (nur bei Themen mit
   einem Eintrag in `STRUCTURES`)
+- **Buchung** – Buchungssatz-Trainer: zu einem Geschäftsfall Soll-Konto, Haben-Konto und
+  Betrag selbst eintippen statt nur auszuwählen. Nach der Prüfung erscheint immer eine
+  Erklärung (Kontenart, Zugang/Abgang, Bilanzveränderungsart) – auch bei richtiger Antwort.
+  Kontonamen werden tolerant erkannt (z. B. "Verbindlichkeiten" statt "Verbindlichkeiten a.
+  LL"), siehe `ACCOUNT_ALIASES` in `data.js` (nur bei Themen mit Einträgen in `BOOKINGS`)
 
 Der Lernfortschritt wird lokal im Browser gespeichert (`localStorage`), es gibt keinen Server
 und keine Datenübertragung an Dritte.

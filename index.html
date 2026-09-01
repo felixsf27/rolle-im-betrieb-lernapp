@@ -52,6 +52,7 @@
       <button class="mode-btn" data-mode="cards">🗂️ Karteikarten</button>
       <button class="mode-btn" data-mode="structure">🧱 Gliederung</button>
       <button class="mode-btn" data-mode="open">✍️ Frei</button>
+      <button class="mode-btn" data-mode="booking">📒 Buchung</button>
     </div>
 
     <div id="topicGrid" class="topic-grid"></div>
@@ -103,6 +104,38 @@
       <div id="openFeedback" class="feedback hidden"></div>
       <div id="openSample" class="open-sample hidden"></div>
       <button id="openNextBtn" class="primary-btn hidden">Weiter →</button>
+    </div>
+  </section>
+
+  <!-- BOOKING (Buchungssatz-Trainer) VIEW -->
+  <section id="view-booking" class="view hidden">
+    <div class="quiz-header">
+      <button class="back-btn" id="backFromBooking">← Zurück</button>
+      <div class="progress-wrap"><div class="progress-bar" id="bookingProgress"></div></div>
+      <div class="score" id="bookingScore">0 / 0</div>
+    </div>
+    <div class="booking-hint">
+      <strong>Merksatz:</strong> Aktivkonto: Zugang → Soll, Abgang → Haben. Passivkonto: Zugang → Haben, Abgang → Soll.
+      Buchungssatz immer: Sollkonto an Habenkonto, Betrag.
+    </div>
+    <div class="card question-card">
+      <div class="q-topic" id="bookingTopicLabel"></div>
+      <h2 id="bookingText"></h2>
+      <div class="booking-form">
+        <label>Soll-Konto
+          <input type="text" id="bookingSollInput" placeholder="z. B. Fuhrpark">
+        </label>
+        <label>Haben-Konto
+          <input type="text" id="bookingHabenInput" placeholder="z. B. Verbindlichkeiten a. LL">
+        </label>
+        <label>Betrag (€)
+          <input type="text" inputmode="numeric" id="bookingAmountInput" placeholder="z. B. 24000">
+        </label>
+      </div>
+      <button id="bookingCheckBtn" class="primary-btn">Buchungssatz prüfen</button>
+      <div id="bookingFeedback" class="feedback hidden"></div>
+      <div id="bookingExplain" class="open-sample hidden"></div>
+      <button id="bookingNextBtn" class="primary-btn hidden">Weiter →</button>
     </div>
   </section>
 
