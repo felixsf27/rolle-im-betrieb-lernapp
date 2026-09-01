@@ -304,7 +304,7 @@ const FLASHCARDS = [
   { topic: "aktiv-passiv-konten", front: "Bilanzverkürzung", back: "Ein Aktivkonto und ein Passivkonto nehmen beide in gleicher Höhe ab. Die Bilanzsumme sinkt (z. B. Zahlung einer Verbindlichkeit per Bank: Bank ↓ und Verbindlichkeiten ↓)." },
   { topic: "buchungssaetze", front: "Buchungssatz – Aufbau", back: "Immer: [Sollkonto] an [Habenkonto], Betrag. Das Sollkonto steht vorne, das Habenkonto nach dem 'an'." },
   { topic: "buchungssaetze", front: "Buchungssatz finden – die 5 Schritte", back: "1. Beide betroffenen Konten bestimmen. 2. Kontenart klären: Aktiv- oder Passivkonto? 3. Zugang oder Abgang? 4. Soll-Seite: Aktivkonto+Zugang oder Passivkonto+Abgang. 5. Haben-Seite: Passivkonto+Zugang oder Aktivkonto+Abgang." },
-  { topic: "buchungssaetze", front: "Typische Aktivkonten", back: "Kasse, Bank (auch Postbank), Fuhrpark, Grundstücke und Gebäude, Technische Anlagen und Maschinen (TAM), Betriebs- und Geschäftsausstattung (GBA), Rohstoffe, Hilfsstoffe, Betriebsstoffe, Waren, Forderungen a. LL (auch: Ford., a LL, ALL) – alles Vermögensgegenstände." },
+  { topic: "buchungssaetze", front: "Typische Aktivkonten", back: "Kasse, Bank, Postbank (eigenes Konto, nicht dasselbe wie Bank – zwischen beiden kann gebucht werden), Fuhrpark, Grundstücke und Gebäude, Technische Anlagen und Maschinen (TAM), Betriebs- und Geschäftsausstattung (GBA), Rohstoffe, Hilfsstoffe, Betriebsstoffe, Waren, Forderungen a. LL (auch: Ford., a LL, ALL) – alles Vermögensgegenstände." },
   { topic: "buchungssaetze", front: "Typische Passivkonten", back: "Eigenkapital, Verbindlichkeiten a. LL (auch: Verb., a LL, ALL), Darlehen und Hypothek(endarlehen) – im Unterricht synonym verwendet – alles Eigenkapital oder Schulden." },
   { topic: "schlussbilanz", front: "Schlussbilanzkonto (SBK)", back: "Technisches Hilfskonto zum Jahresende. Alle Bestandskonten werden über das SBK abgeschlossen; das Ergebnis ist zugleich die Schlussbilanz." },
   { topic: "schlussbilanz", front: "Aktivkonto abschließen", back: "Der Schlussbestand steht im Haben des Aktivkontos (als Abgang) und im Soll des SBK. Buchungssatz: SBK an [Aktivkonto]." },
@@ -936,6 +936,8 @@ const OPEN_QUESTIONS = [
 // bestätigt): Bank statt Bankkonto, Ford./a LL/a. LL/ALL für Forderungen, Verb./a LL/a. LL/ALL
 // für Verbindlichkeiten (nicht "Vrb." - Felix korrigiert: "Verb" ist richtig), Darlehen und
 // Hypothek(en) werden im Unterricht synonym verwendet und daher gegenseitig akzeptiert.
+// Postbank ist ein EIGENES Konto, kein Alias von Bank - zwischen beiden kann gebucht werden
+// (Felix korrigiert: "Person X überweist aus Postbankkonto" ist ein eigener Geschäftsfall).
 const ACCOUNT_ALIASES = {
   grundstuecke: { account: "Grundstücke und Gebäude", aliases: ["grundstucke", "grundstuck"] },
   maschinen: { account: "Technische Anlagen und Maschinen", aliases: ["maschinen", "technische anlagen", "tam"] },
@@ -945,7 +947,8 @@ const ACCOUNT_ALIASES = {
   hilfsstoffe: { account: "Hilfsstoffe", aliases: ["hilfsstoffe"] },
   betriebsstoffe: { account: "Betriebsstoffe", aliases: ["betriebsstoffe", "buromaterial"] },
   forderungen: { account: "Forderungen a. LL", aliases: ["forderungen", "ford", "a ll", "a. ll", "all"] },
-  bank: { account: "Bank", aliases: ["bank", "bankguthaben", "bankkonto", "postbank"] },
+  bank: { account: "Bank", aliases: ["bank", "bankguthaben", "bankkonto"] },
+  postbank: { account: "Postbank", aliases: ["postbank"] },
   kasse: { account: "Kasse", aliases: ["kasse"] },
   verbindlichkeiten: { account: "Verbindlichkeiten a. LL", aliases: ["verbindlichkeiten", "verb", "a ll", "a. ll", "all"] },
   darlehen: { account: "Darlehen", aliases: ["darlehen", "hypothek", "hypotheken", "hypothekendarlehen"] },
@@ -1038,5 +1041,11 @@ const BOOKINGS = [
     situation: "Der Betrieb nimmt ein Darlehen über 1.000 € auf; der Betrag wird direkt in die Kasse eingezahlt.",
     amount: 1000, soll: "kasse", haben: "darlehen", art: "Bilanzverlängerung",
     explanation: "Kasse (Aktivkonto) nimmt zu → Soll. Darlehen (Passivkonto) nimmt zu → Haben. Bilanzverlängerung. Buchungssatz: Kasse an Darlehen, 1.000 €.",
+  },
+  {
+    topic: "buchungssaetze",
+    situation: "Der Betrieb überweist 700 € vom Bankkonto auf das Postbankkonto.",
+    amount: 700, soll: "postbank", haben: "bank", art: "Aktivtausch",
+    explanation: "Postbank (Aktivkonto) nimmt zu → Soll. Bank (Aktivkonto) nimmt ab → Haben. Zwei Aktivkonten verändern sich gegenläufig → Aktivtausch, die Bilanzsumme bleibt gleich. Buchungssatz: Postbank an Bank, 700 €.",
   },
 ];
