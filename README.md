@@ -1,4 +1,4 @@
-# Lernkarten – Umschulung
+# Umschulung KEC 26/02 – Lernkarten
 
 Kostenlose, offline-fähige Lern-App für die Umschulung. Aufbau: **Fach → Kategorie
 (ein Testblock) → Thema → Quiz/Karteikarten/Gliederung**. Die Kategorie-Ebene hält die
@@ -71,6 +71,21 @@ damit bereits installierte Versionen der App das Update laden.
 
 Der Lernfortschritt wird lokal im Browser gespeichert (`localStorage`), es gibt keinen Server
 und keine Datenübertragung an Dritte.
+
+## Lern-Kalender
+
+Klick auf die 🔥-Flamme im Header öffnet einen Kalender, der zeigt, an welchen Tagen
+geübt wurde (nicht nur die aktuelle Serie als Zahl). Monat per ← Zurück / Weiter → wechselbar.
+Datengrundlage: `rolleImBetrieb.streak.v1` in `localStorage` (`{ last, count, days }` – `days`
+ist eine Liste aller Tage mit mindestens einer abgeschlossenen Übung).
+
+## Design
+
+Farb-Tokens (Akzentfarbe, Hintergrund, Text) liegen als CSS-Variablen in `style.css` (`:root`
+und die Dark-Mode-Blöcke). `--accent`/`--accent-2` sind theme-abhängig (heller im Dark Mode,
+für Text/Links), `--accent-strong` ist bewusst in beiden Modi gleich dunkel gehalten – nur
+dieser Wert wird als Hintergrund für Buttons mit weißer Schrift verwendet, damit der
+Kontrast in beiden Themes zuverlässig passt.
 
 ## Tech
 
