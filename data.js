@@ -304,8 +304,8 @@ const FLASHCARDS = [
   { topic: "aktiv-passiv-konten", front: "Bilanzverkürzung", back: "Ein Aktivkonto und ein Passivkonto nehmen beide in gleicher Höhe ab. Die Bilanzsumme sinkt (z. B. Zahlung einer Verbindlichkeit per Bank: Bank ↓ und Verbindlichkeiten ↓)." },
   { topic: "buchungssaetze", front: "Buchungssatz – Aufbau", back: "Immer: [Sollkonto] an [Habenkonto], Betrag. Das Sollkonto steht vorne, das Habenkonto nach dem 'an'." },
   { topic: "buchungssaetze", front: "Buchungssatz finden – die 5 Schritte", back: "1. Beide betroffenen Konten bestimmen. 2. Kontenart klären: Aktiv- oder Passivkonto? 3. Zugang oder Abgang? 4. Soll-Seite: Aktivkonto+Zugang oder Passivkonto+Abgang. 5. Haben-Seite: Passivkonto+Zugang oder Aktivkonto+Abgang." },
-  { topic: "buchungssaetze", front: "Typische Aktivkonten", back: "Kasse, Bank, Fuhrpark, Forderungen a. LL, Waren, Technische Anlagen und Maschinen, Betriebsstoffe – alles Vermögensgegenstände." },
-  { topic: "buchungssaetze", front: "Typische Passivkonten", back: "Eigenkapital, Verbindlichkeiten a. LL, Darlehen, Hypothekendarlehen – alles Eigenkapital oder Schulden." },
+  { topic: "buchungssaetze", front: "Typische Aktivkonten", back: "Kasse, Bank (auch Postbank), Fuhrpark, Grundstücke und Gebäude, Technische Anlagen und Maschinen (TAM), Betriebs- und Geschäftsausstattung (GBA), Rohstoffe, Hilfsstoffe, Betriebsstoffe, Waren, Forderungen a. LL (auch: Ford., a LL, ALL) – alles Vermögensgegenstände." },
+  { topic: "buchungssaetze", front: "Typische Passivkonten", back: "Eigenkapital, Verbindlichkeiten a. LL (auch: Verb., a LL, ALL), Darlehen und Hypothek(endarlehen) – im Unterricht synonym verwendet – alles Eigenkapital oder Schulden." },
   { topic: "schlussbilanz", front: "Schlussbilanzkonto (SBK)", back: "Technisches Hilfskonto zum Jahresende. Alle Bestandskonten werden über das SBK abgeschlossen; das Ergebnis ist zugleich die Schlussbilanz." },
   { topic: "schlussbilanz", front: "Aktivkonto abschließen", back: "Der Schlussbestand steht im Haben des Aktivkontos (als Abgang) und im Soll des SBK. Buchungssatz: SBK an [Aktivkonto]." },
   { topic: "schlussbilanz", front: "Passivkonto abschließen", back: "Der Schlussbestand steht im Soll des Passivkontos (als Abgang) und im Haben des SBK. Buchungssatz: [Passivkonto] an SBK." },
@@ -932,18 +932,26 @@ const OPEN_QUESTIONS = [
 // Neue Aufgabe: Zeile in BOOKINGS ergänzen, topic-id muss zu TOPICS passen.
 // account = Anzeigename des Kontos, aliases = Wörter, die die Eingabe des Nutzers per
 // Wortgrenzen-Suche als "dieses Konto gemeint" erkennen (siehe accountMatches in app.js).
+// Abkürzungen wie in Felix' Unterricht tatsächlich geschrieben (Stand 01.09.2026, von ihm
+// bestätigt): Bank statt Bankkonto, Ford./a LL/a. LL/ALL für Forderungen, Verb./a LL/a. LL/ALL
+// für Verbindlichkeiten (nicht "Vrb." - Felix korrigiert: "Verb" ist richtig), Darlehen und
+// Hypothek(en) werden im Unterricht synonym verwendet und daher gegenseitig akzeptiert.
 const ACCOUNT_ALIASES = {
-  kasse: { account: "Kasse", aliases: ["kasse"] },
-  bank: { account: "Bank", aliases: ["bank", "bankguthaben", "bankkonto"] },
+  grundstuecke: { account: "Grundstücke und Gebäude", aliases: ["grundstucke", "grundstuck"] },
+  maschinen: { account: "Technische Anlagen und Maschinen", aliases: ["maschinen", "technische anlagen", "tam"] },
   fuhrpark: { account: "Fuhrpark", aliases: ["fuhrpark"] },
-  forderungen: { account: "Forderungen a. LL", aliases: ["forderungen"] },
-  verbindlichkeiten: { account: "Verbindlichkeiten a. LL", aliases: ["verbindlichkeiten"] },
-  darlehen: { account: "Darlehen", aliases: ["darlehen"] },
-  hypothek: { account: "Hypothekendarlehen", aliases: ["hypothek", "hypothekendarlehen"] },
+  gba: { account: "Betriebs- und Geschäftsausstattung", aliases: ["geschaftsausstattung", "betriebsausstattung", "gba"] },
+  rohstoffe: { account: "Rohstoffe", aliases: ["rohstoffe"] },
+  hilfsstoffe: { account: "Hilfsstoffe", aliases: ["hilfsstoffe"] },
+  betriebsstoffe: { account: "Betriebsstoffe", aliases: ["betriebsstoffe", "buromaterial"] },
+  forderungen: { account: "Forderungen a. LL", aliases: ["forderungen", "ford", "a ll", "a. ll", "all"] },
+  bank: { account: "Bank", aliases: ["bank", "bankguthaben", "bankkonto", "postbank"] },
+  kasse: { account: "Kasse", aliases: ["kasse"] },
+  verbindlichkeiten: { account: "Verbindlichkeiten a. LL", aliases: ["verbindlichkeiten", "verb", "a ll", "a. ll", "all"] },
+  darlehen: { account: "Darlehen", aliases: ["darlehen", "hypothek", "hypotheken", "hypothekendarlehen"] },
+  hypothek: { account: "Hypothekendarlehen", aliases: ["hypothek", "hypotheken", "hypothekendarlehen", "darlehen"] },
   eigenkapital: { account: "Eigenkapital", aliases: ["eigenkapital", "ek"] },
   waren: { account: "Waren", aliases: ["waren", "warenbestand", "vorraete", "vorrate"] },
-  maschinen: { account: "Technische Anlagen und Maschinen", aliases: ["maschinen", "technische anlagen"] },
-  betriebsstoffe: { account: "Betriebsstoffe", aliases: ["betriebsstoffe", "buromaterial", "büromaterial"] },
 };
 
 const BOOKINGS = [

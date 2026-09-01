@@ -1,4 +1,4 @@
-const CACHE_NAME = "rolle-im-betrieb-v13";
+const CACHE_NAME = "rolle-im-betrieb-v14";
 const ASSETS = [
   "./",
   "./index.html",
