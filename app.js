@@ -691,7 +691,10 @@ function accountMatches(input, accountKey) {
   const entry = ACCOUNT_ALIASES[accountKey];
   if (!entry) return false;
   const norm = normalizeText(input);
-  return entry.aliases.some(a => new RegExp("(^|[^a-z0-9])" + a + "([^a-z0-9]|$)").test(norm));
+  return entry.aliases.some(a => {
+    const escaped = a.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    return new RegExp("(^|[^a-z0-9])" + escaped + "([^a-z0-9]|$)").test(norm);
+  });
 }
 
 function amountMatches(input, expected) {
