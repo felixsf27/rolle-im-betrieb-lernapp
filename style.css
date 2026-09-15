@@ -187,6 +187,21 @@ h1 { font-size: 1.6rem; margin: 4px 0 4px; }
 }
 .back-btn:hover { opacity: 0.7; }
 
+.archive-toggle {
+  display: block;
+  width: 100%;
+  margin-top: 8px;
+  padding: 10px;
+  background: none;
+  border: none;
+  color: var(--muted);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+.archive-toggle:hover { opacity: 0.7; }
+
 /* Eigener, zur Palette passender Fokusring statt des unpassenden Browser-Blaus */
 button:focus-visible, input:focus-visible, .option:focus-visible {
   outline: 2px solid var(--accent-strong);

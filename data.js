@@ -1,10 +1,10 @@
 // Fächer der Umschulung – neues Fach: einfach hier eine Zeile ergänzen
 const SUBJECTS = [
-  { id: "rolle-im-betrieb", title: "Rolle im Betrieb", icon: "📘" },
+  { id: "rolle-im-betrieb", title: "Rolle im Betrieb", icon: "📘", archived: true },
   { id: "rewe", title: "Rechnungswesen", icon: "🧮" },
   { id: "tabellenkalkulation", title: "Tabellenkalkulation", icon: "📊" },
   { id: "textverarbeitung", title: "Textverarbeitung", icon: "📝" },
-  { id: "recht", title: "Recht", icon: "⚖️" },
+  { id: "recht", title: "Recht", icon: "⚖️", archived: true },
 ];
 
 // Kategorien je Fach – ein Testblock/Themenblock. Neue Kategorie (z. B. für den nächsten Test):
