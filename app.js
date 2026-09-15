@@ -17,6 +17,7 @@ let state = {
   answered: false,
   answeredLog: [],   // pro Durchlauf: { question, given, correctText, wasCorrect }
   finishedKind: null, // "quiz" | "open" | "cards" | "structure" – steuert die Ergebnis-Buttons
+  showArchived: false, // abgeschlossene Fächer (archived: true) erst nach Klick auf den Archiv-Link zeigen
 };
 
 function loadProgress() {
@@ -76,20 +77,33 @@ function showView(id) {
 function renderSubjects() {
   const grid = $("#subjectGrid");
   grid.innerHTML = "";
-  SUBJECTS.forEach(s => {
+  const archivedCount = SUBJECTS.filter(s => s.archived).length;
+  SUBJECTS.filter(s => !s.archived || state.showArchived).forEach(s => {
     const categoryCount = CATEGORIES.filter(c => c.subject === s.id).length;
     const card = document.createElement("div");
-    card.className = "subject-card";
+    card.className = "subject-card" + (s.archived ? " subject-card-archived" : "");
     card.innerHTML = `
       <span class="icon">${s.icon}</span>
       <div class="info">
-        <div class="title">${s.title}</div>
+        <div class="title">${s.title}${s.archived ? " (abgeschlossen)" : ""}</div>
         <div class="meta">${categoryCount} ${categoryCount === 1 ? "Kategorie" : "Kategorien"}</div>
       </div>
     `;
     card.addEventListener("click", () => goToSubject(s.id));
     grid.appendChild(card);
   });
+
+  const toggle = $("#archiveToggle");
+  if (toggle) {
+    if (archivedCount === 0) {
+      toggle.classList.add("hidden");
+    } else {
+      toggle.classList.remove("hidden");
+      toggle.textContent = state.showArchived
+        ? "Abgeschlossene Fächer ausblenden"
+        : `Abgeschlossene Fächer anzeigen (${archivedCount})`;
+    }
+  }
 }
 
 // ---------- Category list rendering ----------
@@ -971,6 +985,14 @@ if ("serviceWorker" in navigator) {
     if (!hadControllerAtLoad || reloadedForUpdate) return;
     reloadedForUpdate = true;
     window.location.reload();
+  });
+}
+
+const archiveToggle = $("#archiveToggle");
+if (archiveToggle) {
+  archiveToggle.addEventListener("click", () => {
+    state.showArchived = !state.showArchived;
+    renderSubjects();
   });
 }
 
