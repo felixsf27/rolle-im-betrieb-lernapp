@@ -1,10 +1,11 @@
-const CACHE_NAME = "rolle-im-betrieb-v20";
+const CACHE_NAME = "rolle-im-betrieb-v21";
 const ASSETS = [
   "./",
   "./index.html",
   "./style.css",
   "./app.js",
   "./data.js",
+  "./briefe.js",
   "./manifest.json",
   "./icon-192.png",
   "./icon-512.png",

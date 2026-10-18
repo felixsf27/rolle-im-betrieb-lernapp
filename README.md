@@ -14,6 +14,8 @@ Aktuell fünf Fächer:
   Rechnungswesens, Buchführung & Inventur, Inventar, Bilanz. Kategorie "Eröffnungsbilanz,
   Konten & Buchungssätze": Eröffnungsbilanz & EBK, Aktiv- und Passivkonten, Buchungssätze
   üben (inkl. eigenem Modus "📒 Buchung", siehe unten), Kontenabschluss & Schlussbilanz (SBK).
+  Kategorie "Erfolgskonten & GuV": Aufwand & Ertrag, Buchen auf Erfolgskonten, Abschluss über
+  das GuV-Konto, Wiederholung Bestandskonten & Bilanz.
 - **Tabellenkalkulation** → Kategorie "Grundlagen & Bezüge": Grundlagen & Funktionen
   (SUMME, MIN, MAX, MITTELWERT, ANZAHL/ANZAHL2), Zellbezüge (relativ, absolut, gemischt),
   UND & ODER.
@@ -23,7 +25,10 @@ Aktuell fünf Fächer:
   Seitenzahlen, Seite einrichten, Sortieren & Nummerierung (Kategorie "Werkzeuge &
   Funktionen"); EDV vs. IT, Hardware-Komponenten (Kategorie "EDV-Grundlagen"); eine
   Klausur-Simulation nach dem Vorbild einer echten Musteraufgabe inkl. Gliederungs-Übung
-  zum systematischen Klausur-Ablauf (Kategorie "Klausur-Simulation").
+  zum systematischen Klausur-Ablauf (Kategorie "Klausur-Simulation"). Kategorie "Serienbriefe &
+  interner Schriftverkehr": Grundlagen & Menüband, Regeln & Feldfunktionen, Briefkopf nach
+  DIN 5008, die Serienbrief-Übungen 1 bis 11, interner Schriftverkehr und eine Probeklausur mit
+  der Klausurvorlage (eigener Modus "✉️ Brief", siehe unten).
 - **Recht** → eigenständiges Fach, nicht Teil von "Rolle im Betrieb" → Kategorie
   "Rechtsgrundlagen (BGB AT)": Normenhierarchie & Rechtsquellen, Rechtsnorm (Tatbestand &
   Rechtsfolge), Rechtsobjekte (Sachen), Rechtssubjekte (Personen), Rechtsfähigkeit (jur. Person),
@@ -39,6 +44,8 @@ Alles steckt in `data.js`, keine Änderung an `index.html` oder `app.js` nötig:
 - **Neues Thema:** Zeile in `TOPICS` ergänzen, `subject` und `category` müssen zusammenpassen.
 - **Neue Fragen/Karten:** Einträge in `QUESTIONS` bzw. `FLASHCARDS` mit passender Themen-`id` ergänzen.
 - **Neue Gliederungs-Übung:** Eintrag in `STRUCTURES` ergänzen (`topic`-id + `items` in der korrekten Reihenfolge).
+- **Neue Brief-Aufgabe:** Eintrag in `LETTERS` in `briefe.js` (Aufbau und Zeilentypen stehen
+  oben in der Datei erklärt).
 - **Neue Buchungssatz-Aufgabe:** Eintrag in `BOOKINGS` ergänzen (`topic`-id, `situation`,
   `amount`, `soll`/`haben` als Schlüssel aus `ACCOUNT_ALIASES`, `art`, `explanation`). Neues
   Konto: Eintrag in `ACCOUNT_ALIASES` ergänzen (`account` = Anzeigename, `aliases` = erkannte
@@ -67,7 +74,14 @@ damit bereits installierte Versionen der App das Update laden.
   Betrag selbst eintippen statt nur auszuwählen. Nach der Prüfung erscheint immer eine
   Erklärung (Kontenart, Zugang/Abgang, Bilanzveränderungsart) – auch bei richtiger Antwort.
   Kontonamen werden tolerant erkannt (z. B. "Verbindlichkeiten" statt "Verbindlichkeiten a.
-  LL"), siehe `ACCOUNT_ALIASES` in `data.js` (nur bei Themen mit Einträgen in `BOOKINGS`)
+  LL"), siehe `ACCOUNT_ALIASES` in `data.js` (nur bei Themen mit Einträgen in `BOOKINGS`).
+  Zusammengesetzte Buchungssätze gehen auch: mit "+ weiteres Sollkonto/Habenkonto" mehrere
+  Zeilen anlegen, in `BOOKINGS` dann `soll`/`haben` als Liste `[["konto", betrag], ...]`.
+- **Brief** – Serienbriefe und interne Schriftstücke Zeile für Zeile selbst tippen:
+  Rücksendeangabe, Anschriftenfeld mit «Feldern» und {WENN ...}-Regeln, Informationsblock,
+  Betreff, Anrede, Text. Die App rechnet jede Zeile für alle Datensätze durch (wie die
+  Word-Vorschau) und zeigt pro Datensatz, was herauskommt, Leerzeichen sichtbar als ·.
+  Frei formulierte Texte werden über Kernbegriffe geprüft und mit einem Beispiel verglichen.
 
 Der Lernfortschritt wird lokal im Browser gespeichert (`localStorage`), es gibt keinen Server
 und keine Datenübertragung an Dritte.
