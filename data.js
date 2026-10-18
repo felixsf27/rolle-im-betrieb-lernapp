@@ -2,7 +2,7 @@
 const SUBJECTS = [
   { id: "rolle-im-betrieb", title: "Rolle im Betrieb", icon: "📘", archived: true },
   { id: "rewe", title: "Rechnungswesen", icon: "🧮" },
-  { id: "tabellenkalkulation", title: "Tabellenkalkulation", icon: "📊" },
+  { id: "tabellenkalkulation", title: "Tabellenkalkulation", icon: "📊", archived: true },
   { id: "textverarbeitung", title: "Textverarbeitung", icon: "📝" },
   { id: "recht", title: "Recht", icon: "⚖️", archived: true },
 ];
