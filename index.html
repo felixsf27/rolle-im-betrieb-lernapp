@@ -54,6 +54,7 @@
       <button class="mode-btn" data-mode="structure">🧱 Gliederung</button>
       <button class="mode-btn" data-mode="open">✍️ Frei</button>
       <button class="mode-btn" data-mode="booking">📒 Buchung</button>
+      <button class="mode-btn" data-mode="letter">✉️ Brief</button>
     </div>
 
     <div id="topicGrid" class="topic-grid"></div>
@@ -117,26 +118,60 @@
     </div>
     <div class="booking-hint">
       <strong>Merksatz:</strong> Aktivkonto: Zugang → Soll, Abgang → Haben. Passivkonto: Zugang → Haben, Abgang → Soll.
-      Buchungssatz immer: Sollkonto an Habenkonto, Betrag.
+      Aufwand → Soll, Ertrag → Haben. Buchungssatz immer: Sollkonto an Habenkonto, Betrag.
     </div>
     <div class="card question-card">
       <div class="q-topic" id="bookingTopicLabel"></div>
       <h2 id="bookingText"></h2>
       <div class="booking-form">
-        <label>Soll-Konto
-          <input type="text" id="bookingSollInput" placeholder="z. B. Fuhrpark">
-        </label>
-        <label>Haben-Konto
-          <input type="text" id="bookingHabenInput" placeholder="z. B. Verbindlichkeiten a. LL">
-        </label>
-        <label>Betrag (€)
-          <input type="text" inputmode="numeric" id="bookingAmountInput" placeholder="z. B. 24000">
-        </label>
+        <div class="booking-side">
+          <div class="booking-side-title">Soll</div>
+          <div id="bookingSollRows"></div>
+          <button type="button" class="booking-add" data-side="soll">+ weiteres Sollkonto</button>
+        </div>
+        <div class="booking-side">
+          <div class="booking-side-title">an Haben</div>
+          <div id="bookingHabenRows"></div>
+          <button type="button" class="booking-add" data-side="haben">+ weiteres Habenkonto</button>
+        </div>
+        <p class="booking-note">Bei einfachen Buchungen reicht der Betrag auf einer Seite.</p>
       </div>
       <button id="bookingCheckBtn" class="primary-btn">Buchungssatz prüfen</button>
       <div id="bookingFeedback" class="feedback hidden"></div>
       <div id="bookingExplain" class="open-sample hidden"></div>
       <button id="bookingNextBtn" class="primary-btn hidden">Weiter →</button>
+    </div>
+  </section>
+
+  <!-- LETTER (Brief-Trainer) VIEW -->
+  <section id="view-letter" class="view hidden">
+    <div class="quiz-header">
+      <button class="back-btn" id="backFromLetter">← Zurück</button>
+      <div class="progress-wrap"><div class="progress-bar" id="letterProgress"></div></div>
+      <div class="score" id="letterScore">0 / 0</div>
+    </div>
+    <div class="card letter-task-card">
+      <div class="q-topic" id="letterTopicLabel"></div>
+      <h2 id="letterTitle"></h2>
+      <p class="letter-task" id="letterTask"></p>
+      <div id="letterDQ" class="letter-dq hidden"></div>
+      <details class="letter-help">
+        <summary>So tippst du Felder und Regeln</summary>
+        <p>Seriendruckfeld: <code>«Name»</code> (oder <code>&lt;Name&gt;</code>). Regel wie Wenn…Dann…Sonst:
+        <code>{WENN Geschlecht = "w" "Frau" "Herrn"}</code>. Verschachtelt: die zweite Regel in Anführungszeichen in den Sonst-Teil.
+        Vergleiche: = &nbsp;&lt;&gt; &nbsp;&lt; &nbsp;&gt; &nbsp;&lt;= &nbsp;&gt;=. Die Knöpfe unten fügen Felder an der Cursorposition ein.
+        Geprüft wird wie in der Word-Vorschau: für jeden Datensatz, Leerzeichen zählen mit.</p>
+      </details>
+    </div>
+    <div id="letterInsertBar" class="insert-bar hidden" aria-label="Felder einfügen"></div>
+    <div id="letterSheet" class="letter-sheet"></div>
+    <div id="letterPreview" class="letter-preview hidden"></div>
+    <div id="letterFeedback" class="feedback hidden"></div>
+    <div class="letter-actions">
+      <button id="letterCheckBtn" class="primary-btn">Brief prüfen</button>
+      <button id="letterPreviewBtn" class="secondary-btn" type="button">👁 Vorschau</button>
+      <button id="letterResetBtn" class="secondary-btn" type="button">Leeren</button>
+      <button id="letterNextBtn" class="primary-btn hidden">Weiter →</button>
     </div>
   </section>
 
@@ -210,6 +245,7 @@
 </footer>
 
 <script src="data.js"></script>
+<script src="briefe.js"></script>
 <script src="app.js"></script>
 </body>
 </html>
