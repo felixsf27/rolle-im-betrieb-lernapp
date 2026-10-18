@@ -740,21 +740,34 @@ $("#openNextBtn").addEventListener("click", () => {
 });
 
 // ---------- BUCHUNGSSATZ-TRAINER ----------
-// Welches Konto meint die Eingabe? Jedes Konto bekommt Punkte für alle Schreibweisen, die per
-// Wortgrenze in der Eingabe vorkommen (Summe der Längen). Gewinner ist das Konto mit den
-// meisten Punkten, bei Gleichstand gelten alle Gleichplatzierten (Darlehen/Hypothek sind im
-// Unterricht Synonyme). So gewinnt "Aufwendungen für Rohstoffe" gegen "Rohstoffe" und
-// "Verb. a. LL" gegen "Forderungen a. LL", obwohl beide "a. LL" enthalten.
-function aliasHit(norm, alias) {
+// Welches Konto meint die Eingabe? Für jedes Konto wird markiert, welche Zeichen der Eingabe
+// von seinen Schreibweisen abgedeckt werden (Wortgrenzen beachtet). Gewinner ist das Konto,
+// das den größten Teil der Eingabe abdeckt; bei Gleichstand gelten alle (Darlehen/Hypothek
+// sind im Unterricht Synonyme). So gewinnt "Aufwendungen für Rohstoffe" gegen "Rohstoffe",
+// "Verb. a. LL" gegen "Forderungen a. LL" und "Aufwendungen für Vorprodukte/Fremdbauteile"
+// gegen das Bestandskonto "Vorprodukte/Fremdbauteile".
+function aliasSpans(norm, alias) {
   const escaped = alias.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-  return new RegExp("(^|[^a-z0-9])" + escaped + "([^a-z0-9]|$)").test(norm);
+  const re = new RegExp("(^|[^a-z0-9])(" + escaped + ")(?=[^a-z0-9]|$)", "g");
+  const spans = [];
+  let m;
+  while ((m = re.exec(norm))) {
+    const start = m.index + m[1].length;
+    spans.push([start, start + m[2].length]);
+    re.lastIndex = start + 1;
+  }
+  return spans;
 }
 
 function resolveAccount(input) {
   const norm = normalizeText(input).replace(/\s+/g, " ").trim();
   let best = 0, keys = [];
   Object.keys(ACCOUNT_ALIASES).forEach(key => {
-    const score = ACCOUNT_ALIASES[key].aliases.reduce((sum, a) => sum + (aliasHit(norm, a) ? a.length : 0), 0);
+    const covered = new Set();
+    ACCOUNT_ALIASES[key].aliases.forEach(a => aliasSpans(norm, a).forEach(([s0, e0]) => {
+      for (let c = s0; c < e0; c++) covered.add(c);
+    }));
+    const score = covered.size;
     if (score > best) { best = score; keys = [key]; }
     else if (score > 0 && score === best) keys.push(key);
   });
@@ -805,7 +818,10 @@ function bookingSatzText(b) {
 
 function startBooking(topicId, pushHistory = true, presetPool = null) {
   if (pushHistory) history.pushState({ name: "booking", subjectId: state.currentSubject, categoryId: state.currentCategory }, "");
-  const pool = presetPool ? shuffle(presetPool) : shuffle(bookingsFor(topicId));
+  // Komplettaufgaben (Thema mit ordered: true) laufen in Buchreihenfolge, weil die
+  // Abschlussbuchungen auf den vorherigen Buchungen aufbauen.
+  const ordered = TOPICS.find(t => t.id === topicId)?.ordered;
+  const pool = presetPool ? (ordered ? presetPool : shuffle(presetPool)) : (ordered ? bookingsFor(topicId) : shuffle(bookingsFor(topicId)));
   state.queue = pool;
   state.index = 0;
   state.correctCount = 0;
