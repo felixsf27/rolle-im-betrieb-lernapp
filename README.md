@@ -25,10 +25,11 @@ Aktuell fünf Fächer:
   Seitenzahlen, Seite einrichten, Sortieren & Nummerierung (Kategorie "Werkzeuge &
   Funktionen"); EDV vs. IT, Hardware-Komponenten (Kategorie "EDV-Grundlagen"); eine
   Klausur-Simulation nach dem Vorbild einer echten Musteraufgabe inkl. Gliederungs-Übung
-  zum systematischen Klausur-Ablauf (Kategorie "Klausur-Simulation"). Kategorie "Serienbriefe &
-  interner Schriftverkehr": Grundlagen & Menüband, Regeln & Feldfunktionen, Briefkopf nach
-  DIN 5008, die Serienbrief-Übungen 1 bis 11, interner Schriftverkehr und eine Probeklausur mit
-  der Klausurvorlage (eigener Modus "✉️ Brief", siehe unten).
+  zum systematischen Klausur-Ablauf (Kategorie "Klausur-Simulation"). Kategorie "Serienbriefe":
+  Grundlagen & Menüband, Regeln & Feldfunktionen, Briefkopf nach DIN 5008, die
+  Serienbrief-Übungen 1 bis 11 und eine Probeklausur mit der Klausurvorlage; Kategorie
+  "Interner Schriftverkehr" (Test bereits geschrieben). Beide mit eigenem Modus "✉️ Brief",
+  siehe unten.
 - **Recht** → eigenständiges Fach, nicht Teil von "Rolle im Betrieb" → Kategorie
   "Rechtsgrundlagen (BGB AT)": Normenhierarchie & Rechtsquellen, Rechtsnorm (Tatbestand &
   Rechtsfolge), Rechtsobjekte (Sachen), Rechtssubjekte (Personen), Rechtsfähigkeit (jur. Person),
