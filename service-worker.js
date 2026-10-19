@@ -1,4 +1,4 @@
-const CACHE_NAME = "rolle-im-betrieb-v22";
+const CACHE_NAME = "rolle-im-betrieb-v23";
 const ASSETS = [
   "./",
   "./index.html",
@@ -6,6 +6,7 @@ const ASSETS = [
   "./app.js",
   "./data.js",
   "./briefe.js",
+  "./formulare.js",
   "./manifest.json",
   "./icon-192.png",
   "./icon-512.png",

@@ -55,6 +55,7 @@
       <button class="mode-btn" data-mode="open">✍️ Frei</button>
       <button class="mode-btn" data-mode="booking">📒 Buchung</button>
       <button class="mode-btn" data-mode="letter">✉️ Brief</button>
+      <button class="mode-btn" data-mode="form">🧩 Formular</button>
     </div>
 
     <div id="topicGrid" class="topic-grid"></div>
@@ -175,6 +176,40 @@
     </div>
   </section>
 
+  <!-- FORMULAR VIEW: in Word bauen, .docx hier prüfen -->
+  <section id="view-form" class="view hidden">
+    <div class="quiz-header">
+      <button class="back-btn" id="backFromForm">← Zurück</button>
+      <div class="progress-wrap"><div class="progress-bar" id="formProgress"></div></div>
+      <div class="score" id="formScore">0 / 0</div>
+    </div>
+    <div class="card letter-task-card">
+      <div class="q-topic" id="formTopicLabel"></div>
+      <h2 id="formTitle"></h2>
+      <p class="letter-task" id="formTask"></p>
+      <p class="form-source" id="formSource"></p>
+      <details class="letter-help">
+        <summary>Was die App prüft</summary>
+        <ul class="form-req" id="formReqList"></ul>
+      </details>
+      <details class="letter-help">
+        <summary>Lösungsweg in Word</summary>
+        <ol class="form-req" id="formSteps"></ol>
+      </details>
+    </div>
+    <label class="form-drop" id="formDrop">
+      <input type="file" id="formFile" accept=".docx,.dotx,.docm,application/vnd.openxmlformats-officedocument.wordprocessingml.document">
+      <span class="form-drop-title">📄 Fertige Word-Datei hier ablegen oder antippen</span>
+      <span class="form-drop-sub">Die Datei wird nur auf deinem Gerät gelesen, nichts wird hochgeladen.</span>
+      <span class="form-drop-file" id="formFileName"></span>
+    </label>
+    <div id="formFeedback" class="feedback hidden"></div>
+    <ul id="formResults" class="form-results hidden"></ul>
+    <div class="letter-actions">
+      <button id="formNextBtn" class="primary-btn hidden">Weiter →</button>
+    </div>
+  </section>
+
   <!-- RESULT VIEW -->
   <section id="view-result" class="view hidden">
     <div class="card result-card">
@@ -246,6 +281,7 @@
 
 <script src="data.js"></script>
 <script src="briefe.js"></script>
+<script src="formulare.js"></script>
 <script src="app.js"></script>
 </body>
 </html>
