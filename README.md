@@ -28,7 +28,7 @@ Aktuell fünf Fächer:
   zum systematischen Klausur-Ablauf (Kategorie "Klausur-Simulation"). Kategorie "Serienbriefe":
   Grundlagen & Menüband, Regeln & Feldfunktionen, Briefkopf nach DIN 5008, die
   Serienbrief-Übungen 1 bis 11 und eine Probeklausur mit der Klausurvorlage; Kategorie
-  "Interner Schriftverkehr" (Test bereits geschrieben). Beide mit eigenem Modus "✉️ Brief",
+  "Interner Schriftverkehr (nächster Test)". Beide mit eigenem Modus "✉️ Brief",
   siehe unten.
 - **Recht** → eigenständiges Fach, nicht Teil von "Rolle im Betrieb" → Kategorie
   "Rechtsgrundlagen (BGB AT)": Normenhierarchie & Rechtsquellen, Rechtsnorm (Tatbestand &
