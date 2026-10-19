@@ -15,7 +15,8 @@ const CATEGORIES = [
   { id: "rewe-inventur-inventar", subject: "rewe", title: "Inventur & Inventar", icon: "📋" },
   { id: "rewe-buchung", subject: "rewe", title: "Eröffnungsbilanz, Konten & Buchungssätze", icon: "📒" },
   { id: "tk-grundlagen", subject: "tabellenkalkulation", title: "Grundlagen & Bezüge", icon: "📊" },
-  { id: "tv-serienbriefe", subject: "textverarbeitung", title: "Serienbriefe & interner Schriftverkehr (nächster Test)", icon: "✉️" },
+  { id: "tv-schriftverkehr-formulare", subject: "textverarbeitung", title: "Interner Schriftverkehr & Formulare (nächster Test)", icon: "🧩" },
+  { id: "tv-serienbriefe", subject: "textverarbeitung", title: "Serienbriefe", icon: "✉️" },
   { id: "tv-formatierung", subject: "textverarbeitung", title: "Zeichen- & Absatzformatierung", icon: "🖋️" },
   { id: "tv-funktionen", subject: "textverarbeitung", title: "Werkzeuge & Funktionen", icon: "🔧" },
   { id: "tv-edv-grundlagen", subject: "textverarbeitung", title: "EDV-Grundlagen", icon: "💻" },
@@ -56,7 +57,9 @@ const TOPICS = [
   { id: "sb-regeln", subject: "textverarbeitung", category: "tv-serienbriefe", title: "Regeln (Wenn…Dann…Sonst) & Feldfunktionen", icon: "🔀" },
   { id: "sb-din5008", subject: "textverarbeitung", category: "tv-serienbriefe", title: "Briefkopf & Angaben nach DIN 5008", icon: "📐" },
   { id: "sb-uebungen", subject: "textverarbeitung", category: "tv-serienbriefe", title: "Serienbrief-Übungen 1 bis 11", icon: "✍️" },
-  { id: "interner-schriftverkehr", subject: "textverarbeitung", category: "tv-serienbriefe", title: "Interner Schriftverkehr", icon: "🗂️" },
+  { id: "formulare-uebungen", subject: "textverarbeitung", category: "tv-schriftverkehr-formulare", title: "Formulare in Word bauen (mit Prüfer)", icon: "🧩" },
+  { id: "formulare-grundlagen", subject: "textverarbeitung", category: "tv-schriftverkehr-formulare", title: "Formulare: Entwicklertools & Klickwege", icon: "🛠️" },
+  { id: "interner-schriftverkehr", subject: "textverarbeitung", category: "tv-schriftverkehr-formulare", title: "Interner Schriftverkehr", icon: "🗂️" },
   { id: "sb-klausur", subject: "textverarbeitung", category: "tv-serienbriefe", title: "Klausur 3: Vorlage Fit for fun", icon: "🧪" },
   { id: "zeichenformatierung", subject: "textverarbeitung", category: "tv-formatierung", title: "Zeichenformatierung", icon: "🔤" },
   { id: "absatzformatierung", subject: "textverarbeitung", category: "tv-formatierung", title: "Absatzformatierung", icon: "📐" },
@@ -1594,4 +1597,48 @@ OPEN_QUESTIONS.push(
   { topic: "aufgabe-50", q: "Aufgabe 50, Auswertung 2: Worauf führst du den Verlust zurück?", keyPoints: ["materialverbrauch|rohstoffe|verbrauch", "36.500|hoch", "erträge|umsatz"], sampleAnswer: "Vor allem auf den hohen Materialverbrauch: Allein die Rohstoffe kosten 36.500 €, zusammen mit Vorprodukten und Betriebsstoffen 49.900 €. Dazu kommen 13.000 € Löhne und Gehälter. Die Umsatzerlöse von 58.200 € reichen nicht, um diese Aufwendungen zu decken." },
   { topic: "aufgabe-50", q: "Aufgabe 50, Auswertung 4: Begründe, dass ein hoher Gewinn das oberste Unternehmensziel ist.", keyPoints: ["existenz|überleben|bestand", "investition", "eigenkapital|verzinsung", "risiko|unternehmerlohn"], sampleAnswer: "Nur mit Gewinn kann ein Unternehmen auf Dauer bestehen. Der Gewinn verzinst das eingesetzte Eigenkapital, bezahlt die Arbeit des Unternehmers (Unternehmerlohn) und belohnt das Risiko. Außerdem finanziert er Investitionen, sichert Arbeitsplätze und macht das Unternehmen unabhängiger von Krediten. Verluste dagegen fressen das Eigenkapital auf." },
   { topic: "aufgabe-51", q: "Aufgabe 51, Auswertung 2: Ermittle die Rentabilität des Eigenkapitals.", keyPoints: ["65.000", "609.500", "10,66|10,7"], sampleAnswer: "Durchschnittliches Eigenkapital = (577.000 € + 642.000 €) : 2 = 609.500 €. Eigenkapitalrentabilität = 65.000 € : 609.500 € × 100 ≈ 10,66 %." },
+);
+
+// =====================================================================
+// ERGÄNZUNG 19.10.2026: Formulare mit Inhaltssteuerelementen (Textverarbeitung)
+// Quelle: Kursabschnitt "6. Interner Schriftverkehr" (Erklärung Entwicklertools u. a.).
+// Die eigentlichen Word-Übungen mit Datei-Prüfer stehen in formulare.js (FORMS).
+// =====================================================================
+
+STRUCTURES.push(
+  {
+    topic: "formulare-grundlagen",
+    title: "Ablauf: Formular in Word erstellen",
+    items: [
+      "Entwicklertools einblenden (Datei › Optionen › Menüband anpassen)",
+      "Entwurfsmodus einschalten",
+      "Festen Text und Beschriftungen tippen",
+      "Steuerelemente an die Stellen setzen",
+      "Kombinationsfeld: Eigenschaften › Hinzufügen",
+      "Entwurfsmodus ausschalten",
+      "Bearbeitung einschränken › Ausfüllen von Formularen",
+      "Ja, Schutz jetzt anwenden",
+      "Speichern",
+    ],
+  },
+);
+
+FLASHCARDS.push(
+  { topic: "formulare-grundlagen", front: "Registerkarte Entwicklertools einblenden", back: "Datei › Optionen › Menüband anpassen › rechts unter den Hauptregisterkarten Haken bei Entwicklertools › OK." },
+  { topic: "formulare-grundlagen", front: "Entwurfsmodus", back: "Entwicklertools › Gruppe Steuerelemente › Entwurfsmodus. An = du bist Urheber und baust das Formular. Aus = du siehst es wie der Nutzer." },
+  { topic: "formulare-grundlagen", front: "Rich-Text- vs. Nur-Text-Inhaltssteuerelement", back: "Rich-Text: Nutzer darf fett/kursiv formatieren und mehrere Absätze schreiben. Nur-Text: nur einfacher Text, wenn du einschränken willst." },
+  { topic: "formulare-grundlagen", front: "Einträge im Kombinationsfeld anlegen", back: "Kombinationsfeld markieren › Eigenschaften › Hinzufügen › Anzeigename eintippen › OK. Für jeden Eintrag wiederholen." },
+  { topic: "formulare-grundlagen", front: "Kombinationsfeld vs. Dropdownliste", back: "Beide zeigen eine Liste. Im Kombinationsfeld kann der Nutzer zusätzlich eigenen Text eintippen, in der Dropdownliste nur auswählen." },
+  { topic: "formulare-grundlagen", front: "Datumsformat TT.MM.JJJJ einstellen", back: "Datumsauswahl markieren › Eigenschaften › Datumsanzeige im Format: TT.MM.JJJJ wählen › OK." },
+  { topic: "formulare-grundlagen", front: "Formular schützen", back: "Entwicklertools › Bearbeitung einschränken › Punkt 2 Haken bei \"Nur diese Bearbeitungen zulassen\" › \"Ausfüllen von Formularen\" › Ja, Schutz jetzt anwenden (Kennwort optional)." },
+  { topic: "formulare-grundlagen", front: "Vorversionentools", back: "Die alten Formularfelder (Text, Kontrollkästchen, Kombinationsfeld). Nur nötig, wenn du im Kompatibilitätsmodus arbeitest." },
+);
+
+QUESTIONS.push(
+  { topic: "formulare-grundlagen", type: "single", q: "Wo blendest du die Registerkarte Entwicklertools ein?", options: ["Ansicht › Menüband", "Datei › Optionen › Menüband anpassen", "Einfügen › Steuerelemente", "Start › Formatvorlagen"], correct: [1] },
+  { topic: "formulare-grundlagen", type: "single", q: "Der Nutzer soll seine Abteilung aus Einkauf, Verkauf oder Marketing wählen. Welches Steuerelement nimmst du?", options: ["Nur-Text-Inhaltssteuerelement", "Kombinationsfeld", "Kontrollkästchen", "Datumsauswahl"], correct: [1] },
+  { topic: "formulare-grundlagen", type: "single", q: "Wie legst du die Einträge eines Kombinationsfelds an?", options: ["Einfach in das Feld tippen", "Eigenschaften › Hinzufügen", "Rechtsklick › Absatz", "Über Suchen und Ersetzen"], correct: [1] },
+  { topic: "formulare-grundlagen", type: "single", q: "Was musst du auswählen, damit der Nutzer nur noch die Felder ausfüllen kann?", options: ["Bearbeitung einschränken › Keine Änderungen (Schreibgeschützt)", "Bearbeitung einschränken › Ausfüllen von Formularen", "Bearbeitung einschränken › Kommentare", "Datei › Als PDF speichern"], correct: [1] },
+  { topic: "formulare-grundlagen", type: "single", q: "Du hast \"Ausfüllen von Formularen\" eingestellt, aber man kann noch überall schreiben. Was fehlt?", options: ["Speichern", "Ja, Schutz jetzt anwenden", "Entwurfsmodus einschalten", "Kontrollkästchen einfügen"], correct: [1] },
+  { topic: "formulare-grundlagen", type: "single", q: "Der Nutzer soll in einem Feld auch fett schreiben und mehrere Absätze tippen dürfen. Welches Textfeld passt?", options: ["Nur-Text-Inhaltssteuerelement", "Rich-Text-Inhaltssteuerelement", "Kombinationsfeld", "Dropdownliste"], correct: [1] },
 );

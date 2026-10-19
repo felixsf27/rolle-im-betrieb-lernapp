@@ -652,3 +652,26 @@ textarea.line-input { resize: vertical; min-height: 48px; }
   .letter-actions { grid-template-columns: 1fr 1fr; }
   .letter-actions #letterResetBtn { grid-column: auto; }
 }
+
+/* ---------- Formular-Trainer ---------- */
+.form-source { margin: -6px 0 12px; font-size: 0.8rem; color: var(--muted); line-height: 1.45; }
+.form-req { margin: 8px 0 0; padding-left: 20px; line-height: 1.55; color: var(--text); }
+.form-req li { margin-bottom: 3px; }
+.form-drop {
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;
+  min-height: 120px; padding: 18px 16px; margin-top: 14px; text-align: center; cursor: pointer;
+  border: 2px dashed var(--border); border-radius: 14px; background: var(--surface);
+  transition: border-color .15s, background .15s;
+}
+.form-drop:hover, .form-drop.drag, .form-drop:focus-within { border-color: var(--accent); }
+.form-drop.drag { background: color-mix(in srgb, var(--accent) 8%, var(--surface)); }
+.form-drop.has-file { border-style: solid; }
+.form-drop input { position: absolute; width: 1px; height: 1px; opacity: 0; }
+.form-drop-title { font-weight: 700; }
+.form-drop-sub { font-size: 0.8rem; color: var(--muted); }
+.form-drop-file { font-size: 0.85rem; color: var(--accent); font-weight: 600; word-break: break-all; }
+.form-results { list-style: none; margin: 12px 0 0; padding: 0; display: grid; gap: 6px; }
+.form-res { display: flex; gap: 10px; align-items: flex-start; padding: 10px 12px; border-radius: 10px; background: var(--surface); border: 1px solid var(--border); font-size: 0.88rem; line-height: 1.45; }
+.form-res.bad { border-color: color-mix(in srgb, var(--bad) 45%, var(--border)); }
+.form-res.warn { border-color: color-mix(in srgb, var(--accent) 45%, var(--border)); }
+.form-res-icon { flex: none; }

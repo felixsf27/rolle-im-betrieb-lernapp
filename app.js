@@ -143,6 +143,10 @@ function lettersFor(topicId) {
   return (typeof LETTERS !== "undefined" ? LETTERS : []).filter(l => l.topic === topicId);
 }
 
+function categoryHasForms(categoryId) {
+  return TOPICS.some(t => t.category === categoryId && formsFor(t.id).length > 0);
+}
+
 function categoryHasLetters(categoryId) {
   return TOPICS.some(t => t.category === categoryId && lettersFor(t.id).length > 0);
 }
@@ -166,6 +170,7 @@ function updateModeAvailability() {
     open: categoryHasOpen(state.currentCategory),
     booking: categoryHasBookings(state.currentCategory),
     letter: categoryHasLetters(state.currentCategory),
+    form: categoryHasForms(state.currentCategory),
   };
   Object.keys(availability).forEach(mode => {
     const btn = document.querySelector('.mode-btn[data-mode="' + mode + '"]');
@@ -185,6 +190,7 @@ function topicStats(topicId) {
   const oCount = openFor(topicId).length;
   const bCount = bookingsFor(topicId).length;
   const lCount = lettersFor(topicId).length;
+  const fCount = formsFor(topicId).length;
   const progress = loadProgress();
   const done = progress[topicId]?.bestScore || 0;
   const total = state.mode === "cards" ? cCount
@@ -192,8 +198,9 @@ function topicStats(topicId) {
     : state.mode === "open" ? oCount
     : state.mode === "booking" ? bCount
     : state.mode === "letter" ? lCount
+    : state.mode === "form" ? fCount
     : qCount;
-  return { total, done, qCount, cCount, sCount, oCount, bCount, lCount };
+  return { total, done, qCount, cCount, sCount, oCount, bCount, lCount, fCount };
 }
 
 function renderTopics() {
@@ -204,6 +211,7 @@ function renderTopics() {
     .filter(t => state.mode !== "open" || openFor(t.id).length > 0)
     .filter(t => state.mode !== "booking" || bookingsFor(t.id).length > 0)
     .filter(t => state.mode !== "letter" || lettersFor(t.id).length > 0)
+    .filter(t => state.mode !== "form" || formsFor(t.id).length > 0)
     .filter(t => state.mode !== "quiz" || QUESTIONS.some(q => q.topic === t.id))
     .filter(t => state.mode !== "cards" || FLASHCARDS.some(c => c.topic === t.id))
     .forEach(t => {
@@ -216,6 +224,7 @@ function renderTopics() {
         : state.mode === "open" ? stats.oCount + " Aufgaben"
         : state.mode === "booking" ? stats.bCount + " Buchungen"
         : state.mode === "letter" ? stats.lCount + (stats.lCount === 1 ? " Brief" : " Briefe")
+        : state.mode === "form" ? stats.fCount + (stats.fCount === 1 ? " Formular" : " Formulare")
         : stats.qCount + " Fragen";
       card.innerHTML = `
         <span class="icon">${t.icon}</span>
@@ -342,6 +351,7 @@ $("#backFromStructure").addEventListener("click", () => history.back());
 $("#backFromOpen").addEventListener("click", () => history.back());
 $("#backFromBooking").addEventListener("click", () => history.back());
 $("#backFromLetter").addEventListener("click", () => history.back());
+initForms();
 
 function startTopic(topicId) {
   state.currentTopic = topicId;
@@ -350,6 +360,7 @@ function startTopic(topicId) {
   else if (state.mode === "open") startOpen(topicId);
   else if (state.mode === "booking") startBooking(topicId);
   else if (state.mode === "letter") startLetter(topicId);
+  else if (state.mode === "form") startForm(topicId);
   else startQuiz(topicId);
 }
 
@@ -491,7 +502,7 @@ function showResult(kind) {
   const retryWrongBtn = $("#retryWrongBtn");
 
   // Frage-für-Frage-Durchsicht nur für Fragen-Modi (Quiz/Freitext/Buchung), nicht für Karten/Gliederung.
-  const showReview = (kind === "quiz" || kind === "open" || kind === "booking" || kind === "letter") && state.answeredLog.length;
+  const showReview = (kind === "quiz" || kind === "open" || kind === "booking" || kind === "letter" || kind === "form") && state.answeredLog.length;
   reviewEl.classList.toggle("hidden", !showReview);
   reviewEl.innerHTML = "";
   let wrongCount = 0;
@@ -507,7 +518,7 @@ function showResult(kind) {
         escapeHtml(entry.given) + (entry.wasCorrect ? " ✅" : " ❌") + '</span></div>' +
         (entry.wasCorrect ? "" :
           '<div class="review-line"><span class="review-label">' +
-          (kind === "open" ? "Musterantwort: " : kind === "letter" ? "Fehler: " : "Richtig: ") + '</span>' +
+          (kind === "open" ? "Musterantwort: " : kind === "letter" || kind === "form" ? "Fehler: " : "Richtig: ") + '</span>' +
           '<span class="review-correct">' + escapeHtml(entry.correctText) + '</span></div>');
       reviewEl.appendChild(item);
     });
@@ -534,6 +545,7 @@ $("#retryBtn").addEventListener("click", () => {
   else if (kind === "open") startOpen(state.currentTopic, false);
   else if (kind === "booking") startBooking(state.currentTopic, false);
   else if (kind === "letter") startLetter(state.currentTopic, false);
+  else if (kind === "form") startForm(state.currentTopic, false);
   else startQuiz(state.currentTopic, false);
 });
 
@@ -550,6 +562,10 @@ $("#retryWrongBtn").addEventListener("click", () => {
   else if (state.finishedKind === "letter") {
     const wrongLetters = lettersFor(state.currentTopic).filter(l => wrong.some(w => w.letterId === l.id));
     startLetter(state.currentTopic, false, wrongLetters);
+  }
+  else if (state.finishedKind === "form") {
+    const wrongForms = formsFor(state.currentTopic).filter(f => wrong.some(w => w.formId === f.id));
+    startForm(state.currentTopic, false, wrongForms);
   }
   else startQuiz(state.currentTopic, false);
 });

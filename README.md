@@ -25,10 +25,13 @@ Aktuell fünf Fächer:
   Seitenzahlen, Seite einrichten, Sortieren & Nummerierung (Kategorie "Werkzeuge &
   Funktionen"); EDV vs. IT, Hardware-Komponenten (Kategorie "EDV-Grundlagen"); eine
   Klausur-Simulation nach dem Vorbild einer echten Musteraufgabe inkl. Gliederungs-Übung
-  zum systematischen Klausur-Ablauf (Kategorie "Klausur-Simulation"). Kategorie "Serienbriefe &
-  interner Schriftverkehr": Grundlagen & Menüband, Regeln & Feldfunktionen, Briefkopf nach
-  DIN 5008, die Serienbrief-Übungen 1 bis 11, interner Schriftverkehr und eine Probeklausur mit
-  der Klausurvorlage (eigener Modus "✉️ Brief", siehe unten).
+  zum systematischen Klausur-Ablauf (Kategorie "Klausur-Simulation"). Kategorie "Interner
+  Schriftverkehr & Formulare": Formulare mit Inhaltssteuerelementen in Word bauen (eigener
+  Modus "🧩 Formular" mit Datei-Prüfer, siehe unten), Entwicklertools & Klickwege, interner
+  Schriftverkehr (Mitteilung, Rundschreiben, Aktenvermerk, Protokoll). Kategorie
+  "Serienbriefe" (Test geschrieben): Grundlagen & Menüband, Regeln & Feldfunktionen, Briefkopf
+  nach DIN 5008, die Serienbrief-Übungen 1 bis 11 und eine Probeklausur mit der Klausurvorlage
+  (eigener Modus "✉️ Brief", siehe unten).
 - **Recht** → eigenständiges Fach, nicht Teil von "Rolle im Betrieb" → Kategorie
   "Rechtsgrundlagen (BGB AT)": Normenhierarchie & Rechtsquellen, Rechtsnorm (Tatbestand &
   Rechtsfolge), Rechtsobjekte (Sachen), Rechtssubjekte (Personen), Rechtsfähigkeit (jur. Person),
@@ -46,6 +49,8 @@ Alles steckt in `data.js`, keine Änderung an `index.html` oder `app.js` nötig:
 - **Neue Gliederungs-Übung:** Eintrag in `STRUCTURES` ergänzen (`topic`-id + `items` in der korrekten Reihenfolge).
 - **Neue Brief-Aufgabe:** Eintrag in `LETTERS` in `briefe.js` (Aufbau und Zeilentypen stehen
   oben in der Datei erklärt).
+- **Neue Formular-Aufgabe:** Eintrag in `FORMS` in `formulare.js` (verlangte Steuerelemente mit
+  Typ, Beschriftung, Einträgen, Datumsformat, Ausfüll-Vorgaben; Aufbau oben in der Datei).
 - **Neue Buchungssatz-Aufgabe:** Eintrag in `BOOKINGS` ergänzen (`topic`-id, `situation`,
   `amount`, `soll`/`haben` als Schlüssel aus `ACCOUNT_ALIASES`, `art`, `explanation`). Neues
   Konto: Eintrag in `ACCOUNT_ALIASES` ergänzen (`account` = Anzeigename, `aliases` = erkannte
@@ -82,6 +87,12 @@ damit bereits installierte Versionen der App das Update laden.
   Betreff, Anrede, Text. Die App rechnet jede Zeile für alle Datensätze durch (wie die
   Word-Vorschau) und zeigt pro Datensatz, was herauskommt, Leerzeichen sichtbar als ·.
   Frei formulierte Texte werden über Kernbegriffe geprüft und mit einem Beispiel verglichen.
+- **Formular** – das Formular wird echt in Word gebaut (Entwicklertools), die fertige .docx
+  kommt per Ablegen/Antippen in die App. Die App entpackt die Datei im Browser (ZIP über
+  `DecompressionStream`, nichts wird hochgeladen) und prüft die Inhaltssteuerelemente (Typ,
+  Position neben der Beschriftung, Kombinationsfeld-Einträge, Datumsformat), festen Text,
+  den Formularschutz ("Ausfüllen von Formularen" + angewendet) und bei Ausfüll-Aufgaben die
+  Eingaben. Alte Formularfelder (Vorversionentools) werden erkannt.
 
 Der Lernfortschritt wird lokal im Browser gespeichert (`localStorage`), es gibt keinen Server
 und keine Datenübertragung an Dritte.
