@@ -1,9 +1,9 @@
 // Fächer der Umschulung – neues Fach: einfach hier eine Zeile ergänzen
 const SUBJECTS = [
   { id: "rolle-im-betrieb", title: "Rolle im Betrieb", icon: "📘", archived: true },
-  { id: "rewe", title: "Rechnungswesen", icon: "🧮" },
+  { id: "rewe", title: "Rechnungswesen", icon: "🧮", archived: true },
   { id: "tabellenkalkulation", title: "Tabellenkalkulation", icon: "📊", archived: true },
-  { id: "textverarbeitung", title: "Textverarbeitung", icon: "📝" },
+  { id: "textverarbeitung", title: "Textverarbeitung", icon: "📝", archived: true },
   { id: "recht", title: "Recht", icon: "⚖️", archived: true },
 ];
 
