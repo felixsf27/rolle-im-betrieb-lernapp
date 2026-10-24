@@ -124,6 +124,7 @@ function renderCategories() {
     card.addEventListener("click", () => goToCategory(c.id));
     grid.appendChild(card);
   });
+  if (!grid.children.length) grid.innerHTML = '<p class="meta">Noch keine Inhalte. Kommen, sobald es Unterlagen gibt.</p>';
 }
 
 // ---------- Topic grid rendering ----------
