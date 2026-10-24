@@ -5,6 +5,11 @@ const SUBJECTS = [
   { id: "tabellenkalkulation", title: "Tabellenkalkulation", icon: "📊", archived: true },
   { id: "textverarbeitung", title: "Textverarbeitung", icon: "📝", archived: true },
   { id: "recht", title: "Recht", icon: "⚖️", archived: true },
+  { id: "webshop-konzeption", title: "M2.1 Webshop-Konzeption", icon: "🛒" },
+  { id: "beschaffung", title: "M2.2 Beschaffung", icon: "📦" },
+  { id: "rewe-m4", title: "M4 Rechnungswesen", icon: "🧮" },
+  { id: "recht-2", title: "M5 Recht II", icon: "⚖️" },
+  { id: "englisch", title: "M15 Englisch", icon: "🇬🇧" },
 ];
 
 // Kategorien je Fach – ein Testblock/Themenblock. Neue Kategorie (z. B. für den nächsten Test):
