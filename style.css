@@ -675,3 +675,26 @@ textarea.line-input { resize: vertical; min-height: 48px; }
 .form-res.bad { border-color: color-mix(in srgb, var(--bad) 45%, var(--border)); }
 .form-res.warn { border-color: color-mix(in srgb, var(--accent) 45%, var(--border)); }
 .form-res-icon { flex: none; }
+
+/* ---------- Tageszusammenfassungen: schlichter Lesetext, keine Karten ---------- */
+.summary-heading { font-size: 1.05rem; margin: 28px 0 6px; }
+.summary-list { display: flex; flex-direction: column; }
+.summary-link {
+  display: flex; gap: 12px; align-items: baseline; text-align: left;
+  background: none; border: none; border-bottom: 1px solid var(--border);
+  padding: 12px 2px; color: var(--text); font: inherit; cursor: pointer;
+}
+.summary-link:last-child { border-bottom: none; }
+.summary-link-date { color: var(--accent); font-weight: 600; font-size: 0.85rem; white-space: nowrap; }
+.summary-date { color: var(--muted); font-size: 0.85rem; margin: 14px 0 2px; }
+.summary-body { line-height: 1.6; font-size: 1rem; max-width: 70ch; padding-bottom: 40px; }
+.summary-body h2 { font-size: 1.1rem; margin: 28px 0 8px; color: var(--accent); }
+.summary-body p { margin: 0 0 12px; }
+.summary-body ul, .summary-body ol { margin: 0 0 14px; padding-left: 1.3em; }
+.summary-body li { margin-bottom: 6px; }
+.summary-body li ul { margin: 6px 0 0; }
+.summary-body code { font-size: 0.9em; background: var(--border); padding: 1px 5px; border-radius: 4px; }
+.summary-table { overflow-x: auto; margin: 0 0 16px; }
+.summary-table table { border-collapse: collapse; width: 100%; font-size: 0.9rem; }
+.summary-table th, .summary-table td { text-align: left; padding: 7px 8px; border-bottom: 1px solid var(--border); }
+.summary-table th { color: var(--muted); font-weight: 600; }

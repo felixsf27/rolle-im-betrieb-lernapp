@@ -40,6 +40,19 @@
     <p class="subtitle">Wähle eine Kategorie.</p>
 
     <div id="categoryGrid" class="subject-list"></div>
+
+    <div id="summarySection" class="hidden">
+      <h2 class="summary-heading">Zusammenfassungen</h2>
+      <div id="summaryList" class="summary-list"></div>
+    </div>
+  </section>
+
+  <!-- SUMMARY READER -->
+  <section id="view-summary" class="view hidden">
+    <button class="back-btn" id="backFromSummary">← Zurück</button>
+    <p class="summary-date" id="summaryDate"></p>
+    <h1 id="summaryTitle"></h1>
+    <article id="summaryBody" class="summary-body"></article>
   </section>
 
   <!-- CATEGORY / TOPIC SELECT -->
@@ -282,6 +295,7 @@
 <script src="data.js"></script>
 <script src="briefe.js"></script>
 <script src="formulare.js"></script>
+<script src="zusammenfassungen.js"></script>
 <script src="app.js"></script>
 </body>
 </html>

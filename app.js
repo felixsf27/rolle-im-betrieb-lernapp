@@ -124,7 +124,85 @@ function renderCategories() {
     card.addEventListener("click", () => goToCategory(c.id));
     grid.appendChild(card);
   });
-  if (!grid.children.length) grid.innerHTML = '<p class="meta">Noch keine Inhalte. Kommen, sobald es Unterlagen gibt.</p>';
+  const summaries = SUMMARIES.filter(s => s.subject === state.currentSubject);
+  if (!grid.children.length && !summaries.length) grid.innerHTML = '<p class="meta">Noch keine Inhalte. Kommen, sobald es Unterlagen gibt.</p>';
+
+  $("#summarySection").classList.toggle("hidden", !summaries.length);
+  const list = $("#summaryList");
+  list.innerHTML = "";
+  summaries.forEach(s => {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "summary-link";
+    btn.innerHTML = `<span class="summary-link-date">${s.date}</span><span>${escapeHtml(s.title)}</span>`;
+    btn.addEventListener("click", () => goToSummary(SUMMARIES.indexOf(s)));
+    list.appendChild(btn);
+  });
+}
+
+// ---------- Summary reader ----------
+// Tiny Markdown subset used by the summaries: ## headings, - lists (2-space nesting),
+// 1. lists, | tables |, **bold**, *italic*, `code`.
+function inlineMd(s) {
+  return escapeHtml(s)
+    .replace(/`([^`]+)`/g, "<code>$1</code>")
+    .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>")
+    .replace(/\*([^*]+)\*/g, "<em>$1</em>");
+}
+
+function renderMarkdown(md) {
+  const lines = md.split("\n");
+  let html = "";
+  let i = 0;
+  while (i < lines.length) {
+    const line = lines[i];
+    if (!line.trim()) { i++; continue; }
+    if (line.startsWith("## ")) { html += "<h2>" + inlineMd(line.slice(3)) + "</h2>"; i++; continue; }
+    if (line.startsWith("|")) {
+      const rows = [];
+      while (i < lines.length && lines[i].startsWith("|")) rows.push(lines[i++]);
+      const cells = r => r.slice(1, -1).split("|").map(c => c.trim());
+      html += '<div class="summary-table"><table><thead><tr>' + cells(rows[0]).map(c => "<th>" + inlineMd(c) + "</th>").join("") + "</tr></thead><tbody>";
+      rows.slice(2).forEach(r => { html += "<tr>" + cells(r).map(c => "<td>" + inlineMd(c) + "</td>").join("") + "</tr>"; });
+      html += "</tbody></table></div>";
+      continue;
+    }
+    const listMatch = /^(\s*)(-|\d+\.) /;
+    if (listMatch.test(line)) {
+      const tag = /^\s*\d+\./.test(line) ? "ol" : "ul";
+      html += "<" + tag + ">";
+      let open = false;
+      while (i < lines.length && listMatch.test(lines[i])) {
+        const m = lines[i].match(listMatch);
+        const text = inlineMd(lines[i].slice(m[0].length));
+        if (m[1].length) { html += (open ? "" : "<ul>") + "<li>" + text + "</li>"; open = true; }
+        else { html += (open ? "</ul>" : "") + "<li>" + text + "</li>"; open = false; }
+        i++;
+      }
+      html += (open ? "</ul>" : "") + "</" + tag + ">";
+      continue;
+    }
+    html += "<p>" + inlineMd(line) + "</p>";
+    i++;
+  }
+  return html;
+}
+
+function renderSummaryView(index) {
+  const s = SUMMARIES[index];
+  if (!s) { renderHome(); return; }
+  state.currentSubject = s.subject;
+  $("#summaryDate").textContent = (SUBJECTS.find(x => x.id === s.subject)?.title || "") + " · " + s.date;
+  $("#summaryTitle").textContent = s.title;
+  $("#summaryBody").innerHTML = renderMarkdown(s.md);
+  showView("#view-summary");
+  window.scrollTo(0, 0);
+  saveLastView({ name: "summary", index });
+}
+
+function goToSummary(index) {
+  history.pushState({ name: "summary", index }, "");
+  renderSummaryView(index);
 }
 
 // ---------- Topic grid rendering ----------
@@ -318,6 +396,10 @@ function applyHistoryState(viewState) {
     renderSubjectView(viewState.subjectId);
     return;
   }
+  if (viewState.name === "summary") {
+    renderSummaryView(viewState.index);
+    return;
+  }
   // category, quiz, cards and structure entries all land on the category view:
   // resuming a quiz/cards/structure run mid-way isn't supported, and the
   // category view is exactly where the matching on-screen back button goes too.
@@ -352,6 +434,7 @@ $("#backFromStructure").addEventListener("click", () => history.back());
 $("#backFromOpen").addEventListener("click", () => history.back());
 $("#backFromBooking").addEventListener("click", () => history.back());
 $("#backFromLetter").addEventListener("click", () => history.back());
+$("#backFromSummary").addEventListener("click", () => history.back());
 initForms();
 
 function startTopic(topicId) {
@@ -1676,7 +1759,8 @@ window.addEventListener("appinstalled", () => {
 const lastView = loadLastView();
 const canRestore = lastView && (
   (lastView.name === "subject" && SUBJECTS.some(s => s.id === lastView.subjectId)) ||
-  (lastView.name === "category" && CATEGORIES.some(c => c.id === lastView.categoryId))
+  (lastView.name === "category" && CATEGORIES.some(c => c.id === lastView.categoryId)) ||
+  (lastView.name === "summary" && SUMMARIES[lastView.index])
 );
 if (canRestore) {
   history.replaceState(lastView, "");
