@@ -698,3 +698,4 @@ textarea.line-input { resize: vertical; min-height: 48px; }
 .summary-table table { border-collapse: collapse; width: 100%; font-size: 0.9rem; }
 .summary-table th, .summary-table td { text-align: left; padding: 7px 8px; border-bottom: 1px solid var(--border); }
 .summary-table th { color: var(--muted); font-weight: 600; }
+.summary-body a { color: var(--accent); font-weight: 600; text-decoration: underline; text-underline-offset: 2px; }
