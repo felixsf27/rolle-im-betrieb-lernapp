@@ -1,4 +1,4 @@
-const CACHE_NAME = "rolle-im-betrieb-v31";
+const CACHE_NAME = "rolle-im-betrieb-v32";
 const ASSETS = [
   "./",
   "./index.html",
@@ -8,6 +8,8 @@ const ASSETS = [
   "./briefe.js",
   "./formulare.js",
   "./zusammenfassungen.js",
+  "./tafelbilder/recht-geschaeftsfaehigkeit.png",
+  "./tafelbilder/recht-rechtsfaehigkeit.png",
   "./manifest.json",
   "./icon-192.png",
   "./icon-512.png",

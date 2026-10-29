@@ -142,9 +142,11 @@ function renderCategories() {
 
 // ---------- Summary reader ----------
 // Tiny Markdown subset used by the summaries: ## headings, - lists (2-space nesting),
-// 1. lists, | tables |, **bold**, *italic*, `code`.
+// 1. lists, | tables |, **bold**, *italic*, `code`, [link](relativer/pfad).
 function inlineMd(s) {
   return escapeHtml(s)
+    // nur relative Links (z. B. tafelbilder/...), damit aus Text nichts Fremdes geöffnet wird
+    .replace(/\[([^\]]+)\]\(([\w\-./%]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>')
     .replace(/`([^`]+)`/g, "<code>$1</code>")
     .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>")
     .replace(/\*([^*]+)\*/g, "<em>$1</em>");
