@@ -67,6 +67,7 @@
       <button class="mode-btn" data-mode="structure">🧱 Gliederung</button>
       <button class="mode-btn" data-mode="open">✍️ Frei</button>
       <button class="mode-btn" data-mode="booking">📒 Buchung</button>
+      <button class="mode-btn" data-mode="calc">🔢 Rechnen</button>
       <button class="mode-btn" data-mode="letter">✉️ Brief</button>
       <button class="mode-btn" data-mode="form">🧩 Formular</button>
     </div>
@@ -124,6 +125,27 @@
   </section>
 
   <!-- BOOKING (Buchungssatz-Trainer) VIEW -->
+  <section id="view-calc" class="view hidden">
+    <div class="quiz-header">
+      <button class="back-btn" id="backFromCalc">← Zurück</button>
+      <div class="progress-wrap"><div class="progress-bar" id="calcProgress"></div></div>
+      <div class="score" id="calcScore">0 / 0</div>
+    </div>
+    <div class="booking-hint">
+      <strong>Merksatz:</strong> Netto = 100 %, Brutto = 119 % (bzw. 107 %). Erst auf 1 % runterrechnen: Brutto ÷ 119 × 100 = Netto, Brutto ÷ 119 × 19 = Steuer.
+      Umsatzsteuer − Vorsteuer: positiv = Zahllast, negativ = Vorsteuerüberhang.
+    </div>
+    <div class="card question-card">
+      <div class="q-topic" id="calcTopicLabel"></div>
+      <h2 id="calcText"></h2>
+      <div class="booking-form" id="calcFields"></div>
+      <button id="calcCheckBtn" class="primary-btn">Ergebnis prüfen</button>
+      <div id="calcFeedback" class="feedback hidden"></div>
+      <div id="calcExplain" class="open-sample hidden"></div>
+      <button id="calcNextBtn" class="primary-btn hidden">Weiter →</button>
+    </div>
+  </section>
+
   <section id="view-booking" class="view hidden">
     <div class="quiz-header">
       <button class="back-btn" id="backFromBooking">← Zurück</button>

@@ -51,6 +51,7 @@ Alles steckt in `data.js`, keine Änderung an `index.html` oder `app.js` nötig:
   oben in der Datei erklärt).
 - **Neue Formular-Aufgabe:** Eintrag in `FORMS` in `formulare.js` (verlangte Steuerelemente mit
   Typ, Beschriftung, Einträgen, Datumsformat, Ausfüll-Vorgaben; Aufbau oben in der Datei).
+- **Neue Rechenaufgabe:** Eintrag in `CALCS` ergänzen (siehe Modus "Rechnen" unten).
 - **Neue Buchungssatz-Aufgabe:** Eintrag in `BOOKINGS` ergänzen (`topic`-id, `situation`,
   `amount`, `soll`/`haben` als Schlüssel aus `ACCOUNT_ALIASES`, `art`, `explanation`). Neues
   Konto: Eintrag in `ACCOUNT_ALIASES` ergänzen (`account` = Anzeigename, `aliases` = erkannte
@@ -82,6 +83,11 @@ damit bereits installierte Versionen der App das Update laden.
   LL"), siehe `ACCOUNT_ALIASES` in `data.js` (nur bei Themen mit Einträgen in `BOOKINGS`).
   Zusammengesetzte Buchungssätze gehen auch: mit "+ weiteres Sollkonto/Habenkonto" mehrere
   Zeilen anlegen, in `BOOKINGS` dann `soll`/`haben` als Liste `[["konto", betrag], ...]`.
+- **Rechnen** – Beträge selbst ausrechnen und eintippen (z. B. Netto/Brutto, Steuer, Zahllast),
+  einzelne Felder können auch eine Auswahl sein (z. B. Zahllast oder Vorsteuerüberhang). Nach der
+  Prüfung kommt immer der Rechenweg. 1 Cent Spielraum wegen Rundung. Aufgaben in `CALCS` in
+  `data.js` (`topic`, `situation`, `fields: [{ label, answer }]` bzw. `{ label, options, answer }`,
+  `explanation`), nur bei Themen mit Einträgen dort.
 - **Brief** – Serienbriefe und interne Schriftstücke Zeile für Zeile selbst tippen:
   Rücksendeangabe, Anschriftenfeld mit «Feldern» und {WENN ...}-Regeln, Informationsblock,
   Betreff, Anrede, Text. Die App rechnet jede Zeile für alle Datensätze durch (wie die

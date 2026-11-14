@@ -240,6 +240,14 @@ function categoryHasOpen(categoryId) {
   return TOPICS.some(t => t.category === categoryId && openFor(t.id).length > 0);
 }
 
+function calcsFor(topicId) {
+  return (typeof CALCS !== "undefined" ? CALCS : []).filter(c => c.topic === topicId);
+}
+
+function categoryHasCalcs(categoryId) {
+  return TOPICS.some(t => t.category === categoryId && calcsFor(t.id).length > 0);
+}
+
 function categoryHasBookings(categoryId) {
   return TOPICS.some(t => t.category === categoryId && bookingsFor(t.id).length > 0);
 }
@@ -250,6 +258,7 @@ function updateModeAvailability() {
     structure: categoryHasStructure(state.currentCategory),
     open: categoryHasOpen(state.currentCategory),
     booking: categoryHasBookings(state.currentCategory),
+    calc: categoryHasCalcs(state.currentCategory),
     letter: categoryHasLetters(state.currentCategory),
     form: categoryHasForms(state.currentCategory),
   };
@@ -272,16 +281,18 @@ function topicStats(topicId) {
   const bCount = bookingsFor(topicId).length;
   const lCount = lettersFor(topicId).length;
   const fCount = formsFor(topicId).length;
+  const kCount = calcsFor(topicId).length;
   const progress = loadProgress();
   const done = progress[topicId]?.bestScore || 0;
   const total = state.mode === "cards" ? cCount
     : state.mode === "structure" ? sCount
     : state.mode === "open" ? oCount
     : state.mode === "booking" ? bCount
+    : state.mode === "calc" ? kCount
     : state.mode === "letter" ? lCount
     : state.mode === "form" ? fCount
     : qCount;
-  return { total, done, qCount, cCount, sCount, oCount, bCount, lCount, fCount };
+  return { total, done, qCount, cCount, sCount, oCount, bCount, lCount, fCount, kCount };
 }
 
 function renderTopics() {
@@ -291,6 +302,7 @@ function renderTopics() {
     .filter(t => state.mode !== "structure" || structureFor(t.id))
     .filter(t => state.mode !== "open" || openFor(t.id).length > 0)
     .filter(t => state.mode !== "booking" || bookingsFor(t.id).length > 0)
+    .filter(t => state.mode !== "calc" || calcsFor(t.id).length > 0)
     .filter(t => state.mode !== "letter" || lettersFor(t.id).length > 0)
     .filter(t => state.mode !== "form" || formsFor(t.id).length > 0)
     .filter(t => state.mode !== "quiz" || QUESTIONS.some(q => q.topic === t.id))
@@ -304,6 +316,7 @@ function renderTopics() {
         : state.mode === "structure" ? stats.sCount + " Punkte"
         : state.mode === "open" ? stats.oCount + " Aufgaben"
         : state.mode === "booking" ? stats.bCount + " Buchungen"
+        : state.mode === "calc" ? stats.kCount + (stats.kCount === 1 ? " Rechenaufgabe" : " Rechenaufgaben")
         : state.mode === "letter" ? stats.lCount + (stats.lCount === 1 ? " Brief" : " Briefe")
         : state.mode === "form" ? stats.fCount + (stats.fCount === 1 ? " Formular" : " Formulare")
         : stats.qCount + " Fragen";
@@ -435,6 +448,7 @@ $("#backFromCards").addEventListener("click", () => history.back());
 $("#backFromStructure").addEventListener("click", () => history.back());
 $("#backFromOpen").addEventListener("click", () => history.back());
 $("#backFromBooking").addEventListener("click", () => history.back());
+$("#backFromCalc").addEventListener("click", () => history.back());
 $("#backFromLetter").addEventListener("click", () => history.back());
 $("#backFromSummary").addEventListener("click", () => history.back());
 initForms();
@@ -445,6 +459,7 @@ function startTopic(topicId) {
   else if (state.mode === "structure") startStructure(topicId);
   else if (state.mode === "open") startOpen(topicId);
   else if (state.mode === "booking") startBooking(topicId);
+  else if (state.mode === "calc") startCalc(topicId);
   else if (state.mode === "letter") startLetter(topicId);
   else if (state.mode === "form") startForm(topicId);
   else startQuiz(topicId);
@@ -545,6 +560,7 @@ function submitAnswer(q, selected, shuffledOrder, confirmBtnEl) {
     fb.classList.add("bad");
     fb.textContent = "❌ Nicht ganz. Richtig: " + correctTexts.join(", ");
   }
+  if (q.explain) fb.textContent += " · " + q.explain;
   $("#qNextBtn").classList.remove("hidden");
   $("#quizScore").textContent = state.correctCount + " / " + state.queue.length;
 }
@@ -588,7 +604,7 @@ function showResult(kind) {
   const retryWrongBtn = $("#retryWrongBtn");
 
   // Frage-für-Frage-Durchsicht nur für Fragen-Modi (Quiz/Freitext/Buchung), nicht für Karten/Gliederung.
-  const showReview = (kind === "quiz" || kind === "open" || kind === "booking" || kind === "letter" || kind === "form") && state.answeredLog.length;
+  const showReview = (kind === "quiz" || kind === "open" || kind === "booking" || kind === "calc" || kind === "letter" || kind === "form") && state.answeredLog.length;
   reviewEl.classList.toggle("hidden", !showReview);
   reviewEl.innerHTML = "";
   let wrongCount = 0;
@@ -630,6 +646,7 @@ $("#retryBtn").addEventListener("click", () => {
   else if (kind === "structure") startStructure(state.currentTopic, false, true); // Retry: Nummerierung strippen
   else if (kind === "open") startOpen(state.currentTopic, false);
   else if (kind === "booking") startBooking(state.currentTopic, false);
+  else if (kind === "calc") startCalc(state.currentTopic, false);
   else if (kind === "letter") startLetter(state.currentTopic, false);
   else if (kind === "form") startForm(state.currentTopic, false);
   else startQuiz(state.currentTopic, false);
@@ -644,6 +661,9 @@ $("#retryWrongBtn").addEventListener("click", () => {
     // anhand der situation zurückholen statt der verkürzten question-Objekte aus dem Log.
     const wrongBookings = bookingsFor(state.currentTopic).filter(b => wrong.some(w => w.situation === b.situation));
     startBooking(state.currentTopic, false, wrongBookings);
+  }
+  else if (state.finishedKind === "calc") {
+    startCalc(state.currentTopic, false, calcsFor(state.currentTopic).filter(c => wrong.some(w => w.situation === c.situation)));
   }
   else if (state.finishedKind === "letter") {
     const wrongLetters = lettersFor(state.currentTopic).filter(l => wrong.some(w => w.letterId === l.id));
@@ -1053,6 +1073,95 @@ $("#bookingNextBtn").addEventListener("click", () => {
 });
 document.querySelectorAll(".booking-add").forEach(btn => {
   btn.addEventListener("click", () => addBookingRow(btn.dataset.side, true));
+});
+
+// ---------- RECHNEN (Beträge selbst ausrechnen: Netto/Brutto, Steuer, Zahllast) ----------
+// Aufgaben in CALCS (data.js): fields = [{ label, answer }] für Beträge oder
+// [{ label, options: [...], answer: "..." }] für eine Auswahl (z. B. Zahllast/Vorsteuerüberhang).
+function startCalc(topicId, pushHistory = true, presetPool = null) {
+  if (pushHistory) history.pushState({ name: "calc", subjectId: state.currentSubject, categoryId: state.currentCategory }, "");
+  state.queue = shuffle(presetPool || calcsFor(topicId));
+  state.index = 0;
+  state.correctCount = 0;
+  state.answeredLog = [];
+  showView("#view-calc");
+  renderCalc();
+}
+
+function renderCalc() {
+  state.answered = false;
+  const c = state.queue[state.index];
+  const total = state.queue.length;
+  $("#calcProgress").style.width = (state.index / total * 100) + "%";
+  $("#calcScore").textContent = state.correctCount + " / " + total;
+  const topicMeta = TOPICS.find(t => t.id === c.topic);
+  $("#calcTopicLabel").textContent = (topicMeta ? topicMeta.icon + " " + topicMeta.title : "") + " · Rechnen";
+  $("#calcText").textContent = c.situation;
+  $("#calcFields").innerHTML = c.fields.map((f, i) => "<label>" + escapeHtml(f.label) + (f.options
+    ? '<select data-i="' + i + '"><option value="">bitte wählen</option>' + f.options.map(o => "<option>" + escapeHtml(o) + "</option>").join("") + "</select>"
+    : '<input type="text" inputmode="decimal" data-i="' + i + '" placeholder="Betrag in €">') + "</label>").join("");
+  $("#calcFeedback").classList.add("hidden");
+  $("#calcExplain").classList.add("hidden");
+  $("#calcCheckBtn").classList.remove("hidden");
+  $("#calcNextBtn").classList.add("hidden");
+}
+
+function checkCalcAnswer() {
+  if (state.answered) return;
+  const c = state.queue[state.index];
+  const inputs = [...document.querySelectorAll("#calcFields [data-i]")];
+  if (inputs.some(el => !el.value.trim())) return;
+  if (inputs.some((el, i) => !c.fields[i].options && parseAmount(el.value) === null)) return;
+  state.answered = true;
+  // 1 Cent Spielraum, weil man beim Runden von Brutto auf Netto leicht anders landen kann
+  const results = c.fields.map((f, i) => {
+    const el = inputs[i];
+    el.disabled = true;
+    const ok = f.options ? el.value === f.answer : Math.abs(parseAmount(el.value) - f.answer) <= 0.011;
+    el.classList.add(ok ? "calc-ok" : "calc-bad");
+    return ok;
+  });
+  const isCorrect = results.every(Boolean);
+  const solution = c.fields.map(f => f.label + ": " + (f.options ? f.answer : formatEuro(f.answer))).join(" · ");
+
+  const fb = $("#calcFeedback");
+  fb.classList.remove("hidden", "good", "bad");
+  fb.classList.add(isCorrect ? "good" : "bad");
+  fb.textContent = isCorrect ? "✅ Alles richtig!" : "❌ " + results.filter(Boolean).length + " von " + results.length + " richtig. Lösung: " + solution;
+  if (isCorrect) state.correctCount++;
+
+  const explain = $("#calcExplain");
+  explain.classList.remove("hidden");
+  explain.innerHTML = '<span class="open-sample-label">Rechenweg</span>' + escapeHtml(c.explanation);
+
+  state.answeredLog.push({
+    question: { situation: c.situation },
+    given: inputs.map((el, i) => c.fields[i].label + ": " + el.value).join(" · "),
+    correctText: solution,
+    wasCorrect: isCorrect,
+  });
+  $("#calcScore").textContent = state.correctCount + " / " + state.queue.length;
+  $("#calcCheckBtn").classList.add("hidden");
+  $("#calcNextBtn").classList.remove("hidden");
+}
+
+function finishCalc() {
+  $("#calcProgress").style.width = "100%";
+  const total = state.queue.length;
+  const pct = total ? Math.round((state.correctCount / total) * 100) : 0;
+  bumpStreak();
+  $("#resultEmoji").textContent = pct >= 80 ? "🏆" : pct >= 50 ? "💪" : "📚";
+  $("#resultTitle").textContent = pct >= 80 ? "Stark!" : pct >= 50 ? "Gut gemacht!" : "Weiter üben!";
+  $("#resultText").textContent = `Du hattest ${state.correctCount} von ${total} Rechenaufgaben komplett richtig (${pct}%).`;
+  showResult("calc");
+}
+
+$("#calcCheckBtn").addEventListener("click", checkCalcAnswer);
+$("#calcFields").addEventListener("keydown", e => { if (e.key === "Enter") checkCalcAnswer(); });
+$("#calcNextBtn").addEventListener("click", () => {
+  state.index++;
+  if (state.index >= state.queue.length) finishCalc();
+  else renderCalc();
 });
 
 // ---------- BRIEF-TRAINER (Serienbriefe & interner Schriftverkehr) ----------
