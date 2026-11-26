@@ -10,6 +10,7 @@ const SUBJECTS = [
   { id: "rewe-m4", title: "M4 Rechnungswesen", icon: "🧮" },
   { id: "recht-2", title: "M5 Recht II", icon: "⚖️" },
   { id: "englisch", title: "M15 Englisch", icon: "🇬🇧" },
+  { id: "kommunikation", title: "Kommunikation", icon: "💬" },
 ];
 
 // Kategorien je Fach – ein Testblock/Themenblock. Neue Kategorie (z. B. für den nächsten Test):
@@ -2387,4 +2388,392 @@ FLASHCARDS.push(
   {"topic": "kz-beurteilen", "front": "Maßnahmen bei zu niedriger Liquidität", "back": "Forderungen eintreiben (nur L1), Vorräte abbauen (L1, L2), umschulden (alle Grade), Eigenkapital erhöhen."},
   {"topic": "kz-beurteilen", "front": "Maßnahmen bei zu niedrigem Deckungsgrad", "back": "Eigenkapital erhöhen (Gewinne behalten, Einlagen), kurzfristige Kredite in langfristige umwandeln, nicht gebrauchtes Anlagevermögen verkaufen."},
   {"topic": "kz-beurteilen", "front": "So schreibst du eine Beurteilung", "back": "Wert nennen, mit Richtwert vergleichen, sagen was es bedeutet, Entwicklung zum Vorjahr, Maßnahme wenn nötig."},
+);
+
+// =====================================================================
+// KOMMUNIKATION: TEST KW 49 (verbal/nonverbal, Sender-Empfänger, Eisberg,
+// Vier Ohren, Bedarfsermittlung mit Fragetechniken)
+// Quellen: Skript 01, 02, 04, Anwendungsübung Vier Ohren, Verständnisfragen,
+// Arbeitsblatt Fragetechniken, Fahrrad-Präsentation
+// =====================================================================
+CATEGORIES.push({ id: "kom-test", subject: "kommunikation", title: "Test KW 49: Modelle & Bedarfsermittlung", icon: "💬" });
+TOPICS.push(
+  { id: "kom-grundlagen", subject: "kommunikation", category: "kom-test", title: "Verbal & nonverbal", icon: "🙂" },
+  { id: "kom-sender", subject: "kommunikation", category: "kom-test", title: "Sender-Empfänger-Modell", icon: "📡" },
+  { id: "kom-eisberg", subject: "kommunikation", category: "kom-test", title: "Eisbergmodell", icon: "🧊" },
+  { id: "kom-vier-ohren", subject: "kommunikation", category: "kom-test", title: "Vier-Ohren-Modell & aktives Zuhören", icon: "👂" },
+  { id: "kom-bedarf", subject: "kommunikation", category: "kom-test", title: "Verkaufsgespräch & Kaufmotive", icon: "🛍️" },
+  { id: "kom-fragen", subject: "kommunikation", category: "kom-test", title: "Fragetechniken", icon: "❓" },
+);
+
+LEARN.push(
+  { topic: "kom-grundlagen", md: `## Worum es geht
+Kommunikationsfähigkeit heißt zweierlei: **sich verständlich mitteilen** und **zuhören**, also erkennen, was der andere will, und passend reagieren. Im Beruf ist das eine der wichtigsten sozialen Kompetenzen, weil jede Zusammenarbeit im Team und mit Kunden darauf aufbaut.
+
+| Art | Bedeutung |
+|---|---|
+| Verbal | das, was gesagt wird: Worte, Inhalt |
+| Nonverbal | alles ohne Worte: Körpersprache, Blick, Stimme, Abstand |
+
+## Die 5 Bestandteile der nonverbalen Kommunikation
+Eselsbrücke: von innen nach außen. Gesicht, Körper, Hände, Ton, Raum.
+
+| Bestandteil | Gehört dazu |
+|---|---|
+| Mimik und Blick | Augen, Mund, Stirn, wie lange man jemanden anschaut |
+| Körperhaltung | Rücken, Schultern, Beine, Kopfhaltung |
+| Gestik | Hände, Arme, Füße |
+| Stimme | Stimmlage, Lautstärke, Tonfall |
+| Distanz | Nähe und Abstand zum Gegenüber |
+
+## So setzt du sie im Kundenkontakt ein
+| Bestandteil | Positiv eingesetzt |
+|---|---|
+| Mimik und Blick | freundlich lächeln, Blickkontakt halten, aber nicht anstarren |
+| Körperhaltung | aufrecht und entspannt, dem Kunden zugewandt, Hände nicht in den Taschen |
+| Gestik | offene Handbewegungen, die das Gesagte unterstützen, nicht mit dem Finger zeigen |
+| Stimme | ruhig, freundlich, gut verständlich, nicht zu schnell. Am Telefon lächeln, man hört es |
+| Distanz | etwa eine Armlänge Abstand, keine Berührungen, nicht auf den Kunden zustürmen |
+
+## Fallen
+- Das Plakat im Skript zählt **Blickkontakt** als sechsten Punkt. Im Test die **5 aus dem Skript** nennen (Mimik und Blick zusammen).
+- Die **Stimme** gehört zur nonverbalen Kommunikation, obwohl man sie hört. Verbal ist nur der Inhalt der Worte.
+- Bei "Formuliere zu jedem Bestandteil eine Idee" immer alle 5 abarbeiten und konkret werden ("freundlich lächeln", nicht nur "Mimik positiv").` },
+
+  { topic: "kom-sender", md: `## Das Modell
+| Station | Was passiert |
+|---|---|
+| Sender | denkt, **codiert** (fasst es in Worte und Zeichen), sendet |
+| Nachricht | geht über einen Kanal: gesprochen, geschrieben, Körpersprache |
+| Empfänger | empfängt, **decodiert** (entschlüsselt), versteht |
+| Feedback | die Antwort des Empfängers zurück an den Sender |
+
+## Warum es schiefgeht
+Der Empfänger entschlüsselt die Nachricht mit **seinen eigenen Vorstellungen**. Was ankommt, ist nicht automatisch das, was gemeint war.
+
+Beispiel: Die Chefin sagt "Mach das bitte zeitnah fertig." Sie meint "bis Freitag", du verstehst "sofort" und lässt alles andere liegen. Ein kurzes Nachfragen ("Bis wann genau?") hätte gereicht.
+
+## Aufgaben des Senders
+- Ziel klar haben: Was will ich erreichen?
+- Kontext geben: Worum geht es?
+- Reihenfolge: **vom Allgemeinen zum Detail**
+- anschaulich, klar und verständlich sprechen
+- nonverbal unterstützen (Blick, Gestik, Stimme)
+
+## Aufgaben des Empfängers
+- Empfangsbereitschaft zeigen (zuwenden, Blickkontakt, nicken)
+- sich bewusst machen, dass die eigenen Vorstellungen anders sein können als die des Senders
+- bei Unklarheiten **nachfragen**
+- **Feedback** geben
+
+## Fallen
+- Codieren macht der **Sender**, decodieren der **Empfänger**. Nicht verwechseln.
+- "Vom Detail zum Allgemeinen" ist falsch herum.
+- Feedback ist kein Lob oder Tadel, sondern einfach die Rückmeldung, was angekommen ist.` },
+
+  { topic: "kom-eisberg", md: `## Das Bild
+Wie bei einem Eisberg ist nur ein kleiner Teil der Kommunikation sichtbar.
+
+| Ebene | Was dazugehört |
+|---|---|
+| **Über Wasser: Sachebene** (ca. 20 %) | Zahlen, Daten, Fakten, das, was wörtlich gesagt wird |
+| **Unter Wasser: Beziehungsebene** (ca. 80 %) | Gefühle, Stimmungen, Erwartungen, Einstellungen, Erfahrungen |
+
+Verständnisfrage aus Moodle: "Kommunikation läuft zu 20 % verbal und zu 80 % nonverbal. Welches Modell bildet das ab?" Antwort: **das Eisbergmodell**.
+
+## Beispiel aus dem Skript
+"Ich muss mich ständig mit den Kundenbeschwerden befassen."
+
+- **Sachebene:** Der Kollege bearbeitet Kundenbeschwerden.
+- **Beziehungsebene:** Er ist genervt oder unzufrieden, braucht vielleicht Hilfe, fühlt sich über- oder unterfordert, möchte andere Aufgaben.
+
+## Noch ein Beispiel
+Eine Kundin sagt am Telefon: "Ich warte jetzt schon zum dritten Mal in der Warteschleife."
+
+- **Sachebene:** Sie hat schon dreimal in der Warteschleife gewartet.
+- **Beziehungsebene:** Sie ist genervt und ungeduldig, fühlt sich nicht ernst genommen und erwartet, dass ihr jetzt endlich jemand hilft.
+
+## So gehst du bei einer Aufgabe vor
+**1.** Sachebene: Was wird wörtlich gesagt? Nur Fakten, keine Deutung.
+**2.** Beziehungsebene: Welches Gefühl, welche Erwartung steckt dahinter? Ruhig zwei, drei Möglichkeiten nennen.
+
+## Fallen
+- Die Beziehungsebene muss man **deuten**, und die eigene Deutung stimmt nicht immer. Hier entstehen Missverständnisse und Kränkungen.
+- Die Beziehungsebene schwingt **immer** mit, auch in einer scheinbar rein sachlichen Mail.
+- 20/80 ist eine Faustregel, keine gemessene Zahl. Im Test trotzdem so nennen.
+- Eisberg hat **2 Ebenen**, das Vier-Ohren-Modell **4 Seiten**.` },
+
+  { topic: "kom-vier-ohren", md: `## Vier Seiten einer Nachricht (Schulz von Thun)
+Der Sender spricht mit "vier Schnäbeln", der Empfänger hört mit "vier Ohren".
+
+| Seite | Was steckt drin |
+|---|---|
+| Sachebene | Zahlen, Daten, Fakten |
+| Selbstaussage (Selbstoffenbarung) | was der Sender von sich preisgibt: Gefühle, Stimmung |
+| Beziehungsebene | wie der Sender zum Empfänger steht, oft über Tonfall und Körpersprache |
+| Appell | was der Sender erreichen will, offen oder versteckt |
+
+## Beispiel aus dem Skript: "Der Müll ist ja noch oben."
+| Seite | Beispiel |
+|---|---|
+| Sache | Der Müll ist oben. |
+| Selbstaussage | Ich bin enttäuscht. Jetzt muss ich das wieder machen. |
+| Beziehung | Du bist faul. Du bist nachlässig. |
+| Appell | Bring den Müll runter. |
+
+Die **Beziehungsebene** entscheidet am meisten darüber, wie ein Gespräch läuft.
+
+## Die vier Ohren beim Empfänger
+- **Sachohr:** hört nur die Sachinfo. Stark: sachlich, neutral, ergebnisorientiert. Schwach: hört keine Zwischentöne, wirkt gefühllos.
+- **Selbstaussageohr:** fragt "Wie geht es dem Sender?". Stark: verständnisvoll, fühlt sich ein. Schwach: nimmt sich selbst aus der Verantwortung, hinterfragt sich nicht.
+- **Beziehungsohr:** fragt "Was hält der von mir?". Stark: feinfühlig, liest zwischen den Zeilen. Schwach: schnell gekränkt, nimmt alles persönlich.
+- **Appellohr:** fragt "Was soll ich tun?". Stark: hilfsbereit, lösungsorientiert. Schwach: lässt sich ausnutzen, vergisst eigene Bedürfnisse.
+
+Im Kundenservice: Bei einer wütenden Beschwerde mit dem **Selbstaussage- und Appellohr** hören, nicht mit dem Beziehungsohr. Der Ärger gilt dem Fehler, nicht dir.
+
+## So analysierst du eine Aussage
+**1.** Sache: Was ist passiert? Nur Fakten.
+**2.** Selbstaussage: Wie fühlt sich der Sender? ("Ich bin ...")
+**3.** Beziehung: Was denkt er über mich oder die Firma? ("Ihr seid ...")
+**4.** Appell: Was soll ich tun? ("Machen Sie ...")
+
+Bei Antworten auf Beschwerden: Gefühl anerkennen, Fehler zugeben, nicht rechtfertigen, konkrete Lösung mit Termin. Keine Ironie zurück, keine Schuld beim Kunden suchen.
+
+## Gespräch vorbereiten (Reihenfolge laut Skript)
+**1.** Appell: Was ist mein Ziel (mindestens und höchstens)?
+**2.** Sache: Worüber informiere ich, welche Argumente und Beispiele habe ich?
+**3.** Selbstaussage: Wie erlebe ich die Situation, welche Gefühle teile ich mit?
+**4.** Beziehung: Wie schaffe ich ein gutes Klima, wie kritisiere ich ohne zu verletzen, wie sieht der andere das?
+
+## Aktives Zuhören in drei Stufen
+**1.** Zuhören: verbal ("Ja", "Aha", "Wirklich?") und nonverbal (Blickkontakt, nicken, zugewandt).
+**2.** Verstehen: mit eigenen Worten wiederholen (paraphrasieren), zusammenfassen, nachfragen.
+**3.** Gefühle verstehen: Gefühle aussprechen (verbalisieren), sich hineinversetzen, Wünsche heraushören.
+
+Dazu gehören **Ich-Botschaften** ("Ich habe den Eindruck ...") statt Du-Vorwürfen ("Du machst immer ...").
+
+## Fallen
+- Selbstaussage und Selbstoffenbarung sind **dasselbe**.
+- Der Appell kann **versteckt** sein. "Es zieht hier" heißt oft "Mach das Fenster zu".
+- Im Skript steht beim Selbstaussageohr "seelisch gesünder als Selbstaussageohr". Gemeint ist: gesünder als das **Beziehungsohr**.` },
+
+  { topic: "kom-bedarf", md: `## Die Stufen des Verkaufsgesprächs
+**1.** Kontaktphase
+**2.** **Bedarfsermittlung**
+**3.** Angebotsphase
+**4.** Verkaufs- und Preisargumentation, Einwandbehandlung
+**5.** Abschluss und Ergänzungsangebot
+**6.** Verabschiedung
+
+- **Kontaktphase:** läuft vor allem nonverbal. Der erste Eindruck entscheidet über die Atmosphäre.
+- **Bedarfsermittlung:** herausfinden, was der Kunde wirklich braucht, **bevor** man etwas empfiehlt. Merksatz: **"Wer fragt, der führt."**
+
+## Kontaktphase: nonverbal kundenorientiert
+- **Augen und Blick:** Blickkontakt aufnehmen, nicht anstarren.
+- **Mimik:** offen und freundlich lächeln.
+- **Körperhaltung:** aufrecht, zugewandt, Hände nicht in den Taschen, Arme nicht verschränkt.
+- **Gestik:** einladende, offene Handbewegungen, etwa beim Platz anbieten.
+- **Stimme:** freundliche Begrüßung, ruhiger Ton, angemessene Lautstärke.
+- **Distanz:** nicht auf den Kunden zustürmen, ihn erst ankommen lassen.
+
+## Kaufmotive: warum jemand etwas kauft
+| Motivgruppe | Worum es geht |
+|---|---|
+| Sachmotive | Nutzen und Funktion |
+| Erlebnismotive | Emotion und Spaß |
+| Kommunikationsmotive | Austausch und Zugehörigkeit |
+
+**Beispiel Smartwatch**
+- Sach: Fitness messen, Schlaf tracken, Benachrichtigungen, Bezahlen, Akkulaufzeit
+- Erlebnis: modisches Design, neueste Technik, sich belohnen, Spaß an Statistiken
+- Kommunikation: Freunde haben auch eine, Erfolge teilen, mit der Familie in Kontakt, dazugehören
+
+**Beispiel Siebträger-Espressomaschine**
+- Sach: besserer Kaffee als aus der Kapsel, auf Dauer günstiger als im Café, Milch aufschäumen, weniger Müll
+- Erlebnis: Barista-Gefühl, Freude am Ritual, schönes Design in der Küche, sich etwas gönnen
+- Kommunikation: Gästen guten Kaffee anbieten, Latte Art zeigen, in Kaffee-Gruppen mitreden
+
+## Laptop-Fall aus dem Skript
+Kunde will einen Laptop, weiß aber nicht welchen.
+- Mitarbeiter A: "Welchen Laptop möchten Sie kaufen?" Kann der Kunde nicht beantworten.
+- Mitarbeiter B: "Wofür möchten Sie den Laptop hauptsächlich nutzen?" **Besser**, offene Frage nach dem Verwendungszweck.
+
+**Was du vor einer Empfehlung wissen musst:** Verwendungszweck (Büro, Studium, Gaming, Bildbearbeitung), Budget, wo er ihn nutzt (unterwegs oder am Schreibtisch, also Gewicht, Größe, Akku), wichtige Eigenschaften (Leistung, Bildschirm, Speicher), Vorlieben (Marke, Betriebssystem), wie gut er sich auskennt, bis wann er ihn braucht.
+
+## Fallen
+- Erst fragen, dann empfehlen. Wer sofort ein Produkt zeigt, überspringt die Bedarfsermittlung.
+- "Sachmotiv" heißt nicht "billig". Es geht um Nutzen und Funktion.
+- Kommunikationsmotiv hat nichts mit dem Verkaufsgespräch zu tun, sondern mit Zugehörigkeit und Austausch mit anderen.` },
+
+  { topic: "kom-fragen", md: `## Die sechs Fragearten
+**Offene Frage**
+- Kennzeichen: W-Frage, der Kunde kann erzählen
+- Beispiel: "Wofür möchten Sie den Laptop nutzen?"
+- Gut für: Anfang der Beratung, viele Infos sammeln
+- Achtung: dauert länger, gut zuhören und filtern
+
+**Geschlossene Frage**
+- Kennzeichen: Antwort vorgegeben, meist Ja oder Nein
+- Beispiel: "Möchten Sie mit einem Mitarbeiter verbunden werden?"
+- Gut für: Entscheidung herbeiführen, eingrenzen, Gesprächsende
+- Achtung: wenig Raum, Infos gehen verloren
+
+**Alternativfrage**
+- Kennzeichen: Auswahl aus 2 bis 3 Möglichkeiten
+- Beispiel: "Passt Ihnen Donnerstag oder Freitag besser?"
+- Gut für: Termine, spätere Phase, lenken
+- Achtung: die Optionen reichen vielleicht nicht, kann Druck machen
+
+**Rhetorische Frage**
+- Kennzeichen: keine Antwort erwartet, Stilmittel
+- Beispiel: "Qualität zahlt sich doch aus, oder?"
+- Gut für: Nutzen betonen, Werbung, Preisgespräch
+- Achtung: wirkt schnell belehrend oder manipulativ
+
+**Suggestivfrage**
+- Kennzeichen: Antwort wird in eine Richtung gelenkt
+- Beispiel: "Sie wollen sich den Rabatt doch nicht entgehen lassen?"
+- Gut für: aufs Positive lenken
+- Achtung: Kunde fühlt sich gedrängt, Vertrauen geht verloren
+
+**Konkretisierungsfrage**
+- Kennzeichen: macht ungenaue Aussagen genauer
+- Beispiel: "Für welche Temperaturen brauchen Sie die Jacke?"
+- Gut für: unklare Wünsche, große Auswahl
+- Achtung: zu persönlich oder zu viele Rückfragen nerven
+
+## Reihenfolge in der Beratung
+Am Anfang **offen**, in der Mitte **konkretisieren**, am Ende mit **Alternativ- oder geschlossenen Fragen** zur Entscheidung. Suggestiv- und rhetorische Fragen nur sparsam.
+
+## Fahrradberatung: 10 Fragen aus der Präsentation
+| Frage | Art und passt sie? |
+|---|---|
+| Wofür möchten Sie Ihr neues Fahrrad hauptsächlich nutzen? | offen, ja, guter Einstieg |
+| Sie möchten doch bestimmt ein E-Bike kaufen, oder? | suggestiv, nein, drängt |
+| Wie viel möchten Sie maximal ausgeben? | offen, ja (freundlicher: "Welchen Preisrahmen haben Sie sich vorgestellt?") |
+| Warum fahren Sie denn bisher kein vernünftiges Fahrrad? | offen, aber abwertend, nein |
+| Soll es unbedingt ein Mountainbike sein? | geschlossen und wertend, eher nein |
+| Welche Eigenschaften sind Ihnen besonders wichtig? | offen, ja |
+| Sie brauchen doch sicher eine besonders leichte Gangschaltung? | suggestiv, nein |
+| Fahren Sie eher zur Arbeit, in der Freizeit oder längere Touren? | Alternativfrage, ja, grenzt gut ein |
+| Ist Ihnen eine möglichst aufrechte Sitzposition wichtig? | geschlossen (konkretisierend), ja, wenn schon eingegrenzt |
+| Kennen Sie sich überhaupt mit Fahrradtypen aus? | geschlossen und abwertend, nein |
+
+## Fallen
+- Eine Alternativfrage kann gleichzeitig suggestiv sein, wenn eine Antwort offensichtlich dumm klingt ("Rabatt mitnehmen oder doch den vollen Preis zahlen?").
+- "Warum"-Fragen sind offen, klingen aber schnell wie ein Vorwurf.
+- Wörter wie "doch", "sicher", "bestimmt", "unbedingt", "überhaupt" machen eine Frage oft suggestiv oder abwertend.
+- Im Kundenkontakt siezen. Das Arbeitsblatt duzt in einem Beispiel ("Gefällt dir Berlin?"), das ist dort nur ein Beispiel.` },
+);
+
+STRUCTURES.push(
+  { topic: "kom-bedarf", title: "Stufen des Verkaufsgesprächs", items: ["Kontaktphase", "Bedarfsermittlung", "Angebotsphase", "Verkaufs- und Preisargumentation, Einwandbehandlung", "Abschluss und Ergänzungsangebot", "Verabschiedung"] },
+  { topic: "kom-vier-ohren", title: "Gespräch vorbereiten (Reihenfolge laut Skript)", items: ["Appell: Was ist mein Ziel?", "Sache: Welche Infos, Argumente und Beispiele?", "Selbstaussage: Wie erlebe ich die Situation?", "Beziehung: Wie schaffe ich ein gutes Klima?"] },
+  { topic: "kom-vier-ohren", title: "Aktives Zuhören: drei Stufen", items: ["Zuhören: Ja, Aha, nicken, Blickkontakt", "Verstehen: paraphrasieren, zusammenfassen, nachfragen", "Gefühle verstehen: verbalisieren, hineinversetzen"] },
+  { topic: "kom-sender", title: "Ablauf im Sender-Empfänger-Modell", items: ["Sender denkt", "Sender codiert", "Sender sendet die Nachricht", "Empfänger empfängt", "Empfänger decodiert", "Empfänger versteht", "Empfänger gibt Feedback"] },
+);
+
+QUESTIONS.push(
+  // ----- Verbal & nonverbal -----
+  { topic: "kom-grundlagen", type: "single", q: "Was gehört NICHT zur nonverbalen Kommunikation?", options: ["Der Tonfall, in dem du etwas sagst", "Der Abstand zu deinem Gegenüber", "Die Wortwahl in deinem Satz", "Die Haltung von Schultern und Rücken"], correct: [2], explain: "Die Wortwahl ist Inhalt, also verbal. Tonfall (Stimme), Abstand (Distanz) und Haltung sind nonverbal." },
+  { topic: "kom-grundlagen", type: "single", q: "Wie viele Bestandteile der nonverbalen Kommunikation nennt das Skript?", options: ["Drei", "Vier", "Fünf", "Sechs"], correct: [2], explain: "Mimik und Blick, Körperhaltung, Gestik, Stimme, Distanz. Das Plakat zählt Blickkontakt extra, im Test die 5 nennen." },
+  { topic: "kom-grundlagen", type: "single", q: "Was bedeutet Kommunikationsfähigkeit laut Skript?", options: ["Möglichst viel und überzeugend reden können", "Fachbegriffe sicher und korrekt verwenden können", "Sich verständlich mitteilen und gut zuhören können", "Jeden Kunden zu einem Kauf überreden können"], correct: [2], explain: "Beides gehört dazu: sich mitteilen und zuhören, also erkennen, was der andere will." },
+  { topic: "kom-grundlagen", type: "single", q: "Du zeigst einem Kunden mit offener Hand den Weg zum Regal. Welcher Bestandteil ist das?", options: ["Gestik", "Mimik und Blick", "Körperhaltung", "Distanz"], correct: [0], explain: "Hände, Arme und Füße gehören zur Gestik." },
+  { topic: "kom-grundlagen", type: "single", q: "Welcher Abstand gilt im Kundengespräch als angemessen?", options: ["Etwa eine Handbreite", "Mindestens drei Meter", "Etwa eine Armlänge", "So nah wie möglich"], correct: [2] },
+  { topic: "kom-grundlagen", type: "single", q: "Was ist verbale Kommunikation?", options: ["Die Lautstärke, mit der man spricht", "Der Inhalt der gesprochenen Worte", "Der Gesichtsausdruck beim Sprechen", "Die Gesten, die das Gesagte begleiten"], correct: [1], explain: "Verbal ist nur der Inhalt. Lautstärke gehört zur Stimme und damit zum Nonverbalen." },
+
+  // ----- Sender-Empfänger -----
+  { topic: "kom-sender", type: "single", q: "Was macht der Sender, wenn er codiert?", options: ["Er entschlüsselt die Nachricht des Empfängers", "Er fasst seine Gedanken in Worte und Zeichen", "Er prüft, ob die Nachricht angekommen ist", "Er wiederholt die Nachricht mit anderen Worten"], correct: [1], explain: "Codieren = in Worte fassen (Sender). Decodieren = entschlüsseln (Empfänger)." },
+  { topic: "kom-sender", type: "single", q: "Warum entstehen im Sender-Empfänger-Modell Missverständnisse?", options: ["Weil der Sender meistens zu leise und zu schnell spricht", "Weil Nachrichten im Beruf immer nur eine Bedeutung haben", "Weil der Empfänger mit eigenen Vorstellungen entschlüsselt", "Weil Feedback in dem Modell gar nicht vorgesehen ist"], correct: [2] },
+  { topic: "kom-sender", type: "single", q: "Was gehört zu den Aufgaben des Empfängers?", options: ["Vom Allgemeinen zum Detail reden", "Bei Unklarheiten nachfragen", "Das Ziel des Gesprächs festlegen", "Den Kontext der Nachricht liefern"], correct: [1], explain: "Die anderen drei sind Aufgaben des Senders." },
+  { topic: "kom-sender", type: "single", q: "Welche Reihenfolge soll der Sender beim Erklären einhalten?", options: ["Vom Detail zum Allgemeinen", "Erst Gefühle, dann Fakten", "Vom Allgemeinen zum Detail", "Egal, Hauptsache schnell"], correct: [2] },
+  { topic: "kom-sender", type: "single", q: "Wie heißt die Rückmeldung des Empfängers an den Sender?", options: ["Codierung", "Appell", "Kontext", "Feedback"], correct: [3] },
+  { topic: "kom-sender", type: "single", q: "Ein Kunde nickt und schaut dich beim Erklären an. Welche Empfängeraufgabe erfüllt er?", options: ["Er gibt dem Sender den nötigen Kontext", "Er codiert die Nachricht für sich neu", "Er legt das Ziel des Gesprächs fest", "Er zeigt seine Empfangsbereitschaft"], correct: [3] },
+
+  // ----- Eisberg -----
+  { topic: "kom-eisberg", type: "single", q: "Was liegt beim Eisbergmodell über der Wasseroberfläche?", options: ["Die Beziehungsebene mit Gefühlen und Stimmungen", "Die Sachebene mit Zahlen, Daten und Fakten", "Die Erwartungen und Erfahrungen des Senders", "Die Einstellung des Senders zum Empfänger"], correct: [1] },
+  { topic: "kom-eisberg", type: "single", q: "Mit welchem Verhältnis wird das Eisbergmodell meistens beschrieben?", options: ["50 % Sachebene, 50 % Beziehungsebene", "80 % Sachebene, 20 % Beziehungsebene", "20 % Sachebene, 80 % Beziehungsebene", "10 % Sachebene, 90 % Beziehungsebene"], correct: [2] },
+  { topic: "kom-eisberg", type: "single", q: "Kommunikation läuft zu 20 % verbal und zu 80 % nonverbal. Welches Modell bildet das ab?", options: ["Das Eisbergmodell", "Das Vier-Ohren-Modell", "Das Sender-Empfänger-Modell", "Das Modell der Kaufmotive"], correct: [0], explain: "Verständnisfrage aus Moodle. Der kleine sichtbare Teil ist die Sachebene." },
+  { topic: "kom-eisberg", type: "single", q: "Ein Kollege sagt: \"Ich muss mich ständig mit den Kundenbeschwerden befassen.\" Was gehört zur Beziehungsebene?", options: ["Er bearbeitet regelmäßig Kundenbeschwerden", "Es gibt im Moment sehr viele Beschwerden", "Beschwerden gehören fest zu seinem täglichen Aufgabenbereich", "Er ist genervt und wünscht sich vielleicht Hilfe"], correct: [3] },
+  { topic: "kom-eisberg", type: "single", q: "Warum ist die Beziehungsebene schwierig?", options: ["Sie kommt eigentlich nur in Konflikten mit Kunden überhaupt vor", "Man muss sie deuten, und die Deutung kann falsch sein", "Sie lässt sich mit Zahlen und Fakten genau messen", "Sie spielt im Berufsleben eigentlich keine Rolle"], correct: [1] },
+  { topic: "kom-eisberg", type: "single", q: "Eine Kundin sagt: \"Ich warte jetzt schon zum dritten Mal in der Warteschleife.\" Was ist die Sachebene?", options: ["Sie fühlt sich von der Firma überhaupt nicht ernst genommen", "Sie erwartet, dass ihr jetzt endlich jemand hilft", "Sie hat schon dreimal in der Warteschleife gewartet", "Sie ist genervt und hat keine Geduld mehr übrig"], correct: [2] },
+
+  // ----- Vier Ohren -----
+  { topic: "kom-vier-ohren", type: "single", q: "Von wem stammt das Vier-Ohren-Modell?", options: ["Paul Watzlawick", "Schulz von Thun", "Abraham Maslow", "Sigmund Freud"], correct: [1] },
+  { topic: "kom-vier-ohren", type: "single", q: "Welche vier Seiten hat eine Nachricht?", options: ["Sache, Gefühl, Körpersprache, Rückmeldung", "Inhalt, Tonfall, Lautstärke, Abstand", "Sache, Selbstaussage, Beziehung, Appell", "Sender, Empfänger, Nachricht, Antwort"], correct: [2] },
+  { topic: "kom-vier-ohren", type: "single", q: "Jemand sagt: \"Der Müll ist ja noch oben.\" Was ist der Appell?", options: ["Der Müll steht noch oben", "Bring den Müll runter", "Ich bin enttäuscht von dir", "Du bist faul und nachlässig"], correct: [1] },
+  { topic: "kom-vier-ohren", type: "single", q: "Gleicher Satz: \"Der Müll ist ja noch oben.\" Was ist die Selbstaussage?", options: ["Der Müll steht noch oben", "Du bist mal wieder nachlässig", "Bring endlich den Müll runter", "Jetzt muss ich das wieder machen"], correct: [3] },
+  { topic: "kom-vier-ohren", type: "single", q: "Welches Ohr nimmt schnell alles persönlich?", options: ["Das Sachohr", "Das Selbstaussageohr", "Das Beziehungsohr", "Das Appellohr"], correct: [2] },
+  { topic: "kom-vier-ohren", type: "single", q: "Welche Schwäche hat das Appellohr?", options: ["Es hört keine Zwischentöne und wirkt dadurch oft gefühllos", "Es lässt sich ausnutzen und vergisst eigene Bedürfnisse", "Es ist schnell gekränkt und nimmt alles persönlich", "Es nimmt sich selbst aus der Verantwortung heraus"], correct: [1] },
+  { topic: "kom-vier-ohren", type: "single", q: "Mit welcher Seite fängst du laut Skript an, wenn du ein Gespräch vorbereitest?", options: ["Mit der Sache: Welche Fakten habe ich?", "Mit dem Appell: Was ist mein Ziel?", "Mit der Beziehung: Wie wird das Klima?", "Mit der Selbstaussage: Wie fühle ich mich?"], correct: [1] },
+  { topic: "kom-vier-ohren", type: "single", q: "Ein Kunde schreibt ironisch: \"Interessant, wie schnell Sie abbuchen konnten.\" Wie hörst du am besten hin?", options: ["Mit dem Beziehungsohr, um die Kränkung zurückzugeben", "Mit dem Sachohr, um nur die Buchungsdaten zu prüfen", "Mit dem Appellohr, um zu hören, was er erreichen will", "Gar nicht, auf ironische Nachrichten antwortet man nie"], correct: [2], explain: "Er will sein Geld zurück. Auf die Ironie nicht eingehen, sondern das Problem lösen." },
+  { topic: "kom-vier-ohren", type: "single", q: "Was ist die zweite Stufe beim aktiven Zuhören?", options: ["Zuhören: nicken, Blickkontakt halten, \"Aha\" sagen", "Gefühle verstehen: Gefühle des anderen aussprechen", "Verstehen: mit eigenen Worten wiederholen, nachfragen", "Bewerten: dem anderen ehrlich sagen, was er alles falsch macht"], correct: [2] },
+  { topic: "kom-vier-ohren", type: "single", q: "Welche Formulierung ist eine Ich-Botschaft?", options: ["Du hast das Projekt mal wieder verschleppt", "Ich habe den Eindruck, dass das Projekt hängt", "Das Projekt hängt, weil du nicht mitmachst", "Man sollte Projekte eigentlich pünktlich machen"], correct: [1] },
+  { topic: "kom-vier-ohren", type: "single", q: "Ein Kunde schimpft am Telefon über einen falsch gelieferten Rucksack. Was ist die beste Reaktion?", options: ["Erklären, dass so ein Fehler eigentlich nie passiert", "Ihn bitten, sich erst einmal zu beruhigen und zu warten", "Verständnis zeigen, Fehler zugeben, schnelle Lösung nennen", "Nachfragen, ob er beim Bestellen wirklich richtig geklickt hat"], correct: [2], explain: "Nicht rechtfertigen, keine Schuld beim Kunden suchen. Gefühl anerkennen und konkret lösen." },
+
+  // ----- Verkaufsgespräch & Kaufmotive -----
+  { topic: "kom-bedarf", type: "single", q: "Welche Phase kommt im Verkaufsgespräch direkt nach der Kontaktphase?", options: ["Die Angebotsphase", "Die Einwandbehandlung", "Die Bedarfsermittlung", "Der Abschluss"], correct: [2] },
+  { topic: "kom-bedarf", type: "single", q: "Was ist das Ziel der Bedarfsermittlung?", options: ["Dem Kunden schnell das teuerste Produkt zeigen", "Herausfinden, was der Kunde wirklich braucht", "Dem Kunden alle Produkte im Laden vorstellen", "Den Preis mit dem Kunden gleich fest verhandeln"], correct: [1] },
+  { topic: "kom-bedarf", type: "single", q: "Ein Kunde kauft eine Smartwatch, weil seine Freunde auch eine haben. Welches Kaufmotiv ist das?", options: ["Sachmotiv", "Erlebnismotiv", "Kommunikationsmotiv", "Sicherheitsmotiv"], correct: [2], explain: "Zugehörigkeit und Austausch mit anderen = Kommunikationsmotiv." },
+  { topic: "kom-bedarf", type: "single", q: "Welches Kaufmotiv steckt hinter: \"Ich will einfach besseren Kaffee als aus der Kapsel\"?", options: ["Sachmotiv", "Erlebnismotiv", "Kommunikationsmotiv", "Gruppenmotiv"], correct: [0], explain: "Es geht um Nutzen und Funktion: besserer Kaffee." },
+  { topic: "kom-bedarf", type: "single", q: "Welcher Merksatz gehört zur Bedarfsermittlung?", options: ["Wer redet, der verkauft", "Der Preis entscheidet alles", "Wer fragt, der führt", "Der Kunde wartet gern"], correct: [2] },
+  { topic: "kom-bedarf", type: "single", q: "Ein Kunde will einen Laptop, weiß aber nicht welchen. Welche Frage ist am besten?", options: ["Welchen Laptop möchten Sie denn kaufen?", "Soll es der neue Laptop aus der Werbung sein?", "Sie wollen doch sicher ein Markengerät, oder?", "Wofür möchten Sie den Laptop hauptsächlich nutzen?"], correct: [3] },
+  { topic: "kom-bedarf", type: "single", q: "Was zählt in der Kontaktphase besonders?", options: ["Eine genaue Liste aller Produktdaten", "Der erste Eindruck durch Körpersprache", "Ein Rabatt gleich bei der Begrüßung", "Ein schneller Abschluss des Gesprächs"], correct: [1] },
+  { topic: "kom-bedarf", type: "single", q: "Eine Kundin freut sich auf das Barista-Gefühl mit ihrer neuen Siebträgermaschine. Welches Motiv?", options: ["Sachmotiv", "Erlebnismotiv", "Kommunikationsmotiv", "Sicherheitsmotiv"], correct: [1], explain: "Emotion und Spaß = Erlebnismotiv." },
+
+  // ----- Fragetechniken -----
+  { topic: "kom-fragen", type: "single", q: "\"Wofür möchten Sie Ihr neues Fahrrad hauptsächlich nutzen?\" Welche Frageart ist das?", options: ["Geschlossene Frage", "Offene Frage", "Suggestivfrage", "Alternativfrage"], correct: [1] },
+  { topic: "kom-fragen", type: "single", q: "\"Passt Ihnen Donnerstag oder Freitag besser?\" Welche Frageart ist das?", options: ["Offene Frage", "Rhetorische Frage", "Alternativfrage", "Konkretisierungsfrage"], correct: [2] },
+  { topic: "kom-fragen", type: "single", q: "\"Sie möchten doch bestimmt ein E-Bike kaufen, oder?\" Welche Frageart ist das?", options: ["Alternativfrage", "Offene Frage", "Konkretisierungsfrage", "Suggestivfrage"], correct: [3] },
+  { topic: "kom-fragen", type: "single", q: "\"Für welche Temperaturen brauchen Sie die Jacke?\" Welche Frageart ist das?", options: ["Rhetorische Frage", "Konkretisierungsfrage", "Geschlossene Frage", "Suggestivfrage"], correct: [1] },
+  { topic: "kom-fragen", type: "single", q: "Welche Frageart eignet sich am besten für den Anfang der Beratung?", options: ["Offene Frage", "Geschlossene Frage", "Suggestivfrage", "Alternativfrage"], correct: [0] },
+  { topic: "kom-fragen", type: "single", q: "Woran erkennst du eine offene Frage?", options: ["Man kann sie eigentlich nur mit Ja oder Nein beantworten", "Sie bietet zwei oder drei feste Antworten an", "Sie beginnt mit einem W-Wort und lässt erzählen", "Sie legt dem Kunden die Antwort in den Mund"], correct: [2] },
+  { topic: "kom-fragen", type: "single", q: "Was ist das Risiko einer Suggestivfrage?", options: ["Der Kunde erzählt zu viel und das Gespräch dauert zu lange", "Der Kunde muss zwischen zu vielen Optionen wählen", "Der Kunde kann am Ende nur Ja oder Nein antworten", "Der Kunde fühlt sich gedrängt und verliert Vertrauen"], correct: [3] },
+  { topic: "kom-fragen", type: "single", q: "\"Qualität zahlt sich doch aus, oder?\" Welche Frageart ist das?", options: ["Offene Frage", "Rhetorische Frage", "Alternativfrage", "Konkretisierungsfrage"], correct: [1], explain: "Eine Antwort wird nicht erwartet. Stilmittel, um den Nutzen zu betonen." },
+  { topic: "kom-fragen", type: "single", q: "In welcher Reihenfolge setzt du die Fragen in der Beratung am besten ein?", options: ["Geschlossen, dann offen, dann Suggestivfrage", "Suggestiv, dann rhetorisch, dann offen fragen", "Offen, dann konkretisieren, dann Alternativfrage", "Erst Alternativfrage, dann offen, dann geschlossen"], correct: [2] },
+  { topic: "kom-fragen", type: "single", q: "\"Warum fahren Sie denn bisher kein vernünftiges Fahrrad?\" Warum passt die Frage nicht?", options: ["Sie ist eigentlich eine geschlossene Ja-Nein-Frage", "Sie wertet das alte Fahrrad des Kunden ab", "Sie fragt viel zu früh nach dem Budget", "Sie bietet dem Kunden zu viele Optionen"], correct: [1] },
+  { topic: "kom-fragen", type: "single", q: "Welche Frage passt am besten, um nach dem Budget zu fragen?", options: ["Sie haben doch sicher genug Geld dabei, oder?", "Welchen Preisrahmen haben Sie sich vorgestellt?", "Können Sie sich ein gutes Rad überhaupt leisten?", "Wollen Sie wirklich am falschen Ende sparen?"], correct: [1] },
+);
+
+FLASHCARDS.push(
+  { topic: "kom-grundlagen", front: "Kommunikationsfähigkeit", back: "Sich verständlich mitteilen und zuhören: erkennen, was das Gegenüber will, und passend reagieren." },
+  { topic: "kom-grundlagen", front: "Verbal vs. nonverbal", back: "Verbal: der Inhalt der Worte. Nonverbal: alles ohne Worte (Mimik und Blick, Haltung, Gestik, Stimme, Distanz)." },
+  { topic: "kom-grundlagen", front: "Die 5 Bestandteile der nonverbalen Kommunikation", back: "Mimik und Blick, Körperhaltung, Gestik, Stimme, Distanz." },
+  { topic: "kom-grundlagen", front: "Gestik vs. Körperhaltung", back: "Gestik: Hände, Arme, Füße. Körperhaltung: Rücken, Schultern, Beine, Kopfhaltung." },
+  { topic: "kom-sender", front: "Codieren / Decodieren", back: "Codieren: Sender fasst Gedanken in Worte und Zeichen. Decodieren: Empfänger entschlüsselt die Nachricht." },
+  { topic: "kom-sender", front: "Aufgaben des Senders", back: "Ziel klar haben, Kontext geben, vom Allgemeinen zum Detail, anschaulich und verständlich sprechen, nonverbal unterstützen." },
+  { topic: "kom-sender", front: "Aufgaben des Empfängers", back: "Empfangsbereitschaft zeigen, eigene Vorstellungen hinterfragen, bei Unklarheiten nachfragen, Feedback geben." },
+  { topic: "kom-sender", front: "Warum gibt es Missverständnisse?", back: "Der Empfänger entschlüsselt mit seinen eigenen Vorstellungen. Was ankommt, ist nicht automatisch das, was gemeint war." },
+  { topic: "kom-eisberg", front: "Eisbergmodell: über Wasser", back: "Sachebene (ca. 20 %): Zahlen, Daten, Fakten, das wörtlich Gesagte." },
+  { topic: "kom-eisberg", front: "Eisbergmodell: unter Wasser", back: "Beziehungsebene (ca. 80 %): Gefühle, Stimmungen, Erwartungen, Einstellungen, Erfahrungen." },
+  { topic: "kom-eisberg", front: "Problem der Beziehungsebene", back: "Man muss sie deuten, und die eigene Deutung stimmt nicht immer. Daraus entstehen Missverständnisse und Kränkungen." },
+  { topic: "kom-vier-ohren", front: "Die vier Seiten einer Nachricht", back: "Sachebene, Selbstaussage (Selbstoffenbarung), Beziehungsebene, Appell." },
+  { topic: "kom-vier-ohren", front: "Sachohr", back: "Hört nur die Fakten. Stark: sachlich, ergebnisorientiert. Schwach: hört keine Zwischentöne, wirkt gefühllos." },
+  { topic: "kom-vier-ohren", front: "Selbstaussageohr", back: "Fragt: Wie geht es dem Sender? Stark: verständnisvoll. Schwach: nimmt sich aus der Verantwortung, hinterfragt sich nicht." },
+  { topic: "kom-vier-ohren", front: "Beziehungsohr", back: "Fragt: Was hält der von mir? Stark: feinfühlig. Schwach: schnell gekränkt, nimmt alles persönlich." },
+  { topic: "kom-vier-ohren", front: "Appellohr", back: "Fragt: Was soll ich tun? Stark: hilfsbereit, lösungsorientiert. Schwach: lässt sich ausnutzen, vergisst eigene Bedürfnisse." },
+  { topic: "kom-vier-ohren", front: "Gespräch vorbereiten: Reihenfolge", back: "1. Appell (Ziel), 2. Sache (Infos, Argumente), 3. Selbstaussage (meine Gefühle), 4. Beziehung (gutes Klima, Sicht des anderen)." },
+  { topic: "kom-vier-ohren", front: "Aktives Zuhören: 3 Stufen", back: "1. Zuhören (Aha, nicken), 2. Verstehen (paraphrasieren, nachfragen), 3. Gefühle verstehen (verbalisieren, hineinversetzen)." },
+  { topic: "kom-bedarf", front: "Stufen des Verkaufsgesprächs", back: "Kontaktphase, Bedarfsermittlung, Angebot, Argumentation und Einwandbehandlung, Abschluss und Ergänzungsangebot, Verabschiedung." },
+  { topic: "kom-bedarf", front: "Die drei Gruppen von Kaufmotiven", back: "Sachmotive (Nutzen, Funktion), Erlebnismotive (Emotion, Spaß), Kommunikationsmotive (Austausch, Zugehörigkeit)." },
+  { topic: "kom-bedarf", front: "Ziel der Bedarfsermittlung", back: "Herausfinden, was der Kunde wirklich braucht, bevor man etwas empfiehlt. Wer fragt, der führt." },
+  { topic: "kom-fragen", front: "Offene Frage", back: "W-Frage, Kunde kann erzählen. Gut am Anfang. Beispiel: Wofür möchten Sie den Laptop nutzen?" },
+  { topic: "kom-fragen", front: "Geschlossene Frage", back: "Antwort vorgegeben, meist Ja/Nein. Gut zum Entscheiden und am Ende. Beispiel: Möchten Sie verbunden werden?" },
+  { topic: "kom-fragen", front: "Alternativfrage", back: "Auswahl aus 2 bis 3 Möglichkeiten. Gut für Termine und zum Lenken. Beispiel: Donnerstag oder Freitag?" },
+  { topic: "kom-fragen", front: "Suggestivfrage", back: "Lenkt die Antwort in eine Richtung. Risiko: Kunde fühlt sich gedrängt. Beispiel: Den Rabatt wollen Sie sich doch nicht entgehen lassen?" },
+  { topic: "kom-fragen", front: "Rhetorische Frage", back: "Keine Antwort erwartet, Stilmittel. Wirkt schnell belehrend. Beispiel: Qualität zahlt sich doch aus, oder?" },
+  { topic: "kom-fragen", front: "Konkretisierungsfrage", back: "Macht ungenaue Aussagen genauer. Beispiel: Für welche Temperaturen brauchen Sie die Jacke?" },
+);
+
+OPEN_QUESTIONS.push(
+  { topic: "kom-grundlagen", q: "Nenne die 5 Bestandteile der nonverbalen Kommunikation und je eine Idee, wie du sie im Kundenkontakt positiv einsetzt.", keyPoints: ["mimik|blick", "haltung", "gestik|hände", "stimme", "distanz|abstand"], sampleAnswer: "Mimik und Blick: freundlich lächeln, Blickkontakt halten, nicht anstarren. Körperhaltung: aufrecht und zugewandt, Arme nicht verschränken. Gestik: offene Handbewegungen, nicht mit dem Finger zeigen. Stimme: ruhig, freundlich, gut verständlich. Distanz: etwa eine Armlänge Abstand halten." },
+  { topic: "kom-sender", q: "Welche Aufgaben haben Sender und Empfänger, damit Kommunikation gelingt?", keyPoints: ["ziel", "kontext", "allgemein", "nachfrag", "feedback", "empfangsbereit|zuwend|blickkontakt|nicken"], sampleAnswer: "Sender: Ziel klar haben, Kontext geben, vom Allgemeinen zum Detail, anschaulich und verständlich sprechen, nonverbal unterstützen. Empfänger: Empfangsbereitschaft zeigen, sich bewusst machen, dass die eigenen Vorstellungen anders sein können, bei Unklarheiten nachfragen, Feedback geben." },
+  { topic: "kom-eisberg", q: "Eine Kundin sagt am Telefon: \"Ich warte jetzt schon zum dritten Mal in der Warteschleife.\" Trenne Sachebene und Beziehungsebene.", keyPoints: ["dreimal|dritte|drei mal", "warteschleife|gewartet", "genervt|ungeduld|ärger|frust", "ernst|hilf"], sampleAnswer: "Sachebene: Sie hat schon dreimal in der Warteschleife gewartet. Beziehungsebene: Sie ist genervt und ungeduldig, fühlt sich nicht ernst genommen und erwartet, dass ihr jetzt endlich jemand hilft." },
+  { topic: "kom-vier-ohren", q: "E-Mail: \"Ich habe vor einer Woche bestellt. Laut Website sollte das Paket nach drei Werktagen da sein. Bis heute ist nichts angekommen. Das ist wirklich enttäuschend. Bei anderen Shops funktioniert das schließlich auch.\" Analysiere die vier Seiten.", keyPoints: ["woche|werktag|nicht angekommen|nichts angekommen", "enttäuscht", "versprech|andere shops|zuverlässig|haltet nicht", "paket|klären|schnell|wo"], sampleAnswer: "Sache: Bestellung vor einer Woche, versprochen waren höchstens drei Werktage, das Paket ist nicht da. Selbstaussage: Ich bin enttäuscht und verärgert. Beziehung: Ihr haltet nicht, was ihr versprecht, andere Shops sind zuverlässiger. Appell: Klären Sie, wo mein Paket ist, und sorgen Sie dafür, dass es schnell kommt." },
+  { topic: "kom-vier-ohren", q: "Telefon: \"Ich bestelle extra einen hochwertigen schwarzen Rucksack für meine Geschäftsreise und bekomme einen billigen blauen Turnbeutel! Schauen Sie sich eigentlich an, was Sie verschicken?\" Analysiere die vier Seiten und sag, wie du reagierst.", keyPoints: ["rucksack|turnbeutel", "wütend|wut|ärger|gestresst|zeitdruck", "schlampig|vertrau|nicht ernst|kein verlass", "sofort|richtig|lösung|express", "verständnis|tut mir leid|fehler"], sampleAnswer: "Sache: Bestellt war ein schwarzer Rucksack, geliefert wurde ein blauer Turnbeutel. Selbstaussage: Ich bin wütend und unter Zeitdruck wegen der Reise. Beziehung: Ihr arbeitet schlampig, auf euch ist kein Verlass. Appell: Lösen Sie das sofort. Reaktion: mit dem Selbstaussage- und Appellohr hören, ruhig bleiben, Verständnis zeigen, den Fehler zugeben, nicht rechtfertigen und schnell eine Lösung nennen, z. B. den richtigen Rucksack heute per Express schicken." },
+  { topic: "kom-vier-ohren", q: "Fahrradkunde: \"Na ja, wenn Sie meinen, dass ich dafür so viel Geld ausgeben muss, dann muss ich mir das wohl noch einmal überlegen. Ich wollte eigentlich nur ein Fahrrad, mit dem ich zuverlässig zur Arbeit komme.\" Analysiere die vier Seiten.", keyPoints: ["arbeit|zuverlässig", "teuer|geld", "unsicher|enttäuscht|überfordert", "nicht verstanden|verkaufen|wenn sie meinen", "günstig|passend|ernst"], sampleAnswer: "Sache: Er braucht ein zuverlässiges Rad für den Arbeitsweg, das vorgeschlagene ist ihm zu teuer. Selbstaussage: Er ist unsicher, enttäuscht, hatte mit weniger Geld gerechnet. Beziehung: Er fühlt sich nicht verstanden und glaubt, der Verkäufer will ihm etwas zu Teures verkaufen. Appell: Zeigen Sie mir ein günstigeres Rad, das für meinen Arbeitsweg passt." },
+  { topic: "kom-vier-ohren", q: "Du willst mehr Gehalt. Bereite das Gespräch mit deinem Chef mit den vier Seiten vor, in der Reihenfolge aus dem Skript.", keyPoints: ["appell|ziel", "sache|argument|leistung|aufgaben", "selbstaussage|gefühl|eindruck|ich", "beziehung|klima|wertschätz|sicht"], sampleAnswer: "1. Appell: Ziel festlegen, z. B. mindestens 150 €, am liebsten 300 € mehr. 2. Sache: neue Aufgaben, Erfolge mit Zahlen, was die Branche zahlt. Erst die Leistung, dann die Forderung. 3. Selbstaussage: Ich arbeite gern hier und habe den Eindruck, dass meine Leistung beim Gehalt noch nicht ankommt. 4. Beziehung: guter Zeitpunkt, wertschätzend bleiben, keine Drohung, Ich-Botschaften, die Sicht des Chefs bedenken." },
+  { topic: "kom-bedarf", q: "Warum kauft jemand eine Siebträger-Espressomaschine? Nenne Sach-, Erlebnis- und Kommunikationsmotive.", keyPoints: ["kaffee|günstig|milch|mahlwerk|müll", "barista|ritual|design|gönnen|spaß", "gäste|freunde|community|gruppe|latte"], sampleAnswer: "Sachmotive: besserer Kaffee als aus der Kapsel, auf Dauer günstiger als im Café, Milch aufschäumen, weniger Müll. Erlebnismotive: Barista-Gefühl, Freude am Ritual, schönes Design, sich etwas gönnen. Kommunikationsmotive: Gästen guten Kaffee anbieten, Latte Art zeigen, in Kaffee-Gruppen mitreden." },
+  { topic: "kom-bedarf", q: "Was musst du wissen, bevor du einem Kunden einen Laptop empfiehlst?", keyPoints: ["nutz|zweck|wofür", "budget|preis", "gewicht|unterwegs|akku|größe", "marke|betriebssystem|vorliebe|leistung|speicher"], sampleAnswer: "Wofür er ihn nutzt (Büro, Studium, Gaming, Bildbearbeitung), sein Budget, wo er ihn nutzt (unterwegs oder am Schreibtisch, also Gewicht, Größe, Akku), wichtige Eigenschaften wie Leistung, Bildschirm, Speicher, Vorlieben bei Marke und Betriebssystem, wie gut er sich auskennt und bis wann er ihn braucht." },
+  { topic: "kom-fragen", q: "Erkläre offene, geschlossene und Alternativfrage mit je einem Beispiel und sag, wann du sie in der Beratung einsetzt.", keyPoints: ["offen", "geschlossen", "ja oder nein|ja/nein|ja-nein|ja und nein", "alternativ", "anfang|einstieg", "ende|entscheid|abschluss"], sampleAnswer: "Offene Frage: W-Frage, der Kunde kann erzählen, z. B. \"Wofür möchten Sie das Rad nutzen?\" Am Anfang. Geschlossene Frage: Antwort Ja oder Nein, z. B. \"Ist Ihnen eine aufrechte Sitzposition wichtig?\" Zum Eingrenzen und am Ende. Alternativfrage: Auswahl aus 2 bis 3 Möglichkeiten, z. B. \"Eher Stadt oder Gelände?\" In der späteren Phase, um zur Entscheidung zu führen." },
 );
