@@ -87,7 +87,9 @@ damit bereits installierte Versionen der App das Update laden.
   einzelne Felder können auch eine Auswahl sein (z. B. Zahllast oder Vorsteuerüberhang). Nach der
   Prüfung kommt immer der Rechenweg. 1 Cent Spielraum wegen Rundung. Aufgaben in `CALCS` in
   `data.js` (`topic`, `situation`, `fields: [{ label, answer }]` bzw. `{ label, options, answer }`,
-  `explanation`), nur bei Themen mit Einträgen dort.
+  `explanation`), nur bei Themen mit Einträgen dort. Optional pro Feld: `unit` (z. B. "%", "mal", "Tage", statt Euro) und `tol`
+  (eigener Spielraum, z. B. 0,06 bei Prozent, 0,1 bei Tagen). Themen mit `ordered: true` laufen der Reihe nach
+  (Komplexaufgaben, bei denen die Schritte aufeinander aufbauen).
 - **Brief** – Serienbriefe und interne Schriftstücke Zeile für Zeile selbst tippen:
   Rücksendeangabe, Anschriftenfeld mit «Feldern» und {WENN ...}-Regeln, Informationsblock,
   Betreff, Anrede, Text. Die App rechnet jede Zeile für alle Datensätze durch (wie die

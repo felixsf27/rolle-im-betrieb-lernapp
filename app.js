@@ -1080,7 +1080,10 @@ document.querySelectorAll(".booking-add").forEach(btn => {
 // [{ label, options: [...], answer: "..." }] für eine Auswahl (z. B. Zahllast/Vorsteuerüberhang).
 function startCalc(topicId, pushHistory = true, presetPool = null) {
   if (pushHistory) history.pushState({ name: "calc", subjectId: state.currentSubject, categoryId: state.currentCategory }, "");
-  state.queue = shuffle(presetPool || calcsFor(topicId));
+  // Komplexaufgaben (ordered: true) laufen Schritt für Schritt, weil die Werte aufeinander aufbauen
+  const ordered = TOPICS.find(t => t.id === topicId)?.ordered;
+  const pool = presetPool || calcsFor(topicId);
+  state.queue = ordered && !presetPool ? pool.slice() : shuffle(pool);
   state.index = 0;
   state.correctCount = 0;
   state.answeredLog = [];
@@ -1096,10 +1099,16 @@ function renderCalc() {
   $("#calcScore").textContent = state.correctCount + " / " + total;
   const topicMeta = TOPICS.find(t => t.id === c.topic);
   $("#calcTopicLabel").textContent = (topicMeta ? topicMeta.icon + " " + topicMeta.title : "") + " · Rechnen";
+  // Merksatz passend zum Thema: Kennzahlen bekommen ihre eigenen Formeln statt des Umsatzsteuer-Hinweises
+  const hint = $("#calcHint");
+  if (!hint.dataset.ust) hint.dataset.ust = hint.innerHTML;
+  hint.innerHTML = topicMeta && topicMeta.category === "m4-kennzahlen"
+    ? "<strong>Merksatz:</strong> Quoten und Intensitäten ÷ Bilanzsumme, Liquidität ÷ kurzfristiges FK, Deckungsgrad ÷ Anlagevermögen. Wareneinsatz = AB + Einkäufe − SB, Umschlagshäufigkeit = Wareneinsatz ÷ Ø Lagerbestand, Lagerdauer = 360 ÷ Umschlagshäufigkeit."
+    : hint.dataset.ust;
   $("#calcText").textContent = c.situation;
   $("#calcFields").innerHTML = c.fields.map((f, i) => "<label>" + escapeHtml(f.label) + (f.options
     ? '<select data-i="' + i + '"><option value="">bitte wählen</option>' + f.options.map(o => "<option>" + escapeHtml(o) + "</option>").join("") + "</select>"
-    : '<input type="text" inputmode="decimal" data-i="' + i + '" placeholder="Betrag in €">') + "</label>").join("");
+    : '<input type="text" inputmode="decimal" data-i="' + i + '" placeholder="' + (f.unit ? "Ergebnis in " + escapeHtml(f.unit) : "Betrag in €") + '">') + "</label>").join("");
   $("#calcFeedback").classList.add("hidden");
   $("#calcExplain").classList.add("hidden");
   $("#calcCheckBtn").classList.remove("hidden");
@@ -1117,12 +1126,13 @@ function checkCalcAnswer() {
   const results = c.fields.map((f, i) => {
     const el = inputs[i];
     el.disabled = true;
-    const ok = f.options ? el.value === f.answer : Math.abs(parseAmount(el.value) - f.answer) <= 0.011;
+    // tol: eigener Spielraum, z. B. bei Lagerdauer je nach Rundung der Umschlagshäufigkeit
+    const ok = f.options ? el.value === f.answer : Math.abs(parseAmount(el.value) - f.answer) <= (f.tol ?? 0.011);
     el.classList.add(ok ? "calc-ok" : "calc-bad");
     return ok;
   });
   const isCorrect = results.every(Boolean);
-  const solution = c.fields.map(f => f.label + ": " + (f.options ? f.answer : formatEuro(f.answer))).join(" · ");
+  const solution = c.fields.map(f => f.label + ": " + (f.options ? f.answer : f.unit ? f.answer.toLocaleString("de-DE", { maximumFractionDigits: 2 }) + " " + f.unit : formatEuro(f.answer))).join(" · ");
 
   const fb = $("#calcFeedback");
   fb.classList.remove("hidden", "good", "bad");
