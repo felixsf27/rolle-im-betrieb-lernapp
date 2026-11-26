@@ -52,6 +52,26 @@ Alles steckt in `data.js`, keine Änderung an `index.html` oder `app.js` nötig:
 - **Neue Formular-Aufgabe:** Eintrag in `FORMS` in `formulare.js` (verlangte Steuerelemente mit
   Typ, Beschriftung, Einträgen, Datumsformat, Ausfüll-Vorgaben; Aufbau oben in der Datei).
 - **Neue Rechenaufgabe:** Eintrag in `CALCS` ergänzen (siehe Modus "Rechnen" unten).
+- **Neue Lernseite:** Eintrag in `LEARN` (`topic`, `md`). Markdown wie bei den Zusammenfassungen:
+  `## ` für Überschriften, Listen, Tabellen, **fett**. Tabellen höchstens zwei Spalten, sonst wird die
+  dritte auf dem Handy abgeschnitten.
+
+### Pflicht vor jedem Push mit neuen Quizfragen: Antwortlängen prüfen
+
+Die richtige Antwort darf nicht durch ihre Länge auffallen. Alle Antworten einer Frage sollen ungefähr
+gleich lang sein, und die richtige ist höchstens bei einem Teil der Fragen die längste. Falsche
+Antworten lieber verlängern (mit plausiblen Details) als die richtige künstlich kürzen.
+
+```
+node tools/quiz-check.js          # alle aktiven Fächer
+node tools/quiz-check.js rewe-m4  # nur ein Fach
+node tools/quiz-check.js --alle   # auch archivierte Fächer
+```
+
+Das Skript meldet Fragen, bei denen die richtige Antwort über 25 % (mindestens 8 Zeichen) länger ist
+als die längste falsche, Mehrfachauswahl-Fragen, bei denen alle richtigen länger sind als jede falsche,
+und Themen, in denen die richtige Antwort bei mehr als 40 % der Fragen die längste ist. Erst pushen,
+wenn für die aktiven Fächer "0 Fragen und 0 Themen auffällig" kommt.
 - **Neue Buchungssatz-Aufgabe:** Eintrag in `BOOKINGS` ergänzen (`topic`-id, `situation`,
   `amount`, `soll`/`haben` als Schlüssel aus `ACCOUNT_ALIASES`, `art`, `explanation`). Neues
   Konto: Eintrag in `ACCOUNT_ALIASES` ergänzen (`account` = Anzeigename, `aliases` = erkannte
@@ -71,6 +91,8 @@ damit bereits installierte Versionen der App das Update laden.
 
 ## Modi
 
+- **Lernen** – Lesemodus pro Thema: Formeln, Erklärung, Beispiel und Fallen zum Nachschlagen
+  (nur bei Themen mit Eintrag in `LEARN`). Nutzt die Ansicht der Zusammenfassungen.
 - **Quiz** – Multiple-Choice-Fragen pro Thema mit direktem Feedback
 - **Karteikarten** – Begriffe zum Umdrehen und Auswendiglernen
 - **Gliederung** – Reihenfolge/Struktur eines Themas (z. B. den Aufbau des Inventars) aus

@@ -244,6 +244,15 @@ function calcsFor(topicId) {
   return (typeof CALCS !== "undefined" ? CALCS : []).filter(c => c.topic === topicId);
 }
 
+// Lernseiten (LEARN in data.js): Formeln und Erklärungen zum Nachlesen, ein Eintrag pro Thema
+function learnFor(topicId) {
+  return (typeof LEARN !== "undefined" ? LEARN : []).find(l => l.topic === topicId);
+}
+
+function categoryHasLearn(categoryId) {
+  return TOPICS.some(t => t.category === categoryId && learnFor(t.id));
+}
+
 function categoryHasCalcs(categoryId) {
   return TOPICS.some(t => t.category === categoryId && calcsFor(t.id).length > 0);
 }
@@ -259,6 +268,7 @@ function updateModeAvailability() {
     open: categoryHasOpen(state.currentCategory),
     booking: categoryHasBookings(state.currentCategory),
     calc: categoryHasCalcs(state.currentCategory),
+    learn: categoryHasLearn(state.currentCategory),
     letter: categoryHasLetters(state.currentCategory),
     form: categoryHasForms(state.currentCategory),
   };
@@ -303,6 +313,7 @@ function renderTopics() {
     .filter(t => state.mode !== "open" || openFor(t.id).length > 0)
     .filter(t => state.mode !== "booking" || bookingsFor(t.id).length > 0)
     .filter(t => state.mode !== "calc" || calcsFor(t.id).length > 0)
+    .filter(t => state.mode !== "learn" || learnFor(t.id))
     .filter(t => state.mode !== "letter" || lettersFor(t.id).length > 0)
     .filter(t => state.mode !== "form" || formsFor(t.id).length > 0)
     .filter(t => state.mode !== "quiz" || QUESTIONS.some(q => q.topic === t.id))
@@ -312,7 +323,8 @@ function renderTopics() {
       const pct = stats.total ? Math.round((stats.done / stats.total) * 100) : 0;
       const card = document.createElement("div");
       card.className = "topic-card";
-      const metaText = state.mode === "cards" ? stats.cCount + " Karten"
+      const metaText = state.mode === "learn" ? "Zum Nachlesen"
+        : state.mode === "cards" ? stats.cCount + " Karten"
         : state.mode === "structure" ? stats.sCount + " Punkte"
         : state.mode === "open" ? stats.oCount + " Aufgaben"
         : state.mode === "booking" ? stats.bCount + " Buchungen"
@@ -455,7 +467,8 @@ initForms();
 
 function startTopic(topicId) {
   state.currentTopic = topicId;
-  if (state.mode === "cards") startCards(topicId);
+  if (state.mode === "learn") startLearn(topicId);
+  else if (state.mode === "cards") startCards(topicId);
   else if (state.mode === "structure") startStructure(topicId);
   else if (state.mode === "open") startOpen(topicId);
   else if (state.mode === "booking") startBooking(topicId);
@@ -463,6 +476,19 @@ function startTopic(topicId) {
   else if (state.mode === "letter") startLetter(topicId);
   else if (state.mode === "form") startForm(topicId);
   else startQuiz(topicId);
+}
+
+// ---------- LERNEN (Lesemodus, nutzt die Ansicht der Zusammenfassungen) ----------
+function startLearn(topicId) {
+  const l = learnFor(topicId);
+  if (!l) return;
+  history.pushState({ name: "learn", subjectId: state.currentSubject, categoryId: state.currentCategory }, "");
+  const t = TOPICS.find(x => x.id === topicId);
+  $("#summaryDate").textContent = (CATEGORIES.find(c => c.id === state.currentCategory)?.title || "") + " · Lernen";
+  $("#summaryTitle").textContent = t ? t.icon + " " + t.title : "";
+  $("#summaryBody").innerHTML = renderMarkdown(l.md);
+  showView("#view-summary");
+  window.scrollTo(0, 0);
 }
 
 // ---------- QUIZ ----------
