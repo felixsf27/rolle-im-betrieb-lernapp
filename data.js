@@ -2404,6 +2404,7 @@ TOPICS.push(
   { id: "kom-vier-ohren", subject: "kommunikation", category: "kom-test", title: "Vier-Ohren-Modell & aktives Zuhören", icon: "👂" },
   { id: "kom-bedarf", subject: "kommunikation", category: "kom-test", title: "Verkaufsgespräch & Kaufmotive", icon: "🛍️" },
   { id: "kom-fragen", subject: "kommunikation", category: "kom-test", title: "Fragetechniken", icon: "❓" },
+  { id: "kom-ware", subject: "kommunikation", category: "kom-test", title: "Warenkenntnis & Kundenansprüche", icon: "🧥" },
 );
 
 LEARN.push(
@@ -2664,6 +2665,44 @@ Am Anfang **offen**, in der Mitte **konkretisieren**, am Ende mit **Alternativ- 
 - "Warum"-Fragen sind offen, klingen aber schnell wie ein Vorwurf.
 - Wörter wie "doch", "sicher", "bestimmt", "unbedingt", "überhaupt" machen eine Frage oft suggestiv oder abwertend.
 - Im Kundenkontakt siezen. Das Arbeitsblatt duzt in einem Beispiel ("Gefällt dir Berlin?"), das ist dort nur ein Beispiel.` },
+  { topic: "kom-ware", md: `## Die vier Kundenansprüche an ein Produkt (Skript 05)
+**Gebrauchswert**
+- Summe aller nützlichen Eigenschaften, also Nutzen und Funktion
+- Winterjacke: warm, wasserdicht, atmungsaktiv
+
+**Geltungswert**
+- Prestige, Ansehen, Anerkennung, Marke, Liebhaberwert
+- Winterjacke: bekannte Marke, aktuelles Modell
+
+**Umweltverträglichkeit**
+- Naturschutz, ressourcenschonend, sozial fair hergestellt, Recycling
+
+**Preiswertigkeit**
+- Angemessenes Preis-Leistungs-Verhältnis
+
+## Beispiele aus dem Skript
+- Ferrari: Geltungswert und Qualität sehr wichtig, Umwelt eher unwichtig
+- Dacia: Gebrauchswert sehr wichtig, der Rest eher unwichtig
+- Miele-Waschmaschine: alles sehr wichtig
+- Nike-Sportschuhe: Gebrauchs- und Geltungswert sehr wichtig
+- Jeans von Kik: fast nur der Preis zählt
+- iPhone: Geltungswert ganz oben
+
+## Preis oder Leistung?
+- **Leistung überzeugt, Preis entscheidet.** In der Beratung die Leistung in den Mittelpunkt stellen. Ob der Kunde kaufen kann oder will, entscheidet am Ende der Preis.
+- Markenprodukte: Kunden zahlen mehr, weil die Marke Qualität verspricht ("Wer billig kauft, kauft zweimal"). Ob das stimmt, ist eine andere Frage.
+- Ein zu niedriger Preis bremst den Kauf: Der Kunde zweifelt an Qualität, Herstellung oder Umwelt.
+
+## So argumentierst du in der Angebotsphase
+Eigenschaften nennen, die zum Bedarf passen, sortiert nach den vier Ansprüchen. Beispiel Nagellack:
+- Gebrauchswert: hält zwei Wochen, nur einmal lackieren, leicht entfernbar, pflegende Öle
+- Geltungswert: moderne Farben, Marke seit den 50er Jahren
+- Umweltverträglichkeit: Firma ist gegen Tierversuche
+- Preiswertigkeit: 2,89 € für 5 ml
+
+## Nicht verwechseln
+- **Kaufmotive** (Sach-, Erlebnis-, Kommunikationsmotiv, Skript 04) sagen, **warum** jemand kauft.
+- **Kundenansprüche** (Gebrauchswert, Geltungswert, Umweltverträglichkeit, Preiswertigkeit, Skript 05) sagen, **was das Produkt bieten soll**. Im Unterricht hießen beide manchmal "Motive".` },
 );
 
 STRUCTURES.push(
@@ -2733,6 +2772,18 @@ QUESTIONS.push(
   { topic: "kom-fragen", type: "single", q: "In welcher Reihenfolge setzt du die Fragen in der Beratung am besten ein?", options: ["Geschlossen, dann offen, dann Suggestivfrage", "Suggestiv, dann rhetorisch, dann offen fragen", "Offen, dann konkretisieren, dann Alternativfrage", "Erst Alternativfrage, dann offen, dann geschlossen"], correct: [2] },
   { topic: "kom-fragen", type: "single", q: "\"Warum fahren Sie denn bisher kein vernünftiges Fahrrad?\" Warum passt die Frage nicht?", options: ["Sie ist eigentlich eine geschlossene Ja-Nein-Frage", "Sie wertet das alte Fahrrad des Kunden ab", "Sie fragt viel zu früh nach dem Budget", "Sie bietet dem Kunden zu viele Optionen"], correct: [1] },
   { topic: "kom-fragen", type: "single", q: "Welche Frage passt am besten, um nach dem Budget zu fragen?", options: ["Sie haben doch sicher genug Geld dabei, oder?", "Welchen Preisrahmen haben Sie sich vorgestellt?", "Können Sie sich ein gutes Rad überhaupt leisten?", "Wollen Sie wirklich am falschen Ende sparen?"], correct: [1] },
+  { topic: "kom-ware", type: "single", q: "Eine Kundin will eine Winterjacke, die warm und wasserdicht ist. Welcher Kundenanspruch steht im Vordergrund?", options: ["Gebrauchswert", "Geltungswert", "Umweltverträglichkeit", "Preiswertigkeit"], correct: [0], explain: "Warm und wasserdicht sind nützliche Eigenschaften, also Nutzen und Funktion." },
+  { topic: "kom-ware", type: "single", q: "Ein Kunde will unbedingt das neueste iPhone, weil es zeigt, dass er es sich leisten kann. Welcher Anspruch steht ganz oben?", options: ["Gebrauchswert", "Geltungswert", "Umweltverträglichkeit", "Preiswertigkeit"], correct: [1], explain: "Status und Ansehen gehören zum Geltungswert." },
+  { topic: "kom-ware", type: "single", q: "Ein Shop wirbt mit recycelten Materialien und fairen Löhnen in der Produktion. Welcher Anspruch wird angesprochen?", options: ["Gebrauchswert", "Geltungswert", "Umweltverträglichkeit", "Preiswertigkeit"], correct: [2] },
+  { topic: "kom-ware", type: "single", q: "Was bedeutet Preiswertigkeit?", options: ["Das Produkt ist das billigste im ganzen Laden", "Preis und Leistung stehen in einem guten Verhältnis", "Das Produkt ist teuer und deshalb hochwertig", "Der Preis wurde im Sonderangebot gesenkt"], correct: [1] },
+  { topic: "kom-ware", type: "single", q: "Welcher Merksatz aus dem Unterricht passt zu Preis und Leistung?", options: ["Der Preis überzeugt, die Leistung entscheidet", "Die Leistung überzeugt, der Preis entscheidet", "Nur der Preis zählt am Ende des Gesprächs", "Nur die Leistung zählt, der Preis ist egal"], correct: [1] },
+  { topic: "kom-ware", type: "single", q: "Warum kann ein sehr niedriger Preis den Kauf bremsen?", options: ["Weil der Kunde an Qualität und Herstellung zweifelt", "Weil günstige Produkte nie pünktlich geliefert werden", "Weil der Kunde dann gar keine Beratung mehr bekommt", "Weil billige Ware im Onlineshop nicht erlaubt ist"], correct: [0] },
+  { topic: "kom-ware", type: "single", q: "Bei welchem Produkt ist laut Skript der Geltungswert sehr wichtig, die Umweltverträglichkeit aber eher unwichtig?", options: ["Ferrari 340 Spider", "Auto von Dacia", "Jeans von Kik", "Waschmaschine von Miele"], correct: [0] },
+  { topic: "kom-ware", type: "single", q: "Was unterscheidet Kaufmotive von Kundenansprüchen?", options: ["Motive: warum jemand kauft. Ansprüche: was das Produkt bieten soll", "Kaufmotive gelten nur im Onlineshop, Ansprüche nur im Laden vor Ort", "Kaufmotive betreffen nur den Preis, Ansprüche nur Marke und Design", "Es gibt keinen Unterschied, beide Begriffe meinen genau dasselbe"], correct: [0] },
+  { topic: "kom-fragen", type: "single", q: "\"Kennen Sie sich überhaupt mit Fahrradtypen aus?\" Welche Umformulierung ist am besten?", options: ["Wie gut kennen Sie sich mit Fahrradtypen aus?", "Sie kennen sich doch sicher mit Fahrradtypen aus?", "Warum kennen Sie sich nicht mit Fahrradtypen aus?", "Kennen Sie sich wirklich gar nicht mit Rädern aus?"], correct: [0], explain: "Ohne \"überhaupt\" stellt die Frage den Kunden nicht bloß." },
+  { topic: "kom-fragen", type: "single", q: "\"Sie brauchen doch sicher eine besonders leichte Gangschaltung?\" Was ist eine bessere Frage?", options: ["Welche Anforderungen haben Sie an die Gangschaltung?", "Sie wollen doch bestimmt die leichteste Schaltung?", "Schaffen Sie mit Ihrer Kraft eine normale Schaltung?", "Brauchen Sie wirklich unbedingt eine Gangschaltung?"], correct: [0], explain: "Nach dem Einsatz fragen, nicht nach der Fähigkeit des Kunden. Das passende Produkt suchst du dann selbst aus." },
+  { topic: "kom-fragen", type: "single", q: "\"Soll es unbedingt ein Mountainbike sein?\" Welches Wort macht die Frage suggestiv?", options: ["soll", "unbedingt", "ein", "sein"], correct: [1], explain: "Ohne \"unbedingt\" wird daraus eine neutrale geschlossene Frage oder Kontrollfrage." },
+  { topic: "kom-fragen", type: "single", q: "Worin unterscheiden sich Alternativfrage und Kontrollfrage?", options: ["Alternativfrage ermittelt noch Bedarf, Kontrollfrage sichert Gesagtes ab", "Alternativfrage ist immer offen, Kontrollfrage immer eine rhetorische Frage", "Alternativfrage kommt am Ende, Kontrollfrage ganz am Anfang der Beratung", "Es gibt keinen Unterschied, beide geben dem Kunden Antworten vor"], correct: [0] },
 );
 
 FLASHCARDS.push(
@@ -2763,6 +2814,13 @@ FLASHCARDS.push(
   { topic: "kom-fragen", front: "Suggestivfrage", back: "Lenkt die Antwort in eine Richtung. Risiko: Kunde fühlt sich gedrängt. Beispiel: Den Rabatt wollen Sie sich doch nicht entgehen lassen?" },
   { topic: "kom-fragen", front: "Rhetorische Frage", back: "Keine Antwort erwartet, Stilmittel. Wirkt schnell belehrend. Beispiel: Qualität zahlt sich doch aus, oder?" },
   { topic: "kom-fragen", front: "Konkretisierungsfrage", back: "Macht ungenaue Aussagen genauer. Beispiel: Für welche Temperaturen brauchen Sie die Jacke?" },
+  { topic: "kom-ware", front: "Gebrauchswert", back: "Summe aller nützlichen Eigenschaften eines Produkts: Nutzen und Funktion (Jacke: warm, wasserdicht)." },
+  { topic: "kom-ware", front: "Geltungswert", back: "Prestige, Ansehen, Marke, Liebhaberwert (aktuelles Modell, bekannte Marke)." },
+  { topic: "kom-ware", front: "Umweltverträglichkeit", back: "Naturschutz, ressourcenschonend, sozial fair hergestellt, Recycling." },
+  { topic: "kom-ware", front: "Preiswertigkeit", back: "Angemessenes Preis-Leistungs-Verhältnis." },
+  { topic: "kom-ware", front: "Preis oder Leistung?", back: "Gesundes Verhältnis: Die Leistung überzeugt, der Preis entscheidet." },
+  { topic: "kom-ware", front: "Kaufmotive vs. Kundenansprüche", back: "Kaufmotive (Sach, Erlebnis, Kommunikation): warum jemand kauft. Ansprüche (Gebrauchs-, Geltungswert, Umwelt, Preiswertigkeit): was das Produkt bieten soll." },
+  { topic: "kom-fragen", front: "Schlechte Fragen umformulieren", back: "Füllwörter wie unbedingt, überhaupt, doch, sicher, vernünftig streichen. Statt nach Technik oder Können nach dem Einsatz fragen: \"Welche Anforderungen haben Sie an ...?\"" },
 );
 
 OPEN_QUESTIONS.push(
@@ -2776,4 +2834,7 @@ OPEN_QUESTIONS.push(
   { topic: "kom-bedarf", q: "Warum kauft jemand eine Siebträger-Espressomaschine? Nenne Sach-, Erlebnis- und Kommunikationsmotive.", keyPoints: ["kaffee|günstig|milch|mahlwerk|müll", "barista|ritual|design|gönnen|spaß", "gäste|freunde|community|gruppe|latte"], sampleAnswer: "Sachmotive: besserer Kaffee als aus der Kapsel, auf Dauer günstiger als im Café, Milch aufschäumen, weniger Müll. Erlebnismotive: Barista-Gefühl, Freude am Ritual, schönes Design, sich etwas gönnen. Kommunikationsmotive: Gästen guten Kaffee anbieten, Latte Art zeigen, in Kaffee-Gruppen mitreden." },
   { topic: "kom-bedarf", q: "Was musst du wissen, bevor du einem Kunden einen Laptop empfiehlst?", keyPoints: ["nutz|zweck|wofür", "budget|preis", "gewicht|unterwegs|akku|größe", "marke|betriebssystem|vorliebe|leistung|speicher"], sampleAnswer: "Wofür er ihn nutzt (Büro, Studium, Gaming, Bildbearbeitung), sein Budget, wo er ihn nutzt (unterwegs oder am Schreibtisch, also Gewicht, Größe, Akku), wichtige Eigenschaften wie Leistung, Bildschirm, Speicher, Vorlieben bei Marke und Betriebssystem, wie gut er sich auskennt und bis wann er ihn braucht." },
   { topic: "kom-fragen", q: "Erkläre offene, geschlossene und Alternativfrage mit je einem Beispiel und sag, wann du sie in der Beratung einsetzt.", keyPoints: ["offen", "geschlossen", "ja oder nein|ja/nein|ja-nein|ja und nein", "alternativ", "anfang|einstieg", "ende|entscheid|abschluss"], sampleAnswer: "Offene Frage: W-Frage, der Kunde kann erzählen, z. B. \"Wofür möchten Sie das Rad nutzen?\" Am Anfang. Geschlossene Frage: Antwort Ja oder Nein, z. B. \"Ist Ihnen eine aufrechte Sitzposition wichtig?\" Zum Eingrenzen und am Ende. Alternativfrage: Auswahl aus 2 bis 3 Möglichkeiten, z. B. \"Eher Stadt oder Gelände?\" In der späteren Phase, um zur Entscheidung zu führen." },
+  { topic: "kom-ware", q: "Analysiere ein Produkt deiner Wahl (z. B. Sportschuhe) nach Gebrauchswert, Geltungswert, Umweltverträglichkeit und Preiswertigkeit.", keyPoints: ["gebrauch|nutz|funktion|dämpf|bequem", "geltung|marke|prestige|status|design", "umwelt|nachhalt|recycl|fair", "preis"], sampleAnswer: "Sportschuhe: Gebrauchswert: gute Dämpfung, rutschfest, atmungsaktiv, bequem. Geltungswert: bekannte Marke, aktuelles Design. Umweltverträglichkeit: teils recycelte Materialien, Herstellung unter fairen Bedingungen fraglich. Preiswertigkeit: 120 € sind für die Qualität angemessen, wenn sie lange halten." },
+  { topic: "kom-ware", q: "Warum zahlen Kunden bei Markenprodukten oft mehr, und warum kann ein zu niedriger Preis den Kauf bremsen?", keyPoints: ["qualität", "marke|image|vertrau|zweimal", "skeptisch|zweifel|misstrau|verdächtig", "herstell|umwelt|produktion"], sampleAnswer: "Marken versprechen Qualität und ein bestimmtes Image (\"Wer billig kauft, kauft zweimal\"). Ist der Preis zu niedrig, wird der Kunde skeptisch: Er zweifelt an Qualität, Produktionsbedingungen oder Umweltverträglichkeit. Merksatz: Die Leistung überzeugt, der Preis entscheidet." },
+  { topic: "kom-fragen", q: "Formuliere kundenfreundlich um: a) \"Warum fahren Sie bisher kein vernünftiges Fahrrad?\" b) \"Sie möchten bestimmt ein E-Bike kaufen, oder?\"", keyPoints: ["was für|welches|welche", "verbessern|stört|zufrieden", "fahrradart|in frage|wofür|nutz", "selbst|treten|e-bike"], sampleAnswer: "a) \"Was für ein Fahrrad fahren Sie zurzeit?\" oder \"Was würden Sie an Ihrem jetzigen Fahrrad verbessern?\" b) \"Welche Fahrradart kommt für Sie in Frage?\" oder als Alternativfrage: \"Möchten Sie selbst in die Pedale treten oder haben Sie an ein E-Bike gedacht?\"" },
 );
